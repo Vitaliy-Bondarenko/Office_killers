@@ -11,7 +11,7 @@ gem 'react_on_rails'
 gem 'rubocop-performance'
 gem 'rubocop-rails', require: false
 # Use sqlite3 as the database for Active Record
-gem 'sqlite3', '~> 1.4'
+gem 'pg'
 # Use Puma as the app server
 gem 'puma', '~> 4.1'
 # Use SCSS for stylesheets
