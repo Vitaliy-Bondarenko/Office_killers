@@ -17,7 +17,10 @@ export default class HelloWorld extends React.Component {
       first_name: props.first_name,
       last_name: props.last_name,
       image_URL: props.image_URL,
-      loggedInStatus: !!props.id
+      loggedInStatus: !!props.id,
+      notify_game_start: props.notify_game_start,
+      notify_game_finish: props.notify_game_finish,
+      news: props.news,
      };
   }
 
