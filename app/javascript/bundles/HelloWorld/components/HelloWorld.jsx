@@ -1,20 +1,24 @@
-import PropTypes from 'prop-types';
 import React from 'react';
+import PropTypes from 'prop-types';
+import LoginPage from './LoginPage'
+import MainMenu from './MainMenu'
+import Settings from './Settings'
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
+import { Container } from 'semantic-ui-react'
+import { Button } from 'semantic-ui-react'
+import '../styles/office-killers'
 
 export default class HelloWorld extends React.Component {
-  static propTypes = {
-    name: PropTypes.string.isRequired, // this is passed from the Rails view
-  };
-
-  /**
-   * @param props - Comes from your rails view.
-   */
   constructor(props) {
     super(props);
 
-    // How to set initial state in ES6 class syntax
-    // https://reactjs.org/docs/state-and-lifecycle.html#adding-local-state-to-a-class
-    this.state = { name: this.props.name };
+    this.state = {
+      current_user_id: props.id,
+      first_name: props.first_name,
+      last_name: props.last_name,
+      image_URL: props.image_URL,
+      loggedInStatus: !!props.id
+     };
   }
 
   updateName = (name) => {
@@ -23,23 +27,26 @@ export default class HelloWorld extends React.Component {
 
   render() {
     return (
-      <div>
-        <h3>
-          Hello, {this.state.name}!
-        </h3>
-        <hr />
-        <form >
-          <label htmlFor="name">
-            Say hello to:
-          </label>
-          <input
-            id="name"
-            type="text"
-            value={this.state.name}
-            onChange={(e) => this.updateName(e.target.value)}
-          />
-        </form>
-      </div>
+      <Router>
+        <Switch>
+          <React.Fragment>
+            <Container>
+              {this.state.loggedInStatus ?
+                (<Route path='/' exact component={MainMenu} />) :
+                (<LoginPage/>)}
+              <Route path='/settings' render={props =>
+                                                      <Settings
+                                                          imageProp={this.state.image_URL}
+                                                          first_name={this.state.first_name}
+                                                          last_name={this.state.last_name}
+                                                          current_user_id={this.state.current_user_id}
+                                                          notify_game_start={this.state.notify_game_start}
+                                                          notify_game_finish={this.state.notify_game_finish}
+                                                          news={this.state.news} />} />
+            </Container>
+          </React.Fragment>
+        </Switch>
+      </Router>
     );
   }
 }
