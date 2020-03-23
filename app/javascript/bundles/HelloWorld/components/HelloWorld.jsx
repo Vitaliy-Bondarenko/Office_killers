@@ -3,6 +3,10 @@ import PropTypes from 'prop-types';
 import LoginPage from './LoginPage'
 import MainMenu from './MainMenu'
 import Settings from './Settings'
+import YouWasKilled from './YouWasKilled'
+import JoinGameWithCode from './JoinGameWithCode'
+import WaitingView from './WaitingView'
+import StartGameWarn from './StartGameWarn'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import { Container } from 'semantic-ui-react'
 import { Button } from 'semantic-ui-react'
@@ -46,6 +50,9 @@ export default class HelloWorld extends React.Component {
                                                           notify_game_start={this.state.notify_game_start}
                                                           notify_game_finish={this.state.notify_game_finish}
                                                           news={this.state.news} />} />
+              <Route path='/killed' component={YouWasKilled} />
+              <Route path='/join_game' component={StartGameWarn} />
+              <Route path='/waiting' component={WaitingView} />
             </Container>
           </React.Fragment>
         </Switch>
