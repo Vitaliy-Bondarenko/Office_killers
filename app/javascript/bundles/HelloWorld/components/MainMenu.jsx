@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { Button, List, Container } from 'semantic-ui-react'
-import '../styles/office-killers'
 
 const MainMenu = () => {
   return (
@@ -9,10 +8,10 @@ const MainMenu = () => {
         <h1> KILLER </h1>
         <List>
           <List.Item>
-            <Button id="mm-btn">CREATE NEW GAME</Button>
+            <Button id="mm-btn"><a href='/waiting'>CREATE NEW GAME</a></Button>
           </List.Item>
           <List.Item>
-            <Button id="mm-btn">JOIN GAME VIA CODE</Button>
+            <Button id="mm-btn"><a href='/join_game'>JOIN GAME VIA CODE</a></Button>
           </List.Item>
           <List.Item>
             <Button id="mm-btn">HOW TO PLAY</Button>

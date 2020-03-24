@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { Button, List, Container } from 'semantic-ui-react'
-import '../styles/office-killers'
 
 const PauseMenu = () => {
   return (
