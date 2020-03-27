@@ -8,7 +8,7 @@ const MainMenu = () => {
         <h1> KILLER </h1>
         <List>
           <List.Item>
-            <Button id="mm-btn"><a href='/waiting'>CREATE NEW GAME</a></Button>
+            <Button id="mm-btn"><a href='/connect'>CREATE NEW GAME</a></Button>
           </List.Item>
           <List.Item>
             <Button id="mm-btn"><a href='/join_game'>JOIN GAME VIA CODE</a></Button>
