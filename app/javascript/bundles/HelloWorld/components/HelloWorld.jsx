@@ -26,8 +26,6 @@ export default class HelloWorld extends React.Component {
       notify_game_start: props.notify_game_start,
       notify_game_finish: props.notify_game_finish,
       news: props.news,
-      start_time: props.start_time,
-      game_code: Math.random().toString(36).substring(2, 5) + Math.random().toString(36).substring(2, 5)
      };
   }
 
