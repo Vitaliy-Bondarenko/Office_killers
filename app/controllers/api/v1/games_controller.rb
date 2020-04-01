@@ -3,21 +3,48 @@
 class Api::V1::GamesController < ApplicationController
   def new
     game = Game.new(code: SecureRandom.hex(4))
-    render json: game
+    render json: game, status: :ok
   end
 
   def create
-    game = Game.create(started_at: current_game.created_at, status: current_game.in_progres!)
-    renderr json: game
+    game = Game.new(game_params.merge(owner_id: current_user.id, status: :unstarted))
+    if game.save
+      render json: game, status: :created
+    else
+      render json: { errors: game.errors }, status: :unprocessable_entity
+    end
   end
 
   def destroy
-    Game.destroy(params[:code]) unless Game.in_progress?
+    # TODO
+    if game.in_progress?
+      render json: {}, status: :conflict
+    else
+      game.destroy
+      render json: {}, status: :accepted
+    end
   end
 
   def update
-    game = Game.find(params[:code])
-    game.in_progress!
-    render json: game
+    # TODO
+    if game.update(game_params)
+      render json: game, status: :accepted
+    else
+      render json: { errors: game.errors }, status: :unprocessable_entity
+    end
+  end
+
+  private
+
+  def game
+    @game ||= Game.find(params[:id])
+  end
+
+  def parsed_params
+    @parsed_params ||= ActionController::Parameters.new(JSON.parse(request.body.read, symbolize_names: true))
+  end
+
+  def game_params
+    parsed_params.require(:game).permit(:code, :start_time)
   end
 end

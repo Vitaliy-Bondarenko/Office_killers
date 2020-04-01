@@ -7,6 +7,11 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
 
+  has_many :players, dependent: :destroy
+  has_many :games, through: :players
+  has_one :current_player, -> { order_by_last }, class_name: 'Player'
+  has_one :current_game, through: :current_player, source: :game
+
   def self.from_omniauth(auth)
     where(email: auth.info.email).first_or_initialize do |user|
       user.first_name = auth.info.first_name

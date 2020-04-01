@@ -57,7 +57,7 @@ export default class HelloWorld extends React.Component {
               <Route path='/waiting' component={WaitingView} />
               <Route path='/connect' render={props =>
                                                      <CreateGame
-                                                          start_time={this.state.start_time} />} />
+                                                          game={this.props.current_game} />} />
             </Container>
           </React.Fragment>
         </Switch>

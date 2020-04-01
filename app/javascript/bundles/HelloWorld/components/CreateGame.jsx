@@ -1,17 +1,42 @@
 import React, { Component } from 'react';
 import { Button } from 'semantic-ui-react'
+import requestmanager from '../../lib/requestmanager';
 
 class CreateGame extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      start_time: props.start_time,
-      code: props.code
-     };
+      game: props.game
+    }
   }
 
-  render(){
+  UNSAFE_componentWillMount() {
+    this.getNewGame();
+  }
+
+  getNewGame = () => {
+    if (!this.state.game) {
+      requestmanager.request('/api/v1/games/new').then((resp) => {
+        this.setState({ game: resp });
+      }).catch(() => {});
+    }
+  }
+
+  submitSettings = () => {
+    const { game } = this.state;
+    if (!game.id) {
+      const params = { game: { code: game.code,
+                               start_time: game.start_time }
+      };
+      requestmanager.request('/api/v1/games/', 'post', params).then((_resp) => {
+        window.location = "/";
+      }).catch(() => {});
+    }
+  }
+
+  render() {
+    const game = this.state.game || {};
     return(
       <div className='mm-list-min-padding'>
         <h1> KILLER </h1>
@@ -32,8 +57,8 @@ class CreateGame extends React.Component {
               id='code-input'
               className='code-for-game'
               type='text'
-              value={this.state.last_name}
-              disabled={true} />
+              readOnly
+              value={game.code || ""} />
           </div>
         </div>
         <div className='mm-list-min-padding' style={{margin: '30px 0 30px 0'}}>
@@ -60,7 +85,7 @@ class CreateGame extends React.Component {
                 id="mm-btn-green"
                 style={{}}
                 type="button"
-                onClick={this.submitSettings}
+                onClick={undefined}
                 value="BACK TO MENU" />
             </div>
             <div className='row' style={{width: '33%'}}>
@@ -83,7 +108,7 @@ class CreateGame extends React.Component {
               <input
                 id="mm-btn-green"
                 type="button"
-                onClick={this.submitSettings}
+                onClick={undefined}
                 value="CANCEL GAME" />
             </div>
             <div className='row' style={{width: '33%'}}>
@@ -107,7 +132,7 @@ class CreateGame extends React.Component {
                 id="mm-btn-green"
                 type="button"
                 onClick={this.submitSettings}
-                value="START GAME" />
+                value={game.id ? "START GAME" : "CREATE GAME"} />
             </div>
           </div>
         </div>

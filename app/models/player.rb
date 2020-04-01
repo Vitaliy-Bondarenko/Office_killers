@@ -3,5 +3,6 @@
 class Player < ApplicationRecord
   belongs_to :game
   belongs_to :user
-  has_one :user, dependent: :destroy
+
+  scope :order_by_last, (-> { joins(:game).where.not(games: { status: :finished }).order('games.created_at desc') })
 end
