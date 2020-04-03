@@ -7,7 +7,7 @@ import YouWasKilled from './YouWasKilled'
 import JoinGameWithCode from './JoinGameWithCode'
 import WaitingView from './WaitingView'
 import StartGameWarn from './StartGameWarn'
-import CreateGame from './CreateGame'
+import FormGame from './FormGame'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import { Container } from 'semantic-ui-react'
 import { Button } from 'semantic-ui-react'
@@ -25,7 +25,7 @@ export default class HelloWorld extends React.Component {
       loggedInStatus: !!props.id,
       notify_game_start: props.notify_game_start,
       notify_game_finish: props.notify_game_finish,
-      news: props.news,
+      news: props.news
      };
   }
 
@@ -39,9 +39,10 @@ export default class HelloWorld extends React.Component {
         <Switch>
           <React.Fragment>
             <Container>
-            {this.state.game_code}
               {this.state.loggedInStatus ?
-                (<Route path='/' exact component={MainMenu} />) :
+                (<Route path='/' exact render={props=>
+                                                      <MainMenu
+                                                         game={this.props.current_game} />} />) :
                 (<LoginPage/>)}
               <Route path='/settings' render={props =>
                                                       <Settings
@@ -56,7 +57,7 @@ export default class HelloWorld extends React.Component {
               <Route path='/join_game' component={StartGameWarn} />
               <Route path='/waiting' component={WaitingView} />
               <Route path='/connect' render={props =>
-                                                     <CreateGame
+                                                     <FormGame
                                                           game={this.props.current_game} />} />
             </Container>
           </React.Fragment>

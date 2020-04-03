@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Button } from 'semantic-ui-react'
 import requestmanager from '../../lib/requestmanager';
 
-class CreateGame extends React.Component {
+class FormGame extends React.Component {
   constructor(props) {
     super(props);
 
@@ -23,6 +23,14 @@ class CreateGame extends React.Component {
     }
   }
 
+  destroyGame = () => {
+    const { game } = this.state;
+    const url = '/api/v1/games/' + game.id;
+    requestmanager.request(url, 'delete').then((resp) => {
+      window.location = "/";
+    }).catch(() => {});
+  }
+
   submitSettings = () => {
     const { game } = this.state;
     if (!game.id) {
@@ -40,7 +48,7 @@ class CreateGame extends React.Component {
     return(
       <div className='mm-list-min-padding'>
         <h1> KILLER </h1>
-        <div className='row' style={{padding: "0 70px 0 70px"}}>
+        <div className='row-inline-block'>
           <div className='column-firstname'>
             <label htmlFor="qr-code" className='image-label-center'>
               CONNECTING PLAYERS VIA QR CODE
@@ -63,69 +71,64 @@ class CreateGame extends React.Component {
         </div>
         <div className='mm-list-min-padding' style={{margin: '30px 0 30px 0'}}>
           <h1 className='medium-text'> CONNECTED USER </h1>
-          <div className='row' style={{width: '100%', display: 'flex', boxSizing:'border-box'}}>
-            <div className='row' style={{width: '33%'}}>
+          <div className='row-map'>
+            <div className='row-map-emails'>
               <input
-                style={{width:'200px', height:'30px', margin:'10px 0 5px 0'}}
+                className='input-disabled-map-email'
                 type='text'
                 disabled={true} />
               <input
-                style={{width:'200px', height:'30px', margin:'10px 0 5px 0'}}
+                className='input-disabled-map-email'
                 type='text'
                 disabled={true} />
               <input
-                style={{width:'200px', height:'30px', margin:'10px 0 5px 0'}}
+                className='input-disabled-map-email'
                 type='text'
                 disabled={true} />
               <input
-                style={{width:'200px', height:'30px', margin:'10px 0 5px 0'}}
+                className='input-disabled-map-email'
                 type='text'
                 disabled={true} />
-              <input
-                id="mm-btn-green"
-                style={{}}
-                type="button"
-                onClick={undefined}
-                value="BACK TO MENU" />
+              <Button id='mm-btn-white'><a href='/'>BACK TO MENU</a></Button>
             </div>
-            <div className='row' style={{width: '33%'}}>
+            <div className='row-map-emails'>
               <input
-                style={{width:'200px', height:'30px', margin:'10px 0 5px 0'}}
+                className='input-disabled-map-email'
                 type='text'
                 disabled={true} />
               <input
-                style={{width:'200px', height:'30px', margin:'10px 0 5px 0'}}
+                className='input-disabled-map-email'
                 type='text'
                 disabled={true} />
               <input
-                style={{width:'200px', height:'30px', margin:'10px 0 5px 0'}}
+                className='input-disabled-map-email'
                 type='text'
                 disabled={true} />
               <input
-                style={{width:'200px', height:'30px', margin:'10px 0 5px 0'}}
+                className='input-disabled-map-email'
                 type='text'
                 disabled={true} />
               <input
-                id="mm-btn-green"
+                id="mm-btn-red"
                 type="button"
-                onClick={undefined}
+                onClick={this.destroyGame}
                 value="CANCEL GAME" />
             </div>
-            <div className='row' style={{width: '33%'}}>
+            <div className='row-map-emails'>
               <input
-                style={{width:'200px', height:'30px', margin:'10px 0 5px 0'}}
+                className='input-disabled-map-email'
                 type='text'
                 disabled={true} />
               <input
-                style={{width:'200px', height:'30px', margin:'10px 0 5px 0'}}
+                className='input-disabled-map-email'
                 type='text'
                 disabled={true} />
               <input
-                style={{width:'200px', height:'30px', margin:'10px 0 5px 0'}}
+                className='input-disabled-map-email'
                 type='text'
                 disabled={true} />
               <input
-                style={{width:'200px', height:'30px', margin:'10px 0 5px 0'}}
+                className='input-disabled-map-email'
                 type='text'
                 disabled={true} />
               <input
@@ -141,4 +144,4 @@ class CreateGame extends React.Component {
   }
 }
 
-export default CreateGame
+export default FormGame
