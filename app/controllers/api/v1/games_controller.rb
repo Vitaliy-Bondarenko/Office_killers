@@ -2,7 +2,7 @@
 
 class Api::V1::GamesController < ApplicationController
   def new
-    game = Game.new(code: SecureRandom.hex(4))
+    game = Game.new(code: SecureRandom.hex(3))
     render json: game, status: :ok
   end
 

@@ -22,10 +22,8 @@ class MainMenu extends React.Component {
                                   <a href='/connect'>START NEW GAME</a> :
                                   <a href='/connect'>CREATE NEW GAME</a> }</Button>
             </List.Item>
-            <List.Item>
             {this.state.game ?
-              null : <Button id="mm-btn"><a href='/join_game'>JOIN GAME VIA CODE</a></Button> }
-            </List.Item>
+              null : <List.Item><Button id="mm-btn"><a href='/join_game'>JOIN GAME VIA CODE</a></Button></List.Item> }
             <List.Item>
               <Button id="mm-btn">HOW TO PLAY</Button>
             </List.Item>

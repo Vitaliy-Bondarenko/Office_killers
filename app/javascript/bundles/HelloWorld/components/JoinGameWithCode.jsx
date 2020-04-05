@@ -17,7 +17,8 @@ const JoinGameWithCode = () => {
         <div className='vertical-align'>
           <input
             className='input-code-join'
-            type='text'/>
+            type='text'
+            maxLength="6"/>
           <Button id="button-small-green">JOIN</Button>
         </div>
       </Card>

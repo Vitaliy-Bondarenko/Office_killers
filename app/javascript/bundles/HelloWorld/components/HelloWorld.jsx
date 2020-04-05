@@ -54,7 +54,7 @@ export default class HelloWorld extends React.Component {
                                                           notify_game_finish={this.state.notify_game_finish}
                                                           news={this.state.news} />} />
               <Route path='/killed' component={YouWasKilled} />
-              <Route path='/join_game' component={StartGameWarn} />
+              <Route path='/join_game' component={JoinGameWithCode} />
               <Route path='/waiting' component={WaitingView} />
               <Route path='/connect' render={props =>
                                                      <FormGame

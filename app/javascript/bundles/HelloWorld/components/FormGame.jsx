@@ -7,12 +7,25 @@ class FormGame extends React.Component {
     super(props);
 
     this.state = {
-      game: props.game
+      game: props.game,
+      start_time: this.game ? props.game.start_time.format("YYYY-MM-DDTkk:mm") : new Date()
     }
   }
 
   UNSAFE_componentWillMount() {
     this.getNewGame();
+  }
+
+  copyToClipboard = () => {
+      const el = this.codeInputField;
+      const sel = document.getSelection();
+      el.select();
+      document.execCommand("copy");
+      sel.removeAllRanges();
+    }
+
+  handleStartDate = (start_time) => {
+    this.setState( { start_time });
   }
 
   getNewGame = () => {
@@ -35,7 +48,7 @@ class FormGame extends React.Component {
     const { game } = this.state;
     if (!game.id) {
       const params = { game: { code: game.code,
-                               start_time: game.start_time }
+                               start_time: this.state.start_time }
       };
       requestmanager.request('/api/v1/games/', 'post', params).then((_resp) => {
         window.location = "/";
@@ -61,16 +74,34 @@ class FormGame extends React.Component {
             <label htmlFor="code-input" className='image-label-center'>
               CONNECTING PLAYERS VIA CODE
             </label>
+            <div className='display-flex'>
+              <input
+                id='code-input'
+                className='code-for-game'
+                type='text'
+                readOnly
+                ref={(codeInputField) => this.codeInputField = codeInputField}
+                value={game.code || ""} />
+              <button className='copyToClipboard' onClick={() => this.copyToClipboard()}>
+                COPY TO CLIPBOARD
+              </button>
+            </div>
+            <label htmlFor="date-picker" className='image-label-center-margin'>
+              SET GAME START TIME
+            </label>
             <input
-              id='code-input'
-              className='code-for-game'
-              type='text'
-              readOnly
-              value={game.code || ""} />
+              id='date-picker'
+              type='datetime-local'
+              className='date-time-picker'
+              onChange={(e) => this.handleStartDate(e.target.value)}
+              value={game.start_time || undefined} />
           </div>
         </div>
         <div className='mm-list-min-padding' style={{margin: '30px 0 30px 0'}}>
-          <h1 className='medium-text'> CONNECTED USER </h1>
+          <h1 className='medium-text'> CONNECTED USERS </h1>
+          <div className='align-center-webkit' style={{margin: '0 0 20px 0'}}>
+            <div className='small-horizontal-line' style={{width: '300px'}}> <hr/> </div>
+          </div>
           <div className='row-map'>
             <div className='row-map-emails'>
               <input
@@ -108,11 +139,13 @@ class FormGame extends React.Component {
                 className='input-disabled-map-email'
                 type='text'
                 disabled={true} />
-              <input
-                id="mm-btn-red"
-                type="button"
-                onClick={this.destroyGame}
-                value="CANCEL GAME" />
+                {game.id ?
+                    <input
+                      id="mm-btn-red"
+                      type="button"
+                      onClick={this.destroyGame}
+                      value="CANCEL GAME" /> :
+                    null}
             </div>
             <div className='row-map-emails'>
               <input

@@ -13,6 +13,7 @@
     "isomorphic-fetch": "^2.2.1",
     "prop-types": "^15.7.2",
     "react": "^16.13.0",
+    "react-datetime-picker": "^3.0.1",
     "react-dom": "^16.13.0",
     "react-on-rails": "11.3.0",
     "react-router": "^5.1.2",
