@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Button, List, Container } from 'semantic-ui-react'
+import { Link, BrowserRouter as Router } from 'react-router-dom'
 
 class MainMenu extends React.Component {
   constructor(props) {
@@ -7,23 +8,31 @@ class MainMenu extends React.Component {
 
     this.state = {
       game: !!props.game,
+      current_game: props.game
     }
   }
 
   render(){
+    const game = this.state.current_game || {}
     return (
       <div className='mm-list'>
         <Container>
           <h1> KILLER </h1>
           <List>
             <List.Item>
-              <Button id="mm-btn">
-                {this.state.game ?
-                                  <a href='/connect'>START NEW GAME</a> :
-                                  <a href='/connect'>CREATE NEW GAME</a> }</Button>
+              <Link to='/connect'>
+                <Button id="mm-btn">
+                  {this.state.game ?
+                                    'START NEW GAME' :
+                                    'CREATE NEW GAME' }</Button>
+              </Link>
             </List.Item>
             {this.state.game ?
-              null : <List.Item><Button id="mm-btn"><a href='/join_game'>JOIN GAME VIA CODE</a></Button></List.Item> }
+              null : <List.Item>
+                        <Link to='/join_game'>
+                          <Button id="mm-btn">JOIN GAME VIA CODE</Button>
+                        </Link>
+                      </List.Item> }
             <List.Item>
               <Button id="mm-btn">HOW TO PLAY</Button>
             </List.Item>
@@ -31,10 +40,12 @@ class MainMenu extends React.Component {
               <Button id="mm-btn">STATISTIC</Button>
             </List.Item>
             <List.Item>
-              <Button id="mm-btn"><a href='settings'>SETTINGS</a></Button>
+              <Link to='/settings'>
+                <Button id="mm-btn">SETTINGS</Button>
+              </Link>
             </List.Item>
-            <List.Item>
-              <Button id="mm-btn-logout"><a href='/logout'> LOGOUT </a></Button>
+            <List.Item style={{marginTop: "20px"}}>
+              <a href='/logout' className='buttonH'>LOGOUT</a>
             </List.Item>
           </List>
         </Container>

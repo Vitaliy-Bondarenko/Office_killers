@@ -41,14 +41,23 @@
   margin: 20px
 
 .qr-code-img
-  width: 350px
-  height: 350px
+  max-width: 350px
+  max-height: 350px
   margin-top: 10px
 
 .mm-list-min-padding
   width: 100%
   text-align: center
   padding: 5px 100px 10px 100px
+
+.buttonH
+  padding: 12px 71.15px 12px 71.15px
+  border-radius: .28571429rem
+  width: 200px
+  height: 37px
+  margin-top: 100px
+  color: black
+  background-color: #f38989
 
 .align-center-webkit
   text-align: -webkit-center
@@ -61,11 +70,12 @@
 
 .mm-list-centered
   width: 100%
-  text-align: -webkit-center
-  padding: 170px 200px 170px 170px
+  text-align: center
+  padding: 200px 170px 170px 170px
 
 .float-right
   text-align: right
+  margin-bottom: 12px
 
 .corner-close
   padding: 0
@@ -75,7 +85,7 @@
 
 .small-padding
   padding: 0px 6px 6px 6px
-  margin: 5px 0px 10px 0px
+  margin: 5px 0px 6px 0px
 
 .vertical-align
   vertical-align: middle
@@ -84,6 +94,14 @@
   margin: 50px
   box-sizing: border-box
   width: 50%
+  display: inline-block
+
+.react-notification-root
+  position: fixed
+  z-index: 9000
+  pointer-events: none
+  width: 90%
+  height: 100%
 
 .input-code-join
   width: 131px
@@ -273,9 +291,10 @@ h1
 .notify-gm
   color: white
   padding-left: 7px
+  font-size: 16px
 
 .setting-div
-  padding-bottom: 35px
+  padding-bottom: 5px
 
 h2
   color: white
@@ -285,8 +304,13 @@ h2
   height: 20px
   width: 20px
 
-#notif-gm-st
+.margin-btm
+  margin-bottom: 4px
+
+.notif-gm
   float: left
+  width: 17px
+  height: 17px
 
 .text-align-left
   text-align: left

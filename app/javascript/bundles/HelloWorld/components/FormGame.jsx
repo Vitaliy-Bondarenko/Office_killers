@@ -1,6 +1,11 @@
 import React, { Component } from 'react';
 import { Button } from 'semantic-ui-react'
 import requestmanager from '../../lib/requestmanager';
+import ReactNotification from 'react-notifications-component';
+import { useHistory, Link, BrowserRouter as Router } from 'react-router-dom'
+import {store} from 'react-notifications-component';
+import 'animate.css'
+import 'react-notifications-component/dist/theme.css'
 
 class FormGame extends React.Component {
   constructor(props) {
@@ -8,7 +13,11 @@ class FormGame extends React.Component {
 
     this.state = {
       game: props.game,
-      start_time: this.game ? props.game.start_time.format("YYYY-MM-DDTkk:mm") : new Date()
+      start_time: this.game ? props.game.start_time.format("YYYY-MM-DDTkk:mm") : new Date(),
+      current_user: props.current_user,
+      owner_id: props.owner_id,
+      current_game: props.game,
+      current_player: props.current_player
     }
   }
 
@@ -22,6 +31,19 @@ class FormGame extends React.Component {
       el.select();
       document.execCommand("copy");
       sel.removeAllRanges();
+      store.addNotification({
+        message: "COPIED!",
+        type: "success",
+        container: "top-right",
+        insert: "top",
+        animationIn: ["animated", "fadeIn"],
+        animationOut: ["animated", "fadeOut"],
+
+        dismiss:{
+          duration: 3500,
+          onScreen: true
+        },
+      })
     }
 
   handleStartDate = (start_time) => {
@@ -44,6 +66,14 @@ class FormGame extends React.Component {
     }).catch(() => {});
   }
 
+  destroyPlayer = () => {
+    const { current_player } = this.state;
+    const url = '/api/v1/players/' + current_player.id;
+    requestmanager.request(url, 'delete').then((resp) => {
+      window.location = "/";
+    }).catch(() => {});
+  }
+
   submitSettings = () => {
     const { game } = this.state;
     if (!game.id) {
@@ -57,7 +87,7 @@ class FormGame extends React.Component {
   }
 
   render() {
-    const game = this.state.game || {};
+    const game = this.state.game || {}
     return(
       <div className='mm-list-min-padding'>
         <h1> KILLER </h1>
@@ -99,9 +129,7 @@ class FormGame extends React.Component {
         </div>
         <div className='mm-list-min-padding' style={{margin: '30px 0 30px 0'}}>
           <h1 className='medium-text'> CONNECTED USERS </h1>
-          <div className='align-center-webkit' style={{margin: '0 0 20px 0'}}>
-            <div className='small-horizontal-line' style={{width: '300px'}}> <hr/> </div>
-          </div>
+          <hr align="center" width="25%"/>
           <div className='row-map'>
             <div className='row-map-emails'>
               <input
@@ -120,7 +148,9 @@ class FormGame extends React.Component {
                 className='input-disabled-map-email'
                 type='text'
                 disabled={true} />
-              <Button id='mm-btn-white'><a href='/'>BACK TO MENU</a></Button>
+              <Link to='/'>
+                <Button id='mm-btn-white'>BACK TO MENU</Button>
+              </Link>
             </div>
             <div className='row-map-emails'>
               <input
@@ -143,9 +173,12 @@ class FormGame extends React.Component {
                     <input
                       id="mm-btn-red"
                       type="button"
-                      onClick={this.destroyGame}
-                      value="CANCEL GAME" /> :
-                    null}
+                      onClick={this.state.owner_id == this.state.current_user ?
+                                  this.destroyGame :
+                                  this.destroyPlayer}
+                      value={this.state.owner_id == this.state.current_user ? "CANCEL GAME" : "DISCONNECT FROM GAME"} />:
+                    undefined }
+                }
             </div>
             <div className='row-map-emails'>
               <input
@@ -164,11 +197,11 @@ class FormGame extends React.Component {
                 className='input-disabled-map-email'
                 type='text'
                 disabled={true} />
-              <input
-                id="mm-btn-green"
-                type="button"
-                onClick={this.submitSettings}
-                value={game.id ? "START GAME" : "CREATE GAME"} />
+                <input
+                  id="mm-btn-green"
+                  type="button"
+                  onClick={this.submitSettings}
+                  value={game.id ? "START GAME" : "CREATE GAME"} />
             </div>
           </div>
         </div>
