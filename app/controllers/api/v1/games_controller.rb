@@ -40,10 +40,6 @@ class Api::V1::GamesController < ApplicationController
     @game ||= Game.find(params[:id])
   end
 
-  def parsed_params
-    @parsed_params ||= ActionController::Parameters.new(JSON.parse(request.body.read, symbolize_names: true))
-  end
-
   def game_params
     parsed_params.require(:game).permit(:code, :start_time)
   end

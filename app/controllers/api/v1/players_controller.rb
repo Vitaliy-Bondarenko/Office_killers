@@ -3,10 +3,10 @@
 class Api::V1::PlayersController < ApplicationController
   def create
     if game.present?
-      Player.create(game_id: game.id, user_id: current_user.id)
+      game.players.create(user_id: current_user.id)
       render json: game
     else
-      flash[:alert] = "You has errors!"
+      flash[:alert] = 'You has errors!'
       render json: { status: :conflict }
     end
   end
@@ -16,18 +16,14 @@ class Api::V1::PlayersController < ApplicationController
     render json: {}, status: :accepted
   end
 
-  def game
-    Game.find_by(game_params)
-  end
-
   private
+
+  def game
+    @game ||= Game.find_by(game_params)
+  end
 
   def player
     @player ||= Player.find(params[:id])
-  end
-
-  def parsed_params
-    @parsed_params ||= ActionController::Parameters.new(JSON.parse(request.body.read, symbolize_names: true))
   end
 
   def game_params
