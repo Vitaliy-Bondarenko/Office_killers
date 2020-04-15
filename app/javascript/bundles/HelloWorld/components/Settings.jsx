@@ -1,14 +1,15 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Container, Button } from 'semantic-ui-react'
+import { Container, Button } from 'semantic-ui-react';
 import requestmanager from "../../lib/requestmanager";
+import {Link} from 'react-router-dom'
 
 class Settings extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      current_user_id: props.current_user_id,
+      user_id: props.user_id,
       first_name: props.first_name,
       last_name: props.last_name,
       image_URL: props.imageProp,
@@ -63,7 +64,7 @@ class Settings extends React.Component {
             <img src={this.state.image_URL} id='img-profile' />
           </div>
           <br/>
-          <form className='row'>
+          <div className='row'>
             <div className='column-firstname'>
               <label htmlFor="first-name-input" className='label-input-settings'>
                 FIRST NAME
@@ -71,6 +72,7 @@ class Settings extends React.Component {
               <input
                 id='first-name-input'
                 className='name-input'
+                maxLength="16"
                 type='text'
                 onChange={(e) => this.updateFName(e.target.value)}
                 value={this.state.first_name} />
@@ -81,44 +83,50 @@ class Settings extends React.Component {
               </label>
               <input
                 id='last-name-input'
+                maxLength="20"
                 className='name-input'
                 type='text'
                 onChange={(e) => this.updateLName(e.target.value)}
                 value={this.state.last_name} />
             </div>
-          </form>
-          <div>
-            <h2 id="notif-settings-h2"> NOTIFICATIONS SETTING </h2>
-            <form>
+          </div>
+          <div style={{marginTop: "50px"}}>
               <div className='text-align-left'>
+              <h2 id="notif-settings-h2"> NOTIFICATIONS SETTING </h2>
+              <div className='margin-btm'>
                 <input
                   id='notif-gm-st'
+                  className='notif-gm'
                   type='checkbox'
                   onChange={this.handleChangeForGmS}
                   checked={this.state.notify_game_start} />
                 <label htmlFor='notif-gm-st' className='notify-gm'>NOTIFY ABOUT GAME START</label><br/>
               </div>
-              <div className='text-align-left'>
+              <div className='margin-btm'>
                 <input
                   id='notif-gm-fs'
+                  className='notif-gm'
                   type='checkbox'
                   onChange={this.handleChangeForGmF}
                   checked={this.state.notify_game_finish} />
                 <label htmlFor='notif-gm-fs' className='notify-gm'>NOTIFY ABOUT GAME FINISH</label><br/>
               </div>
-              <div className='text-align-left'>
+              <div className='margin-btm'>
                 <input
                   id='notif-gm-news'
+                  className='notif-gm'
                   type='checkbox'
                   onChange={this.handleChangeForNews}
                   checked={this.state.news} />
                 <label htmlFor='notif-gm-news' className='notify-gm'>NEWS</label>
               </div>
-            </form>
+              </div>
           </div>
         </div>
         <div>
-          <Button id="mm-btn-right-margin"><a href='/'>BACK TO MENU</a></Button>
+          <Link to='/'>
+            <Button id="mm-btn-right-margin">BACK TO MENU</Button>
+          </Link>
           <input
             id="mm-btn-green"
             type="button"

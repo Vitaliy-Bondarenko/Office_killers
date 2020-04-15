@@ -8,6 +8,57 @@
   text-align: center
   padding: 15px 30px 60px 30px
 
+.display-flex
+
+.copyToClipboard
+  height: 30px
+  margin-left: -125px
+  font-size: 10px
+  border-radius: 30px
+  background-color: black
+  border-color: black
+  color: white
+  margin-bottom: -20px
+
+.code-for-game
+  width: 350px
+  height: 36px
+  margin-top: 10px
+  margin-bottom: 15px
+  padding: 17px 0 17px 13px
+  font-size: 20px
+
+.image-label-center
+  text-align: center
+  color: white
+  font-size: 20px
+  margin: 10px
+
+.image-label-center-margin
+  text-align: center
+  color: white
+  font-size: 20px
+  margin: 20px
+
+.qr-code-img
+  max-width: 350px
+  max-height: 350px
+  margin-top: 10px
+
+.mm-list-min-padding
+  width: 100%
+  text-align: center
+  padding: 5px 100px 10px 100px
+
+.buttonH
+  padding: 12px 71.15px 12px 71.15px
+  border-radius: .28571429rem
+  width: 200px
+  height: 37px
+  margin-top: 100px
+  color: black
+  background-color: #f38989
+
 .align-center-webkit
   text-align: -webkit-center
 
@@ -19,11 +70,12 @@
 
 .mm-list-centered
   width: 100%
-  text-align: -webkit-center
-  padding: 170px 200px 170px 170px
+  text-align: center
+  padding: 200px 170px 170px 170px
 
 .float-right
   text-align: right
+  margin-bottom: 12px
 
 .corner-close
   padding: 0
@@ -33,7 +85,7 @@
 
 .small-padding
   padding: 0px 6px 6px 6px
-  margin: 5px 0px 10px 0px
+  margin: 5px 0px 6px 0px
 
 .vertical-align
   vertical-align: middle
@@ -42,11 +94,19 @@
   margin: 50px
   box-sizing: border-box
   width: 50%
+  display: inline-block
+
+.react-notification-root
+  position: fixed
+  z-index: 9000
+  pointer-events: none
+  width: 90%
+  height: 100%
 
 .input-code-join
-  width: 100px
+  width: 131px
   height: 43px
-  font-size: 25px
+  font-size: 24px
   margin: 0px 7px 9px 7px
   padding: 3px 15px 3px 15px
   border-radius: 10px
@@ -151,10 +211,32 @@
 #mm-btn-green
   width: 200px
   height: 37px
-  margin: 2px
+  margin-top: 30px
   color: black
   border-radius: 5px
   background-color: #a8f7a8
+
+#mm-btn-red
+  width: 200px
+  height: 37px
+  margin-top: 30px
+  color: black
+  border-radius: 5px
+  background-color: #ef9c9c
+
+.date-time-picker
+  background-color: white
+  width: 350px
+  border-radius: 5px
+  margin: 10px
+
+#mm-btn-white
+  width: 200px
+  height: 37px
+  margin-top: 30px
+  color: black
+  border-radius: 5px
+  background-color: white
 
 .white-text
   color: white
@@ -182,17 +264,37 @@ h1
   box-sizing : border-box
 
 .row
-  display: table
-  clear: both
   padding-bottom: 20px
   padding-top: 10px
+
+.row-inline-block
+  display: inline-block
+  padding: 0 70px 0 70px
+
+.row-map-emails
+  width: 33%
+
+.row-map
+  width: 100%
+  display: flex
+  box-sizing: border-box
+
+.input-disabled-map-email
+  width: 200px
+  height: 30px
+  margin: 10px 0 5px 0
+
+.row:after
+  display: table
+  clear: both
 
 .notify-gm
   color: white
   padding-left: 7px
+  font-size: 16px
 
 .setting-div
-  padding-bottom: 35px
+  padding-bottom: 5px
 
 h2
   color: white
@@ -202,8 +304,13 @@ h2
   height: 20px
   width: 20px
 
-#notif-gm-st
+.margin-btm
+  margin-bottom: 4px
+
+.notif-gm
   float: left
+  width: 17px
+  height: 17px
 
 .text-align-left
   text-align: left

@@ -12,9 +12,6 @@ class Api::V1::UsersController < ApplicationController
   end
 
   private
-  def parsed_params
-    @parsed_params ||= ActionController::Parameters.new(JSON.parse(request.body.read, symbolize_names: true))
-  end
 
   def user_params
     parsed_params.require(:user).permit(:first_name,
