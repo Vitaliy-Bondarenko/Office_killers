@@ -46,9 +46,10 @@
   margin-top: 10px
 
 .mm-list-min-padding
-  width: 100%
+  width: min-content
   text-align: center
-  padding: 5px 100px 10px 100px
+  padding: 5px 100px 10px 85px
+  display: inline-block
 
 .buttonH
   padding: 12px 71.15px 12px 71.15px
@@ -64,6 +65,9 @@
 
 .horizontal-line
   width: 250px
+
+.margin-bottom-zero
+  margin-bottom: 0
 
 .small-horizontal-line
   width: 100px
@@ -143,6 +147,10 @@
   max-width: none
   margin: 0
 
+.ui.grid
+  display: flex
+  flex-wrap: inherit
+
 .mm-list-waskilled
   width: 100%
   text-align: -webkit-center
@@ -168,6 +176,12 @@
 .small-text
   font-size: 27px
   color: white
+
+.mini-text
+  font-size: 20px
+  color: white
+  margin-top: 0
+  padding-bottom: 30px
 
 #mm-btn
   width: 200px
@@ -241,6 +255,16 @@
 .white-text
   color: white
 
+.input-fields
+  margin-bottom: 13px
+  width: 220px
+  height: 25px
+  background-color: #808080
+  color: white
+  border-width: 0
+  padding: 8px
+  font-size: 16px
+
 .white-text-small
   color: white
   font-size: 12px
@@ -274,8 +298,16 @@ h1
 .row-map-emails
   width: 33%
 
+.box-content
+  box-sizing: content-box
+
+.row-map-buttons
+  width: 33%
+  display: contents
+  text-align: center
+
 .row-map
-  width: 100%
+  width: min-content
   display: flex
   box-sizing: border-box
 

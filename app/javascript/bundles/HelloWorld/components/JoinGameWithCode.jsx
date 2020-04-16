@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import {Button, Card, Icon, Link} from 'semantic-ui-react'
+import { Button, Card, Icon } from 'semantic-ui-react'
 import requestmanager from '../../lib/requestmanager';
 import {store} from 'react-notifications-component';
 
