@@ -34,10 +34,14 @@ class MainMenu extends React.Component {
                         </Link>
                       </List.Item> }
             <List.Item>
-              <Button id="mm-btn">HOW TO PLAY</Button>
+              <Link to='/tutorial'>
+                <Button id="mm-btn">HOW TO PLAY</Button>
+              </Link>
             </List.Item>
             <List.Item>
-              <Button id="mm-btn">STATISTIC</Button>
+              <Link to='/statistic'>
+                <Button id="mm-btn">STATISTIC</Button>
+              </Link>
             </List.Item>
             <List.Item>
               <Link to='/settings'>

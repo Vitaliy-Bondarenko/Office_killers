@@ -11,8 +11,15 @@ class HelloWorldController < ApplicationController
                            notify_game_start: current_user&.notify_game_start,
                            notify_game_finish: current_user&.notify_game_finish,
                            news: current_user&.news,
-                           current_game: current_user&.current_game,
                            owner_id: current_user&.current_game&.owner_id,
-                           current_player: current_user&.current_player }
+                           current_game: current_game,
+                           current_player: current_user&.current_player &&
+                                           PlayerSerializer.new(current_user&.current_player) }
+  end
+
+  private
+
+  def current_game
+    current_user&.current_game && GameSerializer.new(current_user.current_game)
   end
 end

@@ -8,6 +8,8 @@ import JoinGameWithCode from './JoinGameWithCode'
 import WaitingView from './WaitingView'
 import StartGameWarn from './StartGameWarn'
 import FormGame from './FormGame'
+import TargetScreen from './TargetScreen'
+import StatisticPage from './StatisticPage'
 import ReactNotification from 'react-notifications-component';
 import {store} from 'react-notifications-component';
 import 'animate.css'
@@ -68,6 +70,8 @@ export default class HelloWorld extends React.Component {
                                                      <JoinGameWithCode
                                                          />} />
               <Route path='/waiting' component={WaitingView} />
+              <Route path='/tutorial' component={TargetScreen} />
+              <Route path='/statistic' component={StatisticPage} />
               <Route path='/connect' render={props =>
                                                      <FormGame
                                                           game={this.state.current_game}

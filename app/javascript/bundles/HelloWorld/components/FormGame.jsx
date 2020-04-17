@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button } from 'semantic-ui-react'
+import { Button, Grid } from 'semantic-ui-react'
 import requestmanager from '../../lib/requestmanager';
 import ReactNotification from 'react-notifications-component';
 import { useHistory, Link, BrowserRouter as Router } from 'react-router-dom'
@@ -87,7 +87,7 @@ class FormGame extends React.Component {
   }
 
   render() {
-    const game = this.state.game || {}
+    const game = this.state.game || {};
     return(
       <div className='mm-list-min-padding'>
         <h1> KILLER </h1>
@@ -130,78 +130,83 @@ class FormGame extends React.Component {
         <div className='mm-list-min-padding' style={{margin: '30px 0 30px 0'}}>
           <h1 className='medium-text'> CONNECTED USERS </h1>
           <hr align="center" width="25%"/>
-          <div className='row-map'>
-            <div className='row-map-emails'>
-              <input
-                className='input-disabled-map-email'
-                type='text'
-                disabled={true} />
-              <input
-                className='input-disabled-map-email'
-                type='text'
-                disabled={true} />
-              <input
-                className='input-disabled-map-email'
-                type='text'
-                disabled={true} />
-              <input
-                className='input-disabled-map-email'
-                type='text'
-                disabled={true} />
+          <div className='row-map' style={{display: "block"}}>
+            <Grid columns={3} padded='horizontally' style={{marginTop: '10px'}}>
+                <Grid.Column className="box-content">
+                  <input
+                    type='text'
+                    className='input-fields'
+                    readOnly />
+                  <input
+                    type='text'
+                    className='input-fields'
+                    disabled />
+                  <input
+                    type='text'
+                    className='input-fields'
+                    disabled />
+                  <input
+                    type='text'
+                    className='input-fields'
+                    disabled />
+                </Grid.Column>
+                <Grid.Column className="box-content">
+                  <input
+                    type='text'
+                    className='input-fields'
+                    disabled />
+                  <input
+                    type='text'
+                    className='input-fields'
+                    disabled />
+                  <input
+                    type='text'
+                    className='input-fields'
+                    disabled />
+                  <input
+                    type='text'
+                    className='input-fields'
+                    disabled />
+                </Grid.Column>
+                <Grid.Column className="box-content">
+                  <input
+                    type='text'
+                    className='input-fields'
+                    disabled />
+                  <input
+                    type='text'
+                    className='input-fields'
+                    disabled />
+                  <input
+                    type='text'
+                    className='input-fields'
+                    disabled />
+                  <input
+                    type='text'
+                    className='input-fields'
+                    disabled />
+                </Grid.Column>
+            </Grid>
+            <div className='row-map-buttons'>
               <Link to='/'>
-                <Button id='mm-btn-white'>BACK TO MENU</Button>
+                <Button id='mm-btn-white' style={{marginRight: "60px"}}>BACK TO MENU</Button>
               </Link>
-            </div>
-            <div className='row-map-emails'>
-              <input
-                className='input-disabled-map-email'
-                type='text'
-                disabled={true} />
-              <input
-                className='input-disabled-map-email'
-                type='text'
-                disabled={true} />
-              <input
-                className='input-disabled-map-email'
-                type='text'
-                disabled={true} />
-              <input
-                className='input-disabled-map-email'
-                type='text'
-                disabled={true} />
                 {game.id ?
                     <input
                       id="mm-btn-red"
                       type="button"
+                      style={{marginRight: "60px"}}
                       onClick={this.state.owner_id == this.state.current_user ?
                                   this.destroyGame :
                                   this.destroyPlayer}
                       value={this.state.owner_id == this.state.current_user ? "CANCEL GAME" : "DISCONNECT FROM GAME"} />:
                     undefined }
                 }
-            </div>
-            <div className='row-map-emails'>
               <input
-                className='input-disabled-map-email'
-                type='text'
-                disabled={true} />
-              <input
-                className='input-disabled-map-email'
-                type='text'
-                disabled={true} />
-              <input
-                className='input-disabled-map-email'
-                type='text'
-                disabled={true} />
-              <input
-                className='input-disabled-map-email'
-                type='text'
-                disabled={true} />
-                <input
-                  id="mm-btn-green"
-                  type="button"
-                  onClick={this.submitSettings}
-                  value={game.id ? "START GAME" : "CREATE GAME"} />
+                id="mm-btn-green"
+                type="button"
+                onClick={this.submitSettings}
+                value={game.id ? "START GAME" : "CREATE GAME"} />
             </div>
           </div>
         </div>
