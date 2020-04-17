@@ -1,6 +1,5 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import { Button, Card, Icon } from 'semantic-ui-react'
+import React from 'react';
+import { Button, Card, Icon } from 'semantic-ui-react';
 import requestmanager from '../../lib/requestmanager';
 import {store} from 'react-notifications-component';
 
@@ -11,14 +10,14 @@ class JoinGameWithCode extends React.Component {
     this.state = {
       code: [],
       errorMessage: ''
-    }
+    };
   }
 
   updateCode = (code) => {
     this.setState({ code });
   }
 
-  findGameByCode = () => {
+  handleFindGameByCode = () => {
     const params = { game: { code: this.state.code }};
     const url = '/api/v1/players';
     requestmanager.request(url, 'post', params).then((resp) => {
@@ -36,7 +35,7 @@ class JoinGameWithCode extends React.Component {
             duration: 3500,
             onScreen: true
           },
-        })
+        });
       }else {
         window.location = "/connect";
       }
@@ -49,7 +48,7 @@ class JoinGameWithCode extends React.Component {
         <Card className='card-center'>
           <div className='float-right'>
             <a className='corner-close' href='/'>
-              <Icon name='close'/>
+              <Icon name='close' />
             </a>
           </div>
           <div className='small-padding'>
@@ -57,19 +56,19 @@ class JoinGameWithCode extends React.Component {
           </div>
           <div className='vertical-align'>
             <input
-              className='input-code-join'
-              type='text'
-              value={this.state.code || ''}
-              onChange={(e) => this.updateCode(e.target.value)}
-              maxLength="6"/>
+                className='input-code-join'
+                maxLength="6"
+                onChange={(e) => this.updateCode(e.target.value)}
+                type='text'
+                value={this.state.code || ''} />
             <Button
-              id="button-small-green"
-              onClick={this.findGameByCode}>JOIN</Button>
+                id="button-small-green"
+                onClick={this.handleFindGameByCode}>JOIN</Button>
           </div>
         </Card>
       </div>
-    )
+    );
   }
 }
 
-export default JoinGameWithCode
+export default JoinGameWithCode;

@@ -19,7 +19,7 @@ module.exports = {
     "react/forbid-prop-types": ["error", {"forbid": ["any"]}],
     "react/jsx-indent": ["error", 2],
     "react/jsx-closing-bracket-location": ["error", "after-props"],
-    "react/forbid-component-props": ["error", { "forbid": ["style"] }],
+    "react/forbid-component-props": ["off"],
     "react/prefer-stateless-function": ["error", { "ignorePureComponents": true }],
     "react/jsx-max-props-per-line": ["warn", { "maximum": 3 }],
     "react/jsx-no-literals": ["off"],

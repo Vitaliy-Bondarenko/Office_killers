@@ -1,11 +1,10 @@
-import React, { Component } from 'react';
-import { Button, Grid } from 'semantic-ui-react'
+import React from 'react';
+import { Button, Grid } from 'semantic-ui-react';
 import requestmanager from '../../lib/requestmanager';
-import ReactNotification from 'react-notifications-component';
-import { useHistory, Link, BrowserRouter as Router } from 'react-router-dom'
+import { Link } from 'react-router-dom';
 import {store} from 'react-notifications-component';
-import 'animate.css'
-import 'react-notifications-component/dist/theme.css'
+import 'animate.css';
+import 'react-notifications-component/dist/theme.css';
 
 class FormGame extends React.Component {
   constructor(props) {
@@ -18,7 +17,7 @@ class FormGame extends React.Component {
       owner_id: props.owner_id,
       current_game: props.game,
       current_player: props.current_player
-    }
+    };
   }
 
   UNSAFE_componentWillMount() {
@@ -43,7 +42,7 @@ class FormGame extends React.Component {
           duration: 3500,
           onScreen: true
         },
-      })
+      });
     }
 
   handleStartDate = (start_time) => {
@@ -61,7 +60,7 @@ class FormGame extends React.Component {
   destroyGame = () => {
     const { game } = this.state;
     const url = '/api/v1/games/' + game.id;
-    requestmanager.request(url, 'delete').then((resp) => {
+    requestmanager.request(url, 'delete').then((_resp) => {
       window.location = "/";
     }).catch(() => {});
   }
@@ -69,12 +68,12 @@ class FormGame extends React.Component {
   destroyPlayer = () => {
     const { current_player } = this.state;
     const url = '/api/v1/players/' + current_player.id;
-    requestmanager.request(url, 'delete').then((resp) => {
+    requestmanager.request(url, 'delete').then((_resp) => {
       window.location = "/";
     }).catch(() => {});
   }
 
-  submitSettings = () => {
+  handleSubmitSettings = () => {
     const { game } = this.state;
     if (!game.id) {
       const params = { game: { code: game.code,
@@ -93,126 +92,131 @@ class FormGame extends React.Component {
         <h1> KILLER </h1>
         <div className='row-inline-block'>
           <div className='column-firstname'>
-            <label htmlFor="qr-code" className='image-label-center'>
+            <label className='image-label-center' htmlFor="qr-code">
               CONNECTING PLAYERS VIA QR CODE
             </label>
-            <img src='https://www.qr-code-generator.com/wp-content/themes/qr/new_structure/markets/core_market_full/generator/dist/generator/assets/images/websiteQRCode_noFrame.png'
-              id='qr-code'
-              className='qr-code-img'/>
+            <img
+                className='qr-code-img'
+                id='qr-code'
+                src='https://shorturl.at/hkoGJ' />
           </div>
           <div className='column-lastname'>
-            <label htmlFor="code-input" className='image-label-center'>
+            <label className='image-label-center' htmlFor="code-input">
               CONNECTING PLAYERS VIA CODE
             </label>
             <div className='display-flex'>
               <input
-                id='code-input'
-                className='code-for-game'
-                type='text'
-                readOnly
-                ref={(codeInputField) => this.codeInputField = codeInputField}
-                value={game.code || ""} />
-              <button className='copyToClipboard' onClick={() => this.copyToClipboard()}>
+                  className='code-for-game'
+                  id='code-input'
+                  readOnly
+                  ref={(codeInputField) => this.codeInputField = codeInputField}
+                  type='text'
+                  value={game.code || ""} />
+              <button
+                  className='copyToClipboard'
+                  onClick={() => this.copyToClipboard()}
+                  type='button'>
                 COPY TO CLIPBOARD
               </button>
             </div>
-            <label htmlFor="date-picker" className='image-label-center-margin'>
+            <label className='image-label-center-margin' htmlFor="date-picker">
               SET GAME START TIME
             </label>
             <input
-              id='date-picker'
-              type='datetime-local'
-              className='date-time-picker'
-              onChange={(e) => this.handleStartDate(e.target.value)}
-              value={game.start_time || undefined} />
+                className='date-time-picker'
+                id='date-picker'
+                onChange={(e) => this.handleStartDate(e.target.value)}
+                type='datetime-local'
+                value={game.start_time || undefined} />
           </div>
         </div>
         <div className='mm-list-min-padding' style={{margin: '30px 0 30px 0'}}>
           <h1 className='medium-text'> CONNECTED USERS </h1>
-          <hr align="center" width="25%"/>
+          <hr align="center" width="25%" />
           <div className='row-map' style={{display: "block"}}>
             <Grid columns={3} padded='horizontally' style={{marginTop: '10px'}}>
-                <Grid.Column className="box-content">
-                  <input
-                    type='text'
+              <Grid.Column className="box-content">
+                <input
                     className='input-fields'
-                    readOnly />
-                  <input
-                    type='text'
+                    readOnly
+                    type='text' />
+                <input
                     className='input-fields'
-                    disabled />
-                  <input
-                    type='text'
+                    disabled
+                    type='text' />
+                <input
                     className='input-fields'
-                    disabled />
-                  <input
-                    type='text'
+                    disabled
+                    type='text' />
+                <input
                     className='input-fields'
-                    disabled />
-                </Grid.Column>
-                <Grid.Column className="box-content">
-                  <input
-                    type='text'
+                    disabled
+                    type='text' />
+              </Grid.Column>
+              <Grid.Column className="box-content">
+                <input
                     className='input-fields'
-                    disabled />
-                  <input
-                    type='text'
+                    disabled
+                    type='text' />
+                <input
                     className='input-fields'
-                    disabled />
-                  <input
-                    type='text'
+                    disabled
+                    type='text' />
+                <input
                     className='input-fields'
-                    disabled />
-                  <input
-                    type='text'
+                    disabled
+                    type='text' />
+                <input
                     className='input-fields'
-                    disabled />
-                </Grid.Column>
-                <Grid.Column className="box-content">
-                  <input
-                    type='text'
+                    disabled
+                    type='text' />
+              </Grid.Column>
+              <Grid.Column className="box-content">
+                <input
                     className='input-fields'
-                    disabled />
-                  <input
-                    type='text'
+                    disabled
+                    type='text' />
+                <input
                     className='input-fields'
-                    disabled />
-                  <input
-                    type='text'
+                    disabled
+                    type='text' />
+                <input
                     className='input-fields'
-                    disabled />
-                  <input
-                    type='text'
+                    disabled
+                    type='text' />
+                <input
                     className='input-fields'
-                    disabled />
-                </Grid.Column>
+                    disabled
+                    type='text' />
+              </Grid.Column>
             </Grid>
             <div className='row-map-buttons'>
               <Link to='/'>
                 <Button id='mm-btn-white' style={{marginRight: "60px"}}>BACK TO MENU</Button>
               </Link>
-                {game.id ?
-                    <input
-                      id="mm-btn-red"
-                      type="button"
-                      style={{marginRight: "60px"}}
-                      onClick={this.state.owner_id == this.state.current_user ?
+              {game.id ?
+                <input
+                    id="mm-btn-red"
+                    onClick={this.state.owner_id == this.state.current_user ?
                                   this.destroyGame :
                                   this.destroyPlayer}
-                      value={this.state.owner_id == this.state.current_user ? "CANCEL GAME" : "DISCONNECT FROM GAME"} />:
+                    style={{marginRight: "60px"}}
+                    type="button"
+                    value={this.state.owner_id == this.state.current_user ?
+                             "CANCEL GAME" :
+                             "DISCONNECT FROM GAME"} /> :
                     undefined }
-                }
               <input
-                id="mm-btn-green"
-                type="button"
-                onClick={this.submitSettings}
-                value={game.id ? "START GAME" : "CREATE GAME"} />
+                  id="mm-btn-green"
+                  onClick={this.handleSubmitSettings}
+                  type="button"
+                  value={game.id ? "START GAME" : "CREATE GAME"} />
             </div>
           </div>
         </div>
       </div>
-    )
+    );
   }
 }
 
-export default FormGame
+export default FormGame;

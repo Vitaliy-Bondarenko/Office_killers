@@ -1,8 +1,7 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import { Container, Button } from 'semantic-ui-react';
+import React from 'react';
+import { Button } from 'semantic-ui-react';
 import requestmanager from "../../lib/requestmanager";
-import {Link} from 'react-router-dom'
+import { Link } from 'react-router-dom';
 
 class Settings extends React.Component {
   constructor(props) {
@@ -19,7 +18,7 @@ class Settings extends React.Component {
      };
   }
 
-  submitSettings = () => {
+  handleSubmitSettings = () => {
     const params = { user: { first_name: this.state.first_name,
                              last_name: this.state.last_name,
                              notify_game_start: this.state.notify_game_start,
@@ -27,7 +26,7 @@ class Settings extends React.Component {
                              news: this.state.news,
                              image_URL: this.state.image_URL} };
     const url = "/api/v1/users/" + this.state.current_userId;
-    requestmanager.request(url, "put", params).then((resp) => {
+    requestmanager.request(url, "put", params).then((_resp) => {
      }).catch(() => {});
   };
 
@@ -61,66 +60,66 @@ class Settings extends React.Component {
             <p className='white-text-small'> USING FOR DISPLAYING YOUR PHOTO IN EACH GAME </p>
           </div>
           <div>
-            <img src={this.state.image_URL} id='img-profile' />
+            <img id='img-profile' src={this.state.image_URL} />
           </div>
-          <br/>
+          <br />
           <div className='row'>
             <div className='column-firstname'>
-              <label htmlFor="first-name-input" className='label-input-settings'>
+              <label className='label-input-settings' htmlFor="first-name-input">
                 FIRST NAME
               </label>
               <input
-                id='first-name-input'
-                className='name-input'
-                maxLength="16"
-                type='text'
-                onChange={(e) => this.updateFName(e.target.value)}
-                value={this.state.first_name} />
+                  className='name-input'
+                  id='first-name-input'
+                  maxLength="16"
+                  onChange={(e) => this.updateFName(e.target.value)}
+                  type='text'
+                  value={this.state.first_name} />
             </div>
             <div className='column-lastname'>
-              <label htmlFor="last-name-input" className='label-input-settings'>
+              <label className='label-input-settings' htmlFor="last-name-input">
                 LAST NAME
               </label>
               <input
-                id='last-name-input'
-                maxLength="20"
-                className='name-input'
-                type='text'
-                onChange={(e) => this.updateLName(e.target.value)}
-                value={this.state.last_name} />
+                  className='name-input'
+                  id='last-name-input'
+                  maxLength="20"
+                  onChange={(e) => this.updateLName(e.target.value)}
+                  type='text'
+                  value={this.state.last_name} />
             </div>
           </div>
           <div style={{marginTop: "50px"}}>
-              <div className='text-align-left'>
+            <div className='text-align-left'>
               <h2 id="notif-settings-h2"> NOTIFICATIONS SETTING </h2>
               <div className='margin-btm'>
                 <input
-                  id='notif-gm-st'
-                  className='notif-gm'
-                  type='checkbox'
-                  onChange={this.handleChangeForGmS}
-                  checked={this.state.notify_game_start} />
-                <label htmlFor='notif-gm-st' className='notify-gm'>NOTIFY ABOUT GAME START</label><br/>
+                    checked={this.state.notify_game_start}
+                    className='notif-gm'
+                    id='notif-gm-st'
+                    onChange={this.handleChangeForGmS}
+                    type='checkbox' />
+                <label className='notify-gm' htmlFor='notif-gm-st'>NOTIFY ABOUT GAME START</label><br />
               </div>
               <div className='margin-btm'>
                 <input
-                  id='notif-gm-fs'
-                  className='notif-gm'
-                  type='checkbox'
-                  onChange={this.handleChangeForGmF}
-                  checked={this.state.notify_game_finish} />
-                <label htmlFor='notif-gm-fs' className='notify-gm'>NOTIFY ABOUT GAME FINISH</label><br/>
+                    checked={this.state.notify_game_finish}
+                    className='notif-gm'
+                    id='notif-gm-fs'
+                    onChange={this.handleChangeForGmF}
+                    type='checkbox' />
+                <label className='notify-gm' htmlFor='notif-gm-fs'>NOTIFY ABOUT GAME FINISH</label><br />
               </div>
               <div className='margin-btm'>
                 <input
-                  id='notif-gm-news'
-                  className='notif-gm'
-                  type='checkbox'
-                  onChange={this.handleChangeForNews}
-                  checked={this.state.news} />
-                <label htmlFor='notif-gm-news' className='notify-gm'>NEWS</label>
+                    checked={this.state.news}
+                    className='notif-gm'
+                    id='notif-gm-news'
+                    onChange={this.handleChangeForNews}
+                    type='checkbox' />
+                <label className='notify-gm' htmlFor='notif-gm-news'>NEWS</label>
               </div>
-              </div>
+            </div>
           </div>
         </div>
         <div>
@@ -128,14 +127,14 @@ class Settings extends React.Component {
             <Button id="mm-btn-right-margin">BACK TO MENU</Button>
           </Link>
           <input
-            id="mm-btn-green"
-            type="button"
-            onClick={this.submitSettings}
-            value="SUBMIT CHANGES" />
+              id="mm-btn-green"
+              onClick={this.handleSubmitSettings}
+              type="button"
+              value="SUBMIT CHANGES" />
         </div>
       </div>
-    )
+    );
   }
 }
 
-export default Settings
+export default Settings;
