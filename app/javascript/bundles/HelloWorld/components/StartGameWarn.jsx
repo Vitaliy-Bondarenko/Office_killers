@@ -1,6 +1,5 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import {Button, Card, Icon, Link} from 'semantic-ui-react'
+import { Button, Card, Icon } from 'semantic-ui-react';
 
 const StartGameWarn = () => {
   return (
@@ -8,14 +7,14 @@ const StartGameWarn = () => {
       <Card className='card-center'>
         <div className='float-right'>
           <a className='corner-close' href='/'>
-            <Icon name='close'/>
+            <Icon name='close' />
           </a>
         </div>
         <div className='small-padding'>
           <h3>DO YOU REALLY WANT TO START GAME?</h3>
         </div>
         <div className='align-center-webkit'>
-          <div className='small-horizontal-line'> <hr/> </div>
+          <div className='small-horizontal-line'> <hr /> </div>
         </div>
         <div className='small-padding'>
           <h3>PLAYERS IN GAME -</h3>
@@ -26,7 +25,7 @@ const StartGameWarn = () => {
         </div>
       </Card>
     </div>
-  )
-}
+  );
+};
 
-export default StartGameWarn
+export default StartGameWarn;

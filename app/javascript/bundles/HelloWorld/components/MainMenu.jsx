@@ -1,19 +1,18 @@
-import React, { Component } from 'react';
-import { Button, List, Container } from 'semantic-ui-react'
-import { Link, BrowserRouter as Router } from 'react-router-dom'
+import React from 'react';
+import { Button, List, Container } from 'semantic-ui-react';
+import { Link } from 'react-router-dom';
 
 class MainMenu extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      game: !!props.game,
-      current_game: props.game
-    }
+      game: props.game
+    };
   }
 
   render(){
-    const game = this.state.current_game || {}
+    const game = this.state.game || {};
     return (
       <div className='mm-list'>
         <Container>
@@ -22,17 +21,18 @@ class MainMenu extends React.Component {
             <List.Item>
               <Link to='/connect'>
                 <Button id="mm-btn">
-                  {this.state.game ?
+                  {game ?
                                     'START NEW GAME' :
                                     'CREATE NEW GAME' }</Button>
               </Link>
             </List.Item>
-            {this.state.game ?
-              null : <List.Item>
-                        <Link to='/join_game'>
-                          <Button id="mm-btn">JOIN GAME VIA CODE</Button>
-                        </Link>
-                      </List.Item> }
+            { this.state.game ?
+              undefined :
+              <List.Item>
+                <Link to='/join_game'>
+                  <Button id="mm-btn">JOIN GAME VIA CODE</Button>
+                </Link>
+              </List.Item> }
             <List.Item>
               <Link to='/tutorial'>
                 <Button id="mm-btn">HOW TO PLAY</Button>
@@ -49,13 +49,13 @@ class MainMenu extends React.Component {
               </Link>
             </List.Item>
             <List.Item style={{marginTop: "20px"}}>
-              <a href='/logout' className='buttonH'>LOGOUT</a>
+              <a className='buttonH' href='/logout'>LOGOUT</a>
             </List.Item>
           </List>
         </Container>
       </div>
-    )
+    );
   }
 }
 
-export default MainMenu
+export default MainMenu;

@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import { Button, List, Container } from 'semantic-ui-react'
+import React from 'react';
+import { Button, List, Container } from 'semantic-ui-react';
 
 const PauseMenu = () => {
   return (
@@ -25,7 +25,7 @@ const PauseMenu = () => {
         </List>
       </Container>
     </div>
-  )
-}
+  );
+};
 
-export default PauseMenu
+export default PauseMenu;

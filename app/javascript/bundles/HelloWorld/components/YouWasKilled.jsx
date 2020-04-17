@@ -1,6 +1,5 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import {Button} from 'semantic-ui-react'
+import { Button } from 'semantic-ui-react';
 
 const YouWasKilled = () => {
   return (
@@ -12,7 +11,7 @@ const YouWasKilled = () => {
       </div>
       <Button id="mm-btn-right-margin"><a href='/'>BACK TO MENU</a></Button>
     </div>
-  )
-}
+  );
+};
 
-export default YouWasKilled
+export default YouWasKilled;

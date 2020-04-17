@@ -25,8 +25,14 @@
     "semantic-ui-react": "^0.88.2",
     "turbolinks": "^5.2.0"
   },
+  "scripts": {
+    "eslint": "eslint --format unix --ext js --ext jsx ."
+  },
   "version": "0.1.0",
   "devDependencies": {
+    "babel-eslint": "^10.1.0",
+    "eslint": "^6.8.0",
+    "eslint-plugin-react": "^7.19.0",
     "webpack-dev-server": "^3.10.3"
   }
 }

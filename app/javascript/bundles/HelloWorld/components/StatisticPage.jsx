@@ -1,16 +1,13 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import {Button, Card, Icon} from 'semantic-ui-react'
-import { Link, BrowserRouter as Router } from 'react-router-dom'
-import requestmanager from '../../lib/requestmanager';
-import {store} from 'react-notifications-component';
+import React from 'react';
+import { Button, Card, Icon } from 'semantic-ui-react';
+import { Link } from 'react-router-dom';
 
 class StatisticPage extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
-    }
+    };
   }
 
   render(){
@@ -19,7 +16,7 @@ class StatisticPage extends React.Component {
         <Card className='card-center'>
           <div className='float-right'>
             <a className='corner-close' href='/'>
-              <Icon name='close'/>
+              <Icon name='close' />
             </a>
           </div>
           <div className='small-padding'>
@@ -40,8 +37,8 @@ class StatisticPage extends React.Component {
           </div>
         </Card>
       </div>
-    )
+    );
   }
 }
 
-export default StatisticPage
+export default StatisticPage;

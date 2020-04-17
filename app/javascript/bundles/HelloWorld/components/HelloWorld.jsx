@@ -1,23 +1,19 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import LoginPage from './LoginPage'
-import MainMenu from './MainMenu'
-import Settings from './Settings'
-import YouWasKilled from './YouWasKilled'
-import JoinGameWithCode from './JoinGameWithCode'
-import WaitingView from './WaitingView'
-import StartGameWarn from './StartGameWarn'
-import FormGame from './FormGame'
-import TargetScreen from './TargetScreen'
-import StatisticPage from './StatisticPage'
+import LoginPage from './LoginPage';
+import MainMenu from './MainMenu';
+import Settings from './Settings';
+import YouWasKilled from './YouWasKilled';
+import JoinGameWithCode from './JoinGameWithCode';
+import WaitingView from './WaitingView';
+import FormGame from './FormGame';
+import TargetScreen from './TargetScreen';
+import StatisticPage from './StatisticPage';
 import ReactNotification from 'react-notifications-component';
-import {store} from 'react-notifications-component';
-import 'animate.css'
-import 'react-notifications-component/dist/theme.css'
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
-import { Container } from 'semantic-ui-react'
-import { Button } from 'semantic-ui-react'
-import '../styles/office-killers'
+import 'animate.css';
+import 'react-notifications-component/dist/theme.css';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { Container } from 'semantic-ui-react';
+import '../styles/office-killers';
 
 export default class HelloWorld extends React.Component {
   constructor(props) {
@@ -45,42 +41,43 @@ export default class HelloWorld extends React.Component {
   render() {
     return (
       <Router>
-        <Switch>
-          <React.Fragment>
-            <Container>
-              <div className="app-container">
-                <ReactNotification />
-              </div>
-              {this.state.loggedInStatus ?
-                (<Route path='/' exact render={props=>
-                                                      <MainMenu
-                                                         game={this.props.current_game} />} />) :
-                (<LoginPage/>)}
-              <Route path='/settings' render={props =>
-                                                      <Settings
-                                                          imageProp={this.state.image_URL}
-                                                          first_name={this.state.first_name}
-                                                          last_name={this.state.last_name}
-                                                          user_id={this.state.user_id}
-                                                          notify_game_start={this.state.notify_game_start}
-                                                          notify_game_finish={this.state.notify_game_finish}
-                                                          news={this.state.news} />} />
-              <Route path='/killed' component={YouWasKilled} />
-              <Route path='/join_game' render={props =>
-                                                     <JoinGameWithCode
-                                                         />} />
-              <Route path='/waiting' component={WaitingView} />
-              <Route path='/tutorial' component={TargetScreen} />
-              <Route path='/statistic' component={StatisticPage} />
-              <Route path='/connect' render={props =>
-                                                     <FormGame
-                                                          game={this.state.current_game}
-                                                          current_user={this.state.user_id}
-                                                          owner_id={this.state.owner_id}
-                                                          current_player={this.state.current_player} />} />
-            </Container>
-          </React.Fragment>
-        </Switch>
+        <Container>
+          <div className="app-container">
+            <ReactNotification />
+          </div>
+          {this.state.loggedInStatus ?
+            (<Switch><Route
+                exact path='/' render={_props=>
+                  (<MainMenu
+                      game={this.state.current_game} />)} /></Switch>) :
+            (<LoginPage />)}
+          <Switch>
+            <Route
+                path='/settings' render={_props =>
+                  (<Settings
+                      first_name={this.state.first_name}
+                      imageProp={this.state.image_URL}
+                      last_name={this.state.last_name}
+                      news={this.state.news}
+                      notify_game_finish={this.state.notify_game_finish}
+                      notify_game_start={this.state.notify_game_start}
+                      user_id={this.state.user_id} />)} />
+            <Route component={YouWasKilled} path='/killed' />
+            <Route
+                path='/join_game' render={_props =>
+                  <JoinGameWithCode />} />
+            <Route component={WaitingView} path='/waiting' />
+            <Route component={TargetScreen} path='/tutorial' />
+            <Route component={StatisticPage} path='/statistic' />
+            <Route
+                path='/connect' render={_props =>
+                  (<FormGame
+                      current_player={this.state.current_player}
+                      current_user={this.state.user_id}
+                      game={this.state.current_game}
+                      owner_id={this.state.owner_id} />)} />
+          </Switch>
+        </Container>
       </Router>
     );
   }

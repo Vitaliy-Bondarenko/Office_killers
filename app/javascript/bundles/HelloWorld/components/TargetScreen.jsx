@@ -1,15 +1,13 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import { Button, Card, Icon } from 'semantic-ui-react'
-import { Link, BrowserRouter as Router } from 'react-router-dom'
-import requestmanager from '../../lib/requestmanager';
+import React from 'react';
+import { Button } from 'semantic-ui-react';
+import { Link } from 'react-router-dom';
 
 class TargetScreen extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
-    }
+    };
   }
 
   render(){
@@ -22,23 +20,23 @@ class TargetScreen extends React.Component {
             <h2 className='mini-text'> galulex@active-bridge.com </h2>
           </div>
           <div style={{marginBottom: "20px"}}>
-            <img src={this.state.image_URL} id='img-profile' />
+            <img id='img-profile' src={this.state.image_URL} />
           </div>
-          <br/>
+          <br />
         </div>
         <div>
           <Link to='/'>
             <Button id="mm-btn-right-margin">BACK TO MENU</Button>
           </Link>
           <input
-            id="mm-btn-red"
-            type="button"
-            style={{marginLeft: "25px"}}
-            value="I WAS KILLED" />
+              id="mm-btn-red"
+              style={{marginLeft: "25px"}}
+              type="button"
+              value="I WAS KILLED" />
         </div>
       </div>
-    )
+    );
   }
 }
 
-export default TargetScreen
+export default TargetScreen;
