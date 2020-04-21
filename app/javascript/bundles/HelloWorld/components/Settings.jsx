@@ -51,6 +51,7 @@ class Settings extends React.Component {
   }
 
   render(){
+    console.log(this.state.user_id);
     return (
       <div className='mm-list'>
         <div className='setting-div'>
@@ -62,8 +63,7 @@ class Settings extends React.Component {
           <div>
             <img id='img-profile' src={this.state.image_URL} />
           </div>
-          <br />
-          <div className='row'>
+          <div className='row-field'>
             <div className='column-firstname'>
               <label className='label-input-settings' htmlFor="first-name-input">
                 FIRST NAME
@@ -89,36 +89,34 @@ class Settings extends React.Component {
                   value={this.state.last_name} />
             </div>
           </div>
-          <div style={{marginTop: "50px"}}>
-            <div className='text-align-left'>
-              <h2 id="notif-settings-h2"> NOTIFICATIONS SETTING </h2>
-              <div className='margin-btm'>
-                <input
-                    checked={this.state.notify_game_start}
-                    className='notif-gm'
-                    id='notif-gm-st'
-                    onChange={this.handleChangeForGmS}
-                    type='checkbox' />
-                <label className='notify-gm' htmlFor='notif-gm-st'>NOTIFY ABOUT GAME START</label><br />
-              </div>
-              <div className='margin-btm'>
-                <input
-                    checked={this.state.notify_game_finish}
-                    className='notif-gm'
-                    id='notif-gm-fs'
-                    onChange={this.handleChangeForGmF}
-                    type='checkbox' />
-                <label className='notify-gm' htmlFor='notif-gm-fs'>NOTIFY ABOUT GAME FINISH</label><br />
-              </div>
-              <div className='margin-btm'>
-                <input
-                    checked={this.state.news}
-                    className='notif-gm'
-                    id='notif-gm-news'
-                    onChange={this.handleChangeForNews}
-                    type='checkbox' />
-                <label className='notify-gm' htmlFor='notif-gm-news'>NEWS</label>
-              </div>
+          <div className='text-align-left'>
+            <h2 id="notif-settings-h2"> NOTIFICATIONS SETTING </h2>
+            <div>
+              <input
+                  checked={this.state.notify_game_start}
+                  className='notif-gm'
+                  id='notif-gm-st'
+                  onChange={this.handleChangeForGmS}
+                  type='checkbox' />
+              <label className='notify-gm' htmlFor='notif-gm-st'>NOTIFY ABOUT GAME START</label><br />
+            </div>
+            <div>
+              <input
+                  checked={this.state.notify_game_finish}
+                  className='notif-gm'
+                  id='notif-gm-fs'
+                  onChange={this.handleChangeForGmF}
+                  type='checkbox' />
+              <label className='notify-gm' htmlFor='notif-gm-fs'>NOTIFY ABOUT GAME FINISH</label><br />
+            </div>
+            <div>
+              <input
+                  checked={this.state.news}
+                  className='notif-gm'
+                  id='notif-gm-news'
+                  onChange={this.handleChangeForNews}
+                  type='checkbox' />
+              <label className='notify-gm' htmlFor='notif-gm-news'>NEWS</label>
             </div>
           </div>
         </div>

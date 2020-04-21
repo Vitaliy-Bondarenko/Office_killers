@@ -34,6 +34,13 @@
   font-size: 20px
   margin: 10px
 
+.text-above-qr
+  text-align: center
+  margin: 0
+  color: white
+  font-size: 18px
+  max-width: 350px
+
 .image-label-center-margin
   text-align: center
   color: white
@@ -46,7 +53,7 @@
   margin-top: 10px
 
 .mm-list-min-padding
-  width: min-content
+  width: 100%
   text-align: center
   padding: 5px 100px 10px 85px
   display: inline-block
@@ -59,6 +66,20 @@
   margin-top: 100px
   color: black
   background-color: #f38989
+
+.button-small-padding
+  padding: 12px 35px 12px 35px
+  border-radius: .28571429rem
+  width: 200px
+  font-size: 25px
+  height: 37px
+  color: black
+  background-color: #e0e1e2
+  text-decoration: none
+
+.button-without-padding:hover
+  background-color: #e0e1e2
+  text-decoration: none
 
 .align-center-webkit
   text-align: -webkit-center
@@ -230,10 +251,26 @@
   border-radius: 5px
   background-color: #a8f7a8
 
+#mm-btn-green-width
+  width: 33%
+  max-width: 200px
+  height: 37px
+  color: black
+  border-radius: 5px
+  background-color: #a8f7a8
+
 #mm-btn-red
   width: 200px
   height: 37px
   margin-top: 30px
+  color: black
+  border-radius: 5px
+  background-color: #ef9c9c
+
+#mm-btn-red-width
+  width: 33%
+  max-width: 200px
+  height: 37px
   color: black
   border-radius: 5px
   background-color: #ef9c9c
@@ -254,6 +291,27 @@
 
 .white-text
   color: white
+
+.all-center
+  text-align: center
+  text-align: -moz-center
+  text-align: -webkit-center
+
+.back-to-menu-button
+  border-radius: .28571429rem
+  padding: 13px 47px
+  width: 33%
+  max-width: 200px
+  padding-top: 10px
+  padding-bottom: 11px
+  margin-right: 43px
+  height: 37px
+  color: black
+  background-color: #f38989
+
+.row
+  margin-right: 0
+  margin-left: 0
 
 .input-fields
   margin-bottom: 13px
@@ -287,16 +345,38 @@ h1
   width: 50%
   box-sizing : border-box
 
-.row
+.row-field
   padding-bottom: 20px
   padding-top: 10px
+  display: inline-block
 
 .row-inline-block
   display: inline-block
   padding: 0 70px 0 70px
 
+hr
+  border: 1px solid
+  color: white
+
 .row-map-emails
   width: 33%
+
+.email-input
+  color: white
+  width: 200px
+  max-width: 200px
+  background-color: #808080
+  margin: 10px 0 10px 0
+  font-size: 14px
+  text-align: left
+  padding: 8px
+  overflow: hidden
+  text-overflow: ellipsis
+  white-space: nowrap
+
+.col-4
+  padding-right: 0
+  padding-left: 0
 
 .box-content
   box-sizing: content-box
@@ -307,14 +387,18 @@ h1
   text-align: center
 
 .row-map
-  width: min-content
-  display: flex
+  margin-top: 45px
+  width: 100%
   box-sizing: border-box
 
 .input-disabled-map-email
   width: 200px
   height: 30px
   margin: 10px 0 5px 0
+
+.player-disp
+  max-height: 170px
+  text-align: left
 
 .row:after
   display: table
@@ -332,17 +416,30 @@ h2
   color: white
   margin-bottom: 0
 
+img
+  vertical-align: baseline
+
+a
+  text-decoration: none
+
+a:hover
+  color: inherit
+
 #google-logo-m
-  height: 20px
-  width: 20px
+  height: 21px
+  width: 21px
 
 .margin-btm
   margin-bottom: 4px
+
+label
+  margin-bottom: 0
 
 .notif-gm
   float: left
   width: 17px
   height: 17px
+  margin-top: 3px
 
 .text-align-left
   text-align: left
@@ -357,6 +454,9 @@ h2
 #google-log-btn
   font-size: 28px
   padding: 10px 15px
+
+.ui.button:hover
+  background-color: #e0e1e2
 
 #mm-btn-logout
   width: 200px
