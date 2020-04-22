@@ -1,10 +1,10 @@
 import React from 'react';
-import { Button, Grid } from 'semantic-ui-react';
 import requestmanager from '../../lib/requestmanager';
-import { Link } from 'react-router-dom';
 import {store} from 'react-notifications-component';
+import { Row, Col } from "reactstrap";
 import 'animate.css';
 import 'react-notifications-component/dist/theme.css';
+import "bootstrap/dist/css/bootstrap.css";
 
 class FormGame extends React.Component {
   constructor(props) {
@@ -73,6 +73,14 @@ class FormGame extends React.Component {
     }).catch(() => {});
   }
 
+  passPlayers = (user) => {
+    return (
+      <Col key={user.id} xs='4'>
+        <div className="email-input">{user.email}</div>
+      </Col>
+    );
+  }
+
   handleSubmitSettings = () => {
     const { game } = this.state;
     if (!game.id) {
@@ -87,21 +95,22 @@ class FormGame extends React.Component {
 
   render() {
     const game = this.state.game || {};
+    const players = game.players || [];
     return(
       <div className='mm-list-min-padding'>
         <h1> KILLER </h1>
         <div className='row-inline-block'>
           <div className='column-firstname'>
-            <label className='image-label-center' htmlFor="qr-code">
+            <label className='text-above-qr' htmlFor="qr-code">
               CONNECTING PLAYERS VIA QR CODE
             </label>
             <img
                 className='qr-code-img'
                 id='qr-code'
-                src='https://shorturl.at/hkoGJ' />
+                src='http://tiny.cc/f61gnz' />
           </div>
           <div className='column-lastname'>
-            <label className='image-label-center' htmlFor="code-input">
+            <label className='text-above-qr' htmlFor="code-input">
               CONNECTING PLAYERS VIA CODE
             </label>
             <div className='display-flex'>
@@ -119,7 +128,7 @@ class FormGame extends React.Component {
                 COPY TO CLIPBOARD
               </button>
             </div>
-            <label className='image-label-center-margin' htmlFor="date-picker">
+            <label className='text-above-qr' htmlFor="date-picker">
               SET GAME START TIME
             </label>
             <input
@@ -131,87 +140,36 @@ class FormGame extends React.Component {
           </div>
         </div>
         <div className='mm-list-min-padding' style={{margin: '30px 0 30px 0'}}>
-          <h1 className='medium-text'> CONNECTED USERS </h1>
-          <hr align="center" width="25%" />
-          <div className='row-map' style={{display: "block"}}>
-            <Grid columns={3} padded='horizontally' style={{marginTop: '10px'}}>
-              <Grid.Column className="box-content">
-                <input
-                    className='input-fields'
-                    readOnly
-                    type='text' />
-                <input
-                    className='input-fields'
-                    disabled
-                    type='text' />
-                <input
-                    className='input-fields'
-                    disabled
-                    type='text' />
-                <input
-                    className='input-fields'
-                    disabled
-                    type='text' />
-              </Grid.Column>
-              <Grid.Column className="box-content">
-                <input
-                    className='input-fields'
-                    disabled
-                    type='text' />
-                <input
-                    className='input-fields'
-                    disabled
-                    type='text' />
-                <input
-                    className='input-fields'
-                    disabled
-                    type='text' />
-                <input
-                    className='input-fields'
-                    disabled
-                    type='text' />
-              </Grid.Column>
-              <Grid.Column className="box-content">
-                <input
-                    className='input-fields'
-                    disabled
-                    type='text' />
-                <input
-                    className='input-fields'
-                    disabled
-                    type='text' />
-                <input
-                    className='input-fields'
-                    disabled
-                    type='text' />
-                <input
-                    className='input-fields'
-                    disabled
-                    type='text' />
-              </Grid.Column>
-            </Grid>
-            <div className='row-map-buttons'>
-              <Link to='/'>
-                <Button id='mm-btn-white' style={{marginRight: "60px"}}>BACK TO MENU</Button>
-              </Link>
-              {game.id ?
-                <input
-                    id="mm-btn-red"
-                    onClick={this.state.owner_id == this.state.current_user ?
+          {game.id ?
+            <div>
+              <h1 className='medium-text'> CONNECTED USERS </h1>
+              <hr align="center" width="25%" />
+            </div> :
+            undefined }
+          <div>
+            <Row className='all-center' style={{marginBottom: '50px'}}>
+              {game.id ? players.map(this.passPlayers) : undefined }
+            </Row>
+          </div>
+          <div className='row-map' style={{marginTop: '20px'}}>
+            <a className='back-to-menu-button' href='/' style={{textDecoration: 'none'}}>BACK TO MENU</a>
+            {game.id ?
+              <input
+                  id="mm-btn-red-width"
+                  onClick={this.state.owner_id == this.state.current_user ?
                                   this.destroyGame :
                                   this.destroyPlayer}
-                    style={{marginRight: "60px"}}
-                    type="button"
-                    value={this.state.owner_id == this.state.current_user ?
+                  style={{marginRight: "43px"}}
+                  type="button"
+                  value={this.state.owner_id == this.state.current_user ?
                              "CANCEL GAME" :
                              "DISCONNECT FROM GAME"} /> :
                     undefined }
-              <input
-                  id="mm-btn-green"
-                  onClick={this.handleSubmitSettings}
-                  type="button"
-                  value={game.id ? "START GAME" : "CREATE GAME"} />
-            </div>
+            <input
+                id="mm-btn-green-width"
+                onClick={this.handleSubmitSettings}
+                type="button"
+                value={game.id ? "START GAME" : "CREATE GAME"} />
           </div>
         </div>
       </div>
