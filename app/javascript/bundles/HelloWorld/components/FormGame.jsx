@@ -2,6 +2,7 @@ import React from 'react';
 import requestmanager from '../../lib/requestmanager';
 import {store} from 'react-notifications-component';
 import { Row, Col } from "reactstrap";
+import QRCode from 'qrcode.react';
 import 'animate.css';
 import 'react-notifications-component/dist/theme.css';
 import "bootstrap/dist/css/bootstrap.css";
@@ -15,7 +16,6 @@ class FormGame extends React.Component {
       start_time: this.game ? props.game.start_time.format("YYYY-MM-DDTkk:mm") : new Date(),
       current_user: props.current_user,
       owner_id: props.owner_id,
-      current_game: props.game,
       current_player: props.current_player
     };
   }
@@ -50,7 +50,8 @@ class FormGame extends React.Component {
   }
 
   getNewGame = () => {
-    if (!this.state.game) {
+    const { game } = this.state;
+    if (!game) {
       requestmanager.request('/api/v1/games/new').then((resp) => {
         this.setState({ game: resp });
       }).catch(() => {});
@@ -88,7 +89,7 @@ class FormGame extends React.Component {
                                start_time: this.state.start_time }
       };
       requestmanager.request('/api/v1/games/', 'post', params).then((_resp) => {
-        window.location = "/";
+        window.location = '/game';
       }).catch(() => {});
     }
   }
@@ -104,10 +105,12 @@ class FormGame extends React.Component {
             <label className='text-above-qr' htmlFor="qr-code">
               CONNECTING PLAYERS VIA QR CODE
             </label>
-            <img
-                className='qr-code-img'
-                id='qr-code'
-                src='http://tiny.cc/f61gnz' />
+            <QRCode
+                bgColor={"#000000"}
+                fgColor={"#ffffff"}
+                size={350}
+                style={{borderWidth: '10px', borderColor: "white"}}
+                value={window.location.origin + '/games/' + game.code} />
           </div>
           <div className='column-lastname'>
             <label className='text-above-qr' htmlFor="code-input">

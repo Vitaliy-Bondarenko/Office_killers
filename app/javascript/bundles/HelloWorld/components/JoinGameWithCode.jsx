@@ -37,7 +37,7 @@ class JoinGameWithCode extends React.Component {
           },
         });
       }else {
-        window.location = "/connect";
+        window.location = '/game';
       }
     }).catch(err => console.log(err));
   }
