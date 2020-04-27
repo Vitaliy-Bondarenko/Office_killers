@@ -19,9 +19,9 @@ class MainMenu extends React.Component {
           <h1> KILLER </h1>
           <List>
             <List.Item>
-              <Link to='/connect'>
+              <Link to='/game'>
                 <Button id="mm-btn">
-                  {game ?
+                  { game ?
                                     'START NEW GAME' :
                                     'CREATE NEW GAME' }</Button>
               </Link>

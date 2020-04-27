@@ -9,6 +9,10 @@ class ApplicationController < ActionController::Base
     @parsed_params ||= ActionController::Parameters.new(JSON.parse(request.body.read, symbolize_names: true))
   end
 
+  def player
+    @player ||= Player.find(params[:id])
+  end
+
   def serialize(collection, serializer, adapter=:json)
     ActiveModelSerializers::SerializableResource.new(
       collection,

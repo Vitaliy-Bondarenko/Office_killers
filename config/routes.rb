@@ -7,10 +7,11 @@ Rails.application.routes.draw do
     namespace :v1 do
       resources :users, only: :update
       resources :games, only: %i[new create update destroy]
-      resources :players
+      resources :players, only: %i[create destroy]
     end
   end
 
+  resources :games, only: :show
   get 'auth/google_oauth2/callback', to: 'omniauth#googleAuth'
   get 'auth/failure', to: redirect('/')
   get "/login", to: redirect("/users/auth/google_oauth2")

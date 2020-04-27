@@ -39,21 +39,21 @@ export default class HelloWorld extends React.Component {
   };
 
   render() {
+    const { loggedInStatus } = this.state;
     return (
       <Router>
         <Container>
           <div className="app-container">
             <ReactNotification />
           </div>
-          {this.state.loggedInStatus ?
-            (<Switch><Route
-                exact path='/' render={_props=>
+          { loggedInStatus ?
+            (<Switch>
+              <Route
+                  exact path='/' render={_props=>
                   (<MainMenu
-                      game={this.state.current_game} />)} /></Switch>) :
-            (<LoginPage />)}
-          <Switch>
-            <Route
-                path='/settings' render={_props =>
+                      game={this.state.current_game} />)} />
+              <Route
+                  path='/settings' render={_props =>
                   (<Settings
                       first_name={this.state.first_name}
                       imageProp={this.state.image_URL}
@@ -62,21 +62,19 @@ export default class HelloWorld extends React.Component {
                       notify_game_finish={this.state.notify_game_finish}
                       notify_game_start={this.state.notify_game_start}
                       user_id={this.state.user_id} />)} />
-            <Route component={YouWasKilled} path='/killed' />
-            <Route
-                path='/join_game' render={_props =>
-                  <JoinGameWithCode />} />
-            <Route component={WaitingView} path='/waiting' />
-            <Route component={TargetScreen} path='/tutorial' />
-            <Route component={StatisticPage} path='/statistic' />
-            <Route
-                path='/connect' render={_props =>
+              <Route component={YouWasKilled} path='/killed' />
+              <Route component={JoinGameWithCode} path='/join_game' />
+              <Route component={WaitingView} path='/waiting' />
+              <Route component={TargetScreen} path='/tutorial' />
+              <Route component={StatisticPage} path='/statistic' />
+              <Route
+                  path='/game' render={_props =>
                   (<FormGame
                       current_player={this.state.current_player}
                       current_user={this.state.user_id}
                       game={this.state.current_game}
                       owner_id={this.state.owner_id} />)} />
-          </Switch>
+            </Switch>) : (<LoginPage />) }
         </Container>
       </Router>
     );

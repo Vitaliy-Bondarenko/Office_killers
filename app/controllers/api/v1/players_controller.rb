@@ -22,10 +22,6 @@ class Api::V1::PlayersController < ApplicationController
     @game ||= Game.find_by(game_params)
   end
 
-  def player
-    @player ||= Player.find(params[:id])
-  end
-
   def game_params
     parsed_params.require(:game).permit(:code)
   end
