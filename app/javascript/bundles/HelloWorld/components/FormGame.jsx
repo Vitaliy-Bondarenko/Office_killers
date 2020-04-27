@@ -3,9 +3,10 @@ import requestmanager from '../../lib/requestmanager';
 import {store} from 'react-notifications-component';
 import { Row, Col } from "reactstrap";
 import QRCode from 'qrcode.react';
-import 'animate.css';
+import DateTimePicker from 'react-datetime-picker';
 import 'react-notifications-component/dist/theme.css';
 import "bootstrap/dist/css/bootstrap.css";
+import 'animate.css';
 
 class FormGame extends React.Component {
   constructor(props) {
@@ -13,7 +14,7 @@ class FormGame extends React.Component {
 
     this.state = {
       game: props.game,
-      start_time: this.game ? props.game.start_time.format("YYYY-MM-DDTkk:mm") : new Date(),
+      start_time: (props.game || {}).start_time ? new Date(props.game.start_time) : undefined,
       current_user: props.current_user,
       owner_id: props.owner_id,
       current_player: props.current_player
@@ -97,6 +98,7 @@ class FormGame extends React.Component {
   render() {
     const game = this.state.game || {};
     const players = game.players || [];
+    const { start_time } = this.state;
     return(
       <div className='mm-list-min-padding'>
         <h1> KILLER </h1>
@@ -134,12 +136,12 @@ class FormGame extends React.Component {
             <label className='text-above-qr' htmlFor="date-picker">
               SET GAME START TIME
             </label>
-            <input
+            <DateTimePicker
                 className='date-time-picker'
+                format="dd-MM-y hh:mm a"
                 id='date-picker'
-                onChange={(e) => this.handleStartDate(e.target.value)}
-                type='datetime-local'
-                value={game.start_time || undefined} />
+                onChange={this.handleStartDate}
+                value={start_time} />
           </div>
         </div>
         <div className='mm-list-min-padding' style={{margin: '30px 0 30px 0'}}>
