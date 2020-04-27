@@ -3,8 +3,6 @@ import requestmanager from '../../lib/requestmanager';
 import {store} from 'react-notifications-component';
 import { Row, Col } from "reactstrap";
 import QRCode from 'qrcode.react';
-import 'animate.css';
-import moment from 'moment';
 import DateTimePicker from 'react-datetime-picker';
 import 'react-notifications-component/dist/theme.css';
 import "bootstrap/dist/css/bootstrap.css";
@@ -16,7 +14,7 @@ class FormGame extends React.Component {
 
     this.state = {
       game: props.game,
-      start_time: props.game.start_time,
+      start_time: (props.game || {}).start_time ? new Date(props.game.start_time) : undefined,
       current_user: props.current_user,
       owner_id: props.owner_id,
       current_player: props.current_player
@@ -140,12 +138,10 @@ class FormGame extends React.Component {
             </label>
             <DateTimePicker
                 className='date-time-picker'
-                format="DD/MM/YYYY hh:mm a"
+                format="dd-MM-y hh:mm a"
                 id='date-picker'
                 onChange={this.handleStartDate}
-                value={game.id ?
-                       moment(start_time,).format("DD/MM/YYYY hh:mm a") :
-                       new Date()} />
+                value={start_time} />
           </div>
         </div>
         <div className='mm-list-min-padding' style={{margin: '30px 0 30px 0'}}>

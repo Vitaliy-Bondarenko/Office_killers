@@ -5,7 +5,8 @@ class Game < ApplicationRecord
 
   enum status: %i[unstarted in_progress finished]
 
-  validates :start_time, timeliness: { on_or_after: lambda { DateTime.now.iso8601 }, type: :date }
+  validates :start_time, timeliness: { on_or_after: lambda { DateTime.now.iso8601 }, type: :date },
+                         if: -> { start_time.present? }
   validates :code, uniqueness: true, presence: true
 
   after_create :add_owner_player
