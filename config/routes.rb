@@ -14,9 +14,8 @@ Rails.application.routes.draw do
   resources :games, only: :show
   get 'auth/google_oauth2/callback', to: 'omniauth#googleAuth'
   get 'auth/failure', to: redirect('/')
-  get "/login", to: redirect("/users/auth/google_oauth2")
-  get '/logout', to: redirect("/users/sign_out")
-
+  get '/login', to: redirect('/users/auth/google_oauth2')
+  get '/logout', to: redirect('/users/sign_out')
   match '*path', to: 'hello_world#index', via: :all
 
   root 'hello_world#index'

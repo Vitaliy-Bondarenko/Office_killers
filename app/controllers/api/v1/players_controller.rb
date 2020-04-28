@@ -19,7 +19,7 @@ class Api::V1::PlayersController < ApplicationController
   private
 
   def game
-    @game ||= Game.find_by(game_params)
+    @game ||= Game.unstarted.find_by(game_params)
   end
 
   def game_params
