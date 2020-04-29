@@ -8,6 +8,7 @@ import WaitingView from './WaitingView';
 import FormGame from './FormGame';
 import TargetScreen from './TargetScreen';
 import StatisticPage from './StatisticPage';
+import StartGameWarn from './StartGameWarn';
 import ReactNotification from 'react-notifications-component';
 import 'animate.css';
 import 'react-notifications-component/dist/theme.css';
@@ -39,7 +40,7 @@ export default class HelloWorld extends React.Component {
   };
 
   render() {
-    const { loggedInStatus } = this.state;
+    const { loggedInStatus, owner_id, user_id, current_game } = this.state;
     return (
       <Router>
         <Container>
@@ -64,6 +65,11 @@ export default class HelloWorld extends React.Component {
                       user_id={this.state.user_id} />)} />
               <Route component={YouWasKilled} path='/killed' />
               <Route component={JoinGameWithCode} path='/join_game' />
+              {owner_id == user_id && current_game.players.length > 2 &&
+                <Route
+                    path='/confirm' render={_props =>
+                       (<StartGameWarn
+                           current_game={this.state.current_game} />)} />}
               <Route component={WaitingView} path='/waiting' />
               <Route component={TargetScreen} path='/tutorial' />
               <Route component={StatisticPage} path='/statistic' />

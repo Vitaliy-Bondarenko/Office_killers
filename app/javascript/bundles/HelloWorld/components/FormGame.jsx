@@ -75,6 +75,30 @@ class FormGame extends React.Component {
     }).catch(() => {});
   }
 
+  showStartGameButton = () => {
+    const game = this.state.game || {};
+    const {owner_id, current_user} = this.state;
+    if (game.id){
+      if (owner_id == current_user){
+        return (
+          <input
+              id="mm-btn-green-width"
+              onClick={this.handleSubmitSettings}
+              type="button"
+              value={"START GAME"} />
+          );
+      }
+    }else {
+      return(
+        <input
+            id="mm-btn-green-width"
+            onClick={this.handleSubmitSettings}
+            type="button"
+            value={"CREATE GAME"} />
+        );
+    }
+  }
+
   passPlayers = (user) => {
     return (
       <Col key={user.id} xs='4'>
@@ -92,13 +116,31 @@ class FormGame extends React.Component {
       requestmanager.request('/api/v1/games/', 'post', params).then((_resp) => {
         window.location = '/game';
       }).catch(() => {});
+    }else{
+      if (game.players.length > 2)
+        window.location = '/confirm';
+      else {
+        store.addNotification({
+          message: "NOT ENOUGH PLAYERS FOR GAME!",
+          type: "danger",
+          container: "top-right",
+          insert: "top",
+          animationIn: ["animated", "fadeIn"],
+          animationOut: ["animated", "fadeOut"],
+
+          dismiss:{
+            duration: 3500,
+            onScreen: true
+          },
+        });
+      }
     }
   }
 
   render() {
     const game = this.state.game || {};
     const players = game.players || [];
-    const { start_time } = this.state;
+    const { start_time, owner_id, current_user } = this.state;
     return(
       <div className='mm-list-min-padding'>
         <h1> KILLER </h1>
@@ -111,7 +153,7 @@ class FormGame extends React.Component {
                 bgColor={"#000000"}
                 fgColor={"#ffffff"}
                 size={350}
-                style={{borderWidth: '10px', borderColor: "white"}}
+                style={{borderWidth: '10px', borderColor: "white", marginTop: '10px'}}
                 value={window.location.origin + '/games/' + game.code} />
           </div>
           <div className='column-lastname'>
@@ -161,20 +203,16 @@ class FormGame extends React.Component {
             {game.id ?
               <input
                   id="mm-btn-red-width"
-                  onClick={this.state.owner_id == this.state.current_user ?
+                  onClick={owner_id == current_user ?
                                   this.destroyGame :
                                   this.destroyPlayer}
                   style={{marginRight: "43px"}}
                   type="button"
-                  value={this.state.owner_id == this.state.current_user ?
+                  value={owner_id == current_user ?
                              "CANCEL GAME" :
                              "DISCONNECT FROM GAME"} /> :
                     undefined }
-            <input
-                id="mm-btn-green-width"
-                onClick={this.handleSubmitSettings}
-                type="button"
-                value={game.id ? "START GAME" : "CREATE GAME"} />
+            {this.showStartGameButton()}
           </div>
         </div>
       </div>
