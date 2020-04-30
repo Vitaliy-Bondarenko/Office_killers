@@ -1,6 +1,7 @@
 import React from 'react';
 import { Button, Card, Icon } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
+import requestmanager from '../../lib/requestmanager';
 
 class StartGameWarn extends React.Component {
   constructor(props) {
@@ -10,6 +11,15 @@ class StartGameWarn extends React.Component {
       game: props.current_game,
     };
   }
+
+  handleGameStart = () => {
+    const { game } = this.state;
+    const url = '/api/v1/games/' + game.id + '/killer_start';
+    requestmanager.request(url, 'PUT').then((_resp) => {
+      window.location = '/game';
+    }).catch(() => {});
+  }
+
   render() {
     const { game } = this.state;
     return (
@@ -33,7 +43,9 @@ class StartGameWarn extends React.Component {
             <Link to='/game'>
               <Button id="button-big-red">CANCEL</Button>
             </Link>
-            <Button id="button-big-green">START</Button>
+            <Button
+                id="button-big-green"
+                onClick={this.handleGameStart}>START</Button>
           </div>
         </Card>
       </div>

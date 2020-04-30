@@ -7,26 +7,44 @@ class MainMenu extends React.Component {
     super(props);
 
     this.state = {
-      game: props.game
+      current_game: props.game,
+      owner_id: props.owner_id,
+      user_id: props.user_id
     };
   }
 
+  handleGameButtonText = () => {
+    const { owner_id, user_id, current_game} = this.state;
+    if (current_game){
+      if (current_game.status == "unstarted"){
+        if (owner_id == user_id){
+          return "START GAME";
+        }else{
+          return "RETURN TO GAME";
+        }
+      }else{
+        return "RETURN TO GAME";
+      }
+    }else{
+      return "CREATE NEW GAME";
+    }
+  }
+
   render(){
-    const game = this.state.game || {};
+    const game = this.state.current_game || {};
     return (
       <div className='mm-list'>
         <Container>
           <h1> KILLER </h1>
           <List>
             <List.Item>
-              <Link to='/game'>
+              <Link
+                  to='/game'>
                 <Button id="mm-btn">
-                  { game ?
-                                    'START NEW GAME' :
-                                    'CREATE NEW GAME' }</Button>
+                  {this.handleGameButtonText()}</Button>
               </Link>
             </List.Item>
-            { this.state.game ?
+            { game.id ?
               undefined :
               <List.Item>
                 <Link to='/join_game'>
@@ -49,7 +67,7 @@ class MainMenu extends React.Component {
               </Link>
             </List.Item>
             <List.Item style={{marginTop: "20px"}}>
-              <a className='buttonH' href='/logout'>LOGOUT</a>
+              <a className='buttonH' href='/logout' style={{textDecoration: "none"}}>LOGOUT</a>
             </List.Item>
           </List>
         </Container>

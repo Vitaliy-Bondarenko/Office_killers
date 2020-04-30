@@ -39,6 +39,40 @@ export default class HelloWorld extends React.Component {
     this.setState({ name });
   };
 
+  handleGameProps = () => {
+    const { user_id, owner_id, current_game } = this.state;
+    if (current_game){
+      if (current_game.status == "in_progress"){
+        return (_props =>
+        (<TargetScreen
+            current_user={this.state.user_id} />));
+      }else{
+        if (user_id == owner_id){
+          return (_props =>
+          (<FormGame
+              current_player={this.state.current_player}
+              current_user={this.state.user_id}
+              game={this.state.current_game}
+              owner_id={this.state.owner_id} />));
+        }else{
+          return (_props =>
+          (<WaitingView
+              current_player={this.state.current_player}
+              current_user={this.state.current_user}
+              game={this.state.game}
+              owner_id={this.state.owner_id} />));
+        }
+      }
+    }else {
+      return (_props =>
+      (<FormGame
+          current_player={this.state.current_player}
+          current_user={this.state.user_id}
+          game={this.state.current_game}
+          owner_id={this.state.owner_id} />));
+    }
+  }
+
   render() {
     const { loggedInStatus, owner_id, user_id, current_game } = this.state;
     return (
@@ -52,7 +86,9 @@ export default class HelloWorld extends React.Component {
               <Route
                   exact path='/' render={_props=>
                   (<MainMenu
-                      game={this.state.current_game} />)} />
+                      game={current_game}
+                      owner_id={owner_id}
+                      user_id={user_id} />)} />
               <Route
                   path='/settings' render={_props =>
                   (<Settings
@@ -65,21 +101,14 @@ export default class HelloWorld extends React.Component {
                       user_id={this.state.user_id} />)} />
               <Route component={YouWasKilled} path='/killed' />
               <Route component={JoinGameWithCode} path='/join_game' />
-              {owner_id == user_id && current_game.players.length > 2 &&
+              {owner_id == user_id && current_game.players.length > 2 && current_game.status == "unstarted" &&
                 <Route
                     path='/confirm' render={_props =>
                        (<StartGameWarn
                            current_game={this.state.current_game} />)} />}
-              <Route component={WaitingView} path='/waiting' />
-              <Route component={TargetScreen} path='/tutorial' />
               <Route component={StatisticPage} path='/statistic' />
               <Route
-                  path='/game' render={_props =>
-                  (<FormGame
-                      current_player={this.state.current_player}
-                      current_user={this.state.user_id}
-                      game={this.state.current_game}
-                      owner_id={this.state.owner_id} />)} />
+                  path='/game' render={this.handleGameProps()} />
             </Switch>) : (<LoginPage />) }
         </Container>
       </Router>

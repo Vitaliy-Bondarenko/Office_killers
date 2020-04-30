@@ -15,6 +15,11 @@ class Api::V1::GamesController < ApplicationController
     end
   end
 
+  def killer_start
+    return unless current_game.owner_id == current_user.id
+    current_game.start_game
+  end
+
   def destroy
     # TODO
     if game.in_progress?
@@ -35,6 +40,10 @@ class Api::V1::GamesController < ApplicationController
   end
 
   private
+
+  def current_game
+    current_user.current_game
+  end
 
   def game
     @game ||= Game.find(params[:id])

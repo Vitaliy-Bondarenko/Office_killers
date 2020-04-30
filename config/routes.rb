@@ -6,7 +6,9 @@ Rails.application.routes.draw do
   namespace :api do
     namespace :v1 do
       resources :users, only: :update
-      resources :games, only: %i[new create update destroy]
+      resources :games, only: %i[new create update destroy] do
+        put 'killer_start', on: :member
+      end
       resources :players, only: %i[create destroy]
     end
   end
