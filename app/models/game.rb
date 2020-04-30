@@ -2,6 +2,7 @@
 
 class Game < ApplicationRecord
   has_many :players, dependent: :destroy
+  has_many :users, through: :players
 
   enum status: %i[unstarted in_progress finished]
 
@@ -11,6 +12,10 @@ class Game < ApplicationRecord
   validates :code, uniqueness: true, presence: true
   after_create :add_owner_player, :start_game_on_time
   after_update :start_game_on_time, if: -> { saved_change_to_start_time? }
+
+  after_create_commit :broadcast_game
+  after_update_commit :broadcast_game
+  before_destroy :broadcast_game
 
   def start_game
     return unless unstarted? && players.count > 2
@@ -22,6 +27,12 @@ class Game < ApplicationRecord
     in_progress!
   end
 
+  def broadcast_game
+    user_ids.each do |user_id|
+      GameBroadcastJob.perform_later(user_id)
+    end
+  end
+
   private
 
   def add_owner_player
@@ -29,6 +40,6 @@ class Game < ApplicationRecord
   end
 
   def start_game_on_time
-    StartGameJob.perform_at(start_time, id) unless in_progress? && finished? && start_time.nil?
+    StartGameJob.perform_at(start_time, id) if unstarted? && start_time.present?
   end
 end
