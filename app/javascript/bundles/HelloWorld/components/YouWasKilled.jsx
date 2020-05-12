@@ -1,5 +1,6 @@
 import React from 'react';
 import { Button } from 'semantic-ui-react';
+import { Link } from 'react-router-dom';
 
 const YouWasKilled = () => {
   return (
@@ -9,7 +10,12 @@ const YouWasKilled = () => {
         <h2 className='big-header'> YOU WAS KILLED! </h2>
         <p className='white-paragraph'> WE WILL SHOW YOU RESULTS AFTER GAME FINISHED </p>
       </div>
-      <Button id="mm-btn-right-margin"><a href='/'>BACK TO MENU</a></Button>
+      <Link
+          to='/'>
+        <Button id="mm-btn-right-margin">
+          BACK TO MENU
+        </Button>
+      </Link>
     </div>
   );
 };

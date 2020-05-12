@@ -9,7 +9,11 @@ Rails.application.routes.draw do
       resources :games, only: %i[new create update destroy] do
         put 'killer_start', on: :member
       end
-      resources :players, only: %i[create destroy]
+      resources :players, only: %i[create destroy] do
+        put 'death_confirm', on: :member
+        put 'player_killed', on: :member
+        put 'error_death', on: :member
+      end
     end
   end
 

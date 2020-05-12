@@ -7,7 +7,7 @@ class GamesController < ApplicationController
       cookies[:code] = game.code
       return redirect_to '/login'
     end
-    return redirect_to '/game' if current_user.current_game.present?
+    return redirect_to '/game' if current_user.current_game.present? || game.in_progress? || game.finished?
     game.players.create(user_id: current_user.id)
     redirect_to '/game'
   end
