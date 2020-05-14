@@ -17,7 +17,7 @@ class Game < ApplicationRecord
     sorted_players = players.shuffle
     sorted_players.each.with_index do |p, index|
       target = sorted_players[index + 1] || sorted_players[0]
-      p.update(target_id: target.id, target_ids: [target.id])
+      p.update(target_id: target.id, target_ids: [target.id], status: :alive)
     end
     in_progress!
   end

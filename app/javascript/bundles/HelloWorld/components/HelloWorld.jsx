@@ -40,12 +40,17 @@ export default class HelloWorld extends React.Component {
   };
 
   handleGameProps = () => {
-    const { user_id, owner_id, current_game } = this.state;
+    const { user_id, owner_id, current_game, current_player } = this.state;
     if (current_game){
       if (current_game.status == "in_progress"){
+        if (current_player.status == "dead"){
+          return (_props =>
+          (<YouWasKilled />));
+        }else{
         return (_props =>
         (<TargetScreen
-            current_user={this.state.user_id} />));
+            current_player={this.state.current_player} />));
+        }
       }else{
         if (user_id == owner_id){
           return (_props =>
@@ -63,7 +68,7 @@ export default class HelloWorld extends React.Component {
               owner_id={this.state.owner_id} />));
         }
       }
-    }else {
+    }else{
       return (_props =>
       (<FormGame
           current_player={this.state.current_player}
