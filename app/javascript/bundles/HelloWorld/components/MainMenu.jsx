@@ -19,13 +19,15 @@ class MainMenu extends React.Component {
       if (current_game.status == "unstarted"){
         if (owner_id == user_id){
           return "START GAME";
-        }else{
+        } else {
           return "RETURN TO GAME";
         }
-      }else{
+      } else if(current_game.status == "in_progress") {
         return "RETURN TO GAME";
+      } else if(current_game.status == "finished") {
+        return "CREATE NEW GAME";
       }
-    }else{
+    } else {
       return "CREATE NEW GAME";
     }
   }
@@ -33,7 +35,7 @@ class MainMenu extends React.Component {
   render(){
     const game = this.state.current_game || {};
     return (
-      <div className='mm-list'>
+      <div className='mm-list' style={{transform: 'scale(1.2) translate(0, 15%)'}}>
         <Container>
           <h1> KILLER </h1>
           <List>
@@ -44,7 +46,7 @@ class MainMenu extends React.Component {
                   {this.handleGameButtonText()}</Button>
               </Link>
             </List.Item>
-            { game.id ?
+            { game.id && game.status != "finished" ?
               undefined :
               <List.Item>
                 <Link to='/join_game'>
@@ -56,18 +58,23 @@ class MainMenu extends React.Component {
                 <Button id="mm-btn">HOW TO PLAY</Button>
               </Link>
             </List.Item>
-            <List.Item>
-              <Link to='/statistic'>
-                <Button id="mm-btn">STATISTIC</Button>
-              </Link>
-            </List.Item>
+            {game && game.status == "finished" ?
+              <List.Item>
+                <Link to='/best_killer'>
+                  <Button id="mm-btn">STATISTIC</Button>
+                </Link>
+              </List.Item> : undefined}
             <List.Item>
               <Link to='/settings'>
                 <Button id="mm-btn">SETTINGS</Button>
               </Link>
             </List.Item>
-            <List.Item style={{marginTop: "20px"}}>
-              <a className='buttonH' href='/logout' style={{textDecoration: "none"}}>LOGOUT</a>
+            <List.Item>
+              <input
+                  id="mm-btn-red"
+                  onClick={() => window.location.href="/logout"}
+                  type="button"
+                  value="LOGOUT" />
             </List.Item>
           </List>
         </Container>

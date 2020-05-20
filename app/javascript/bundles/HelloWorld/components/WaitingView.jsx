@@ -10,7 +10,6 @@ class WaitingView extends React.Component {
     this.state = {
       game: props.game,
       current_user: props.current_user,
-      owner_id: props.owner_id,
       current_player: props.current_player
     };
   }

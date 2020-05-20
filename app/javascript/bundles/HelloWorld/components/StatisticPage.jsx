@@ -7,13 +7,24 @@ class StatisticPage extends React.Component {
     super(props);
 
     this.state = {
+      current_player: props.current_player
     };
   }
 
-  render(){
+  passEmailTargets = (user) => {
     return (
-      <div className='mm-list-centered'>
-        <Card className='card-center'>
+      <div key={user.id}>
+        <div><h4>{user.email}</h4></div>
+      </div>
+    );
+  }
+
+  render(){
+    const target_ids = this.state.current_player.dead_targets;
+    const your_killers = this.state.current_player.your_killers;
+    return (
+      <div className='statistic-window'>
+        <Card className='card-center' style={{maxWidth: '36%', minWidth: '20%'}}>
           <div className='float-right'>
             <a className='corner-close' href='/'>
               <Icon name='close' />
@@ -24,12 +35,14 @@ class StatisticPage extends React.Component {
           </div>
           <div className='vertical-align'>
             <div>
-              <h3 className='margin-bottom-zero'> Your killers </h3>
-              <hr style={{width: "150px"}} />
+              <h3 className='black-text'> Your killers </h3>
+              <hr style={{width: "150px", color: 'black', marginTop: '5px'}} />
+              {your_killers.map(this.passEmailTargets)}
             </div>
             <div>
-              <h3 className='margin-bottom-zero'> You killed </h3>
-              <hr style={{width: "150px"}} />
+              <h3 className='black-text' style={{marginTop: '13px'}}> You killed </h3>
+              <hr style={{width: "150px", color: 'black', marginTop: '5px'}} />
+              {target_ids.map(this.passEmailTargets)}
             </div>
             <Link to='/'>
               <Button id="mm-btn-green" style={{marginBottom: "25px"}}>BACK TO MAIN MENU</Button>

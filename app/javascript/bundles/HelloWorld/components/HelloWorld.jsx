@@ -9,6 +9,7 @@ import FormGame from './FormGame';
 import TargetScreen from './TargetScreen';
 import StatisticPage from './StatisticPage';
 import StartGameWarn from './StartGameWarn';
+import BestKiller from './BestKiller';
 import ReactNotification from 'react-notifications-component';
 import 'animate.css';
 import 'react-notifications-component/dist/theme.css';
@@ -40,46 +41,49 @@ export default class HelloWorld extends React.Component {
   };
 
   handleGameProps = () => {
-    const { user_id, owner_id, current_game, current_player } = this.state;
+    const { user_id, current_game, current_player, current_user } = this.state;
     if (current_game){
       if (current_game.status == "in_progress"){
         if (current_player.status == "dead"){
           return (_props =>
           (<YouWasKilled />));
-        }else{
-        return (_props =>
-        (<TargetScreen
-            current_player={this.state.current_player} />));
+        } else {
+          return (_props =>
+          (<TargetScreen
+              current_player={current_player} />));
         }
-      }else{
-        if (user_id == owner_id){
+      } else if (current_game.status == "finished") {
+        return (_props =>
+          (<FormGame
+              current_player={current_player}
+              current_user={user_id}
+              game={current_game} />));
+      } else {
+        if (current_player.current_game_owner){
           return (_props =>
           (<FormGame
-              current_player={this.state.current_player}
-              current_user={this.state.user_id}
-              game={this.state.current_game}
-              owner_id={this.state.owner_id} />));
-        }else{
+              current_player={current_player}
+              current_user={user_id}
+              game={current_game} />));
+        } else {
           return (_props =>
           (<WaitingView
-              current_player={this.state.current_player}
-              current_user={this.state.current_user}
-              game={this.state.game}
-              owner_id={this.state.owner_id} />));
+              current_player={current_player}
+              current_user={current_user}
+              game={current_game} />));
         }
       }
-    }else{
+    } else {
       return (_props =>
       (<FormGame
-          current_player={this.state.current_player}
-          current_user={this.state.user_id}
-          game={this.state.current_game}
-          owner_id={this.state.owner_id} />));
+          current_player={current_player}
+          current_user={user_id}
+          game={current_game} />));
     }
   }
 
   render() {
-    const { loggedInStatus, owner_id, user_id, current_game } = this.state;
+    const { loggedInStatus, owner_id, user_id, current_game, current_player } = this.state;
     return (
       <Router>
         <Container>
@@ -105,13 +109,26 @@ export default class HelloWorld extends React.Component {
                       notify_game_start={this.state.notify_game_start}
                       user_id={this.state.user_id} />)} />
               <Route component={YouWasKilled} path='/killed' />
-              <Route component={JoinGameWithCode} path='/join_game' />
-              {owner_id == user_id && current_game.players.length > 2 && current_game.status == "unstarted" &&
+              <Route
+                  component={!current_game || current_game.status == "finished" ?
+                                  JoinGameWithCode : undefined} path='/join_game' />
+              {current_player.current_game_owner &&
+                current_game.players.length > 2 && current_game.status == "unstarted" &&
                 <Route
                     path='/confirm' render={_props =>
                        (<StartGameWarn
                            current_game={this.state.current_game} />)} />}
-              <Route component={StatisticPage} path='/statistic' />
+              <Route
+                  path='/statistic' render={current_game.status == "finished" ?
+                       (_props =>
+                         (<StatisticPage
+                             current_player={current_player} />)) : undefined} />
+              <Route
+                  path='/best_killer' render={current_game.status == "finished" ?
+                       (_props =>
+                         (<BestKiller
+                             current_game={current_game}
+                             current_player={current_player} />)) : undefined} />
               <Route
                   path='/game' render={this.handleGameProps()} />
             </Switch>) : (<LoginPage />) }

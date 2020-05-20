@@ -11,5 +11,5 @@ class Player < ApplicationRecord
 
   enum status: %i[alive dead death_confirm]
 
-  scope :order_by_last, (-> { joins(:game).where.not(games: { status: :finished }).order('games.created_at desc') })
+  scope :order_by_last, (-> { joins(:game).order('games.created_at desc') })
 end

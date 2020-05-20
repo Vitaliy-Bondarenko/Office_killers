@@ -16,7 +16,6 @@ class FormGame extends React.Component {
       game: props.game,
       start_time: (props.game || {}).start_time ? new Date(props.game.start_time) : undefined,
       current_user: props.current_user,
-      owner_id: props.owner_id,
       current_player: props.current_player
     };
   }
@@ -52,7 +51,7 @@ class FormGame extends React.Component {
 
   getNewGame = () => {
     const { game } = this.state;
-    if (!game) {
+    if (!game || game.status == "finished") {
       requestmanager.request('/api/v1/games/new').then((resp) => {
         this.setState({ game: resp });
       }).catch(() => {});
@@ -77,9 +76,9 @@ class FormGame extends React.Component {
 
   showStartGameButton = () => {
     const game = this.state.game || {};
-    const {owner_id, current_user} = this.state;
+    const { current_player } = this.state;
     if (game.id){
-      if (owner_id == current_user){
+      if (current_player.current_game_owner){
         return (
           <input
               id="mm-btn-green-width"
@@ -88,7 +87,7 @@ class FormGame extends React.Component {
               value={"START GAME"} />
           );
       }
-    }else {
+    } else {
       return(
         <input
             id="mm-btn-green-width"
@@ -109,14 +108,14 @@ class FormGame extends React.Component {
 
   handleSubmitSettings = () => {
     const { game } = this.state;
-    if (!game.id) {
+    if (!game.id || game.status == "finished") {
       const params = { game: { code: game.code,
                                start_time: this.state.start_time }
       };
       requestmanager.request('/api/v1/games/', 'post', params).then((_resp) => {
         window.location = '/game';
       }).catch(() => {});
-    }else{
+    } else {
       if (game.players.length > 2)
         window.location = '/confirm';
       else {
@@ -138,9 +137,9 @@ class FormGame extends React.Component {
   }
 
   render() {
-    const game = this.state.game || {};
+    const game = this.state.game.status == "finished" ? {} : this.state.game || {};
     const players = game.players || [];
-    const { start_time, owner_id, current_user } = this.state;
+    const { start_time, current_player } = this.state;
     return(
       <div className='mm-list-min-padding'>
         <h1> KILLER </h1>
@@ -153,14 +152,22 @@ class FormGame extends React.Component {
                 bgColor={"#000000"}
                 fgColor={"#ffffff"}
                 size={350}
-                style={{borderWidth: '10px', borderColor: "white", marginTop: '10px'}}
+                style={{borderWidth: '10px',
+                        borderColor: "white",
+                        marginTop: '10px',
+                        minWidth: '40%',
+                        minHeight: '40%',
+                        maxWidth: '350px',
+                        maxHeight: '350px',
+                        height: '100%',
+                        width: '100%'}}
                 value={window.location.origin + '/games/' + game.code} />
           </div>
           <div className='column-lastname'>
-            <label className='text-above-qr' htmlFor="code-input">
-              CONNECTING PLAYERS VIA CODE
-            </label>
             <div className='display-flex'>
+              <label className='text-above-qr' htmlFor="code-input">
+                CONNECTING PLAYERS VIA CODE
+              </label>
               <input
                   className='code-for-game'
                   id='code-input'
@@ -175,15 +182,17 @@ class FormGame extends React.Component {
                 COPY TO CLIPBOARD
               </button>
             </div>
-            <label className='text-above-qr' htmlFor="date-picker">
-              SET GAME START TIME
-            </label>
-            <DateTimePicker
-                className='date-time-picker'
-                format="dd-MM-y hh:mm a"
-                id='date-picker'
-                onChange={this.handleStartDate}
-                value={start_time} />
+            <div>
+              <label className='text-above-qr' htmlFor="date-picker">
+                SET GAME START TIME
+              </label>
+              <DateTimePicker
+                  className='date-time-picker'
+                  format="dd-MM-y hh:mm a"
+                  id='date-picker'
+                  onChange={this.handleStartDate}
+                  value={start_time} />
+            </div>
           </div>
         </div>
         <div className='mm-list-min-padding' style={{margin: '30px 0 30px 0'}}>
@@ -193,22 +202,23 @@ class FormGame extends React.Component {
               <hr align="center" width="25%" />
             </div> :
             undefined }
-          <div>
-            <Row className='all-center' style={{marginBottom: '50px'}}>
-              {game.id ? players.map(this.passPlayers) : undefined }
-            </Row>
-          </div>
+          <Row className='all-center' style={{marginBottom: '50px', transform: 'translate(12%)'}}>
+            {game.id ? players.map(this.passPlayers) : undefined }
+          </Row>
           <div className='row-map' style={{marginTop: '20px'}}>
-            <a className='back-to-menu-button' href='/' style={{textDecoration: 'none'}}>BACK TO MENU</a>
+            <input
+                id="mm-btn-white"
+                onClick={() => window.location.href="/"}
+                type="button"
+                value="BACK TO MENU" />
             {game.id ?
               <input
                   id="mm-btn-red-width"
-                  onClick={owner_id == current_user ?
+                  onClick={current_player.current_game_owner ?
                                   this.destroyGame :
                                   this.destroyPlayer}
-                  style={{marginRight: "43px"}}
                   type="button"
-                  value={owner_id == current_user ?
+                  value={current_player.current_game_owner ?
                              "CANCEL GAME" :
                              "DISCONNECT FROM GAME"} /> :
                     undefined }

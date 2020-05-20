@@ -24,7 +24,7 @@ class StartGameWarn extends React.Component {
     const { game } = this.state;
     return (
       <div className='mm-list-centered'>
-        <Card className='card-center' style={{width: '70%'}}>
+        <Card className='card-center' style={{width: '40%'}}>
           <div className='float-right'>
             <a className='corner-close' href='/'>
               <Icon name='close' />
