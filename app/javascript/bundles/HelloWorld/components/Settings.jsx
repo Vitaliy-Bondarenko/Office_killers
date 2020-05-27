@@ -51,7 +51,6 @@ class Settings extends React.Component {
   }
 
   render(){
-    console.log(this.state.user_id);
     return (
       <div className='mm-list'>
         <div className='setting-div'>
@@ -120,7 +119,7 @@ class Settings extends React.Component {
             </div>
           </div>
         </div>
-        <div>
+        <div style={{marginBottom: '30px'}}>
           <Link to='/'>
             <Button id="mm-btn-right-margin">BACK TO MENU</Button>
           </Link>

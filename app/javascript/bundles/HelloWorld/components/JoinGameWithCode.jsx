@@ -36,7 +36,7 @@ class JoinGameWithCode extends React.Component {
             onScreen: true
           },
         });
-      }else {
+      } else {
         window.location = '/game';
       }
     }).catch(err => console.log(err));
@@ -44,7 +44,7 @@ class JoinGameWithCode extends React.Component {
 
   render(){
     return (
-      <div className='mm-list-centered'>
+      <div className='join-by-code'>
         <Card className='card-center'>
           <div className='float-right'>
             <a className='corner-close' href='/'>

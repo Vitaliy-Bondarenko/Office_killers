@@ -17,7 +17,12 @@ class Api::V1::PlayersController < ApplicationController
 
   def player_killed
     target_info.dead! if target_info.death_confirm?
-    return current_user.current_game.finished! if players.alive.count == 2
+    if players.alive.count == 2
+      return current_user.current_game.update(
+        status: :finished,
+        finish_time: DateTime.now
+      )
+    end
     player.target_ids << target_info.target_id
     player.target_id = target_info.target_id
     player.save

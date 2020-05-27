@@ -42,9 +42,9 @@ class TargetScreen extends React.Component {
       return(
         <Card
             style={{margin: '20% auto',
-                    position: 'absolute',
-                    width: 'auto',
-                    display: 'block'}}>
+                    position: 'fixed',
+                    display: 'block',
+                    transform: 'translate(10px, 0)'}}>
           <div className='float-right'>
             <a className='corner-close' href='/'>
               <Icon name='close' />
@@ -78,13 +78,13 @@ class TargetScreen extends React.Component {
       <div className='mm-list'>
         <div className='setting-div'>
           {this.DeathConfirmWindow()}
-          <h1> KILLER </h1>
+          <h1 style={{marginTop: '15px'}}> KILLER </h1>
           <div className='image-label-center'>
             <h2> YOUR TARGET IS </h2>
             <h2 className='mini-text'> {current_player.target_info.email} </h2>
           </div>
           <div style={{marginBottom: "20px"}}>
-            <img id='img-profile' src={current_player.target_info.image_URL} />
+            <img id='img-target' src={current_player.target_info.image_URL} />
           </div>
           <br />
         </div>

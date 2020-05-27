@@ -1,14 +1,22 @@
 .mm-list
   width: 100%
   text-align: center
-  padding: 30px 150px 60px 150px
 
 .mm-list-small-padding
   width: 100%
   text-align: center
   padding: 15px 30px 60px 30px
 
-.display-flex
+.statistic-window
+  text-align: center
+  width: 100%
+  top: 50%
+  right: 0
+  position: absolute
+  transform: translate(0, -50%)
+
+.black-text
+  color: black
 
 .copyToClipboard
   margin-top: 15px
@@ -56,7 +64,6 @@
 .mm-list-min-padding
   width: 100%
   text-align: center
-  padding: 5px 100px 10px 85px
   display: inline-block
 
 .buttonH
@@ -98,7 +105,18 @@
 .mm-list-centered
   width: 100%
   text-align: center
-  padding: 200px 170px 170px 170px
+  top: 50%
+  right: 0
+  position: absolute
+  transform: translate(0, -50%)
+
+.join-by-code
+  text-align: center
+  top: 50%
+  right: 50%
+  position: absolute
+  transform: translate(50%, -50%)
+  min-width: 60%
 
 .float-right
   text-align: right
@@ -112,7 +130,7 @@
 
 .small-padding
   padding: 0px 6px 6px 6px
-  margin: 5px 0px 6px 0px
+  margin: 10px 0px 10px 0px
 
 .medium-padding
   padding: 0px 6px 6px 6px
@@ -120,6 +138,7 @@
 
 .vertical-align
   vertical-align: middle
+  margin: 10px
 
 .ui.card.card-center
   margin: 50px
@@ -163,7 +182,7 @@
   height: 43px
   color: black
   padding: 2px 10px 2px 10px
-  margin: 10px 7px 25px 7px
+  margin: 0 10px 10px 10px
   background-color: #a8f7a8
 
 #button-small-red
@@ -186,7 +205,7 @@
   height: 43px
   color: black
   padding: 2px 10px 2px 10px
-  margin: 10px 7px 25px 7px
+  margin: 0 10px 10px 10px
   background-color: #ef9c9c
 
 .ui.card
@@ -264,6 +283,10 @@
   width: 350px
   height: 350px
 
+#img-target
+  width: 310px
+  height: 310px
+
 #mm-btn-right-margin
   width: 200px
   height: 37px
@@ -272,6 +295,15 @@
   background-color: white
   margin: 7px
   border-width: 0
+
+#login-button
+  border-radius: .28571429rem
+  width: 350px
+  height: 55px
+  font-size: 25px
+  background-color: #e0e1e2
+  border-color: none
+  font-weight: bold
 
 #mm-btn-green
   width: 200px
@@ -283,46 +315,49 @@
   border-width: 0
 
 #mm-btn-green-width
-  width: 33%
-  max-width: 200px
+  max-width: 33%
   height: 37px
   color: black
   border-radius: 5px
   background-color: #a8f7a8
   border-width: 0
+  flex: 0 0 33.333333%
+  min-width: 200px
 
 #mm-btn-red
   width: 200px
   height: 37px
-  margin-top: 30px
   color: black
   border-radius: 5px
   background-color: #ef9c9c
   border-width: 0
 
 #mm-btn-red-width
-  width: 33%
-  max-width: 200px
+  max-width: 33%
   height: 37px
   color: black
   border-radius: 5px
   background-color: #ef9c9c
   border-width: 0
+  flex: 0 0 33.333333%
+  min-width: 200px
+  margin: 0 7% 0 7%
 
 .date-time-picker
   background-color: white
   width: 350px
   border-radius: 5px
-  margin: 10px
+  margin: 5px
 
 #mm-btn-white
-  width: 200px
+  max-width: 33%
   height: 37px
-  margin-top: 30px
   color: black
   border-radius: 5px
   background-color: white
   border-width: 0
+  flex: 0 0 33.333333%
+  min-width: 200px
 
 .white-text
   color: white
@@ -347,8 +382,8 @@
   background-color: white
 
 .row
-  margin-right: 0
   margin-left: 0
+  margin-right: 0
 
 .input-fields
   margin-bottom: 13px
@@ -389,7 +424,7 @@ h1
 
 .row-inline-block
   display: inline-block
-  padding: 0 70px 0 70px
+  margin: 0 14.3% 0 14.3%
 
 hr
   border: 1px solid
@@ -414,6 +449,10 @@ hr
 .col-4
   padding-right: 0
   padding-left: 0
+  min-width: 200px
+  max-width: 33.3333%
+  margin: 0 3.5% 0 3.5%
+  flex: 0
 
 .box-content
   box-sizing: content-box
@@ -463,8 +502,8 @@ a:hover
   color: inherit
 
 #google-logo-m
-  height: 21px
-  width: 21px
+  height: 25px
+  width: 25px
 
 .margin-btm
   margin-bottom: 4px
@@ -494,10 +533,3 @@ label
 
 .ui.button:hover
   background-color: #e0e1e2
-
-#mm-btn-logout
-  width: 200px
-  height: 37px
-  margin: 2px
-  border-width: 0
-  background-color: #f38989
