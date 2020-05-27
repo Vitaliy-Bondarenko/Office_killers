@@ -13,10 +13,11 @@ class FormGame extends React.Component {
     super(props);
 
     this.state = {
-      game: props.game,
+      game: props.game && props.game.status != "finished" ? props.game : undefined,
       start_time: (props.game || {}).start_time ? new Date(props.game.start_time) : undefined,
       current_user: props.current_user,
-      current_player: props.current_player
+      current_player: props.current_player,
+      datetime_changed: false
     };
   }
 
@@ -46,12 +47,12 @@ class FormGame extends React.Component {
     }
 
   handleStartDate = (start_time) => {
-    this.setState( { start_time });
+    this.setState( { start_time, datetime_changed: true });
   }
 
   getNewGame = () => {
     const { game } = this.state;
-    if (!game || game.status == "finished") {
+    if (!game) {
       requestmanager.request('/api/v1/games/new').then((resp) => {
         this.setState({ game: resp });
       }).catch(() => {});
@@ -66,6 +67,15 @@ class FormGame extends React.Component {
     }).catch(() => {});
   }
 
+  handleGameUpdate = () => {
+    const { game } = this.state;
+    const url = '/api/v1/games/' + game.id;
+    const params = { game: { start_time: this.state.start_time }};
+    requestmanager.request(url, 'PATCH', params).then((_resp) => {
+      window.location = '/game';
+    }).catch(() => {});
+  }
+
   destroyPlayer = () => {
     const { current_player } = this.state;
     const url = '/api/v1/players/' + current_player.id;
@@ -76,15 +86,15 @@ class FormGame extends React.Component {
 
   showStartGameButton = () => {
     const game = this.state.game || {};
-    const { current_player } = this.state;
+    const { current_player, datetime_changed } = this.state;
     if (game.id){
       if (current_player.current_game_owner){
         return (
           <input
               id="mm-btn-green-width"
-              onClick={this.handleSubmitSettings}
+              onClick={datetime_changed ? this.handleGameUpdate : this.handleSubmitSettings}
               type="button"
-              value={"START GAME"} />
+              value={datetime_changed ? "UPDATE GAME" : "START GAME"} />
           );
       }
     } else {
@@ -137,7 +147,7 @@ class FormGame extends React.Component {
   }
 
   render() {
-    const game = this.state.game.status == "finished" ? {} : this.state.game || {};
+    const game = this.state.game;
     const players = game.players || [];
     const { start_time, current_player } = this.state;
     return(

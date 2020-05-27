@@ -83,7 +83,9 @@ export default class HelloWorld extends React.Component {
   }
 
   render() {
-    const { loggedInStatus, owner_id, user_id, current_game, current_player } = this.state;
+    const { loggedInStatus, owner_id, user_id, current_game } = this.state;
+    const current_player = this.state.current_player || {};
+    const game = this.state.current_game || {};
     return (
       <Router>
         <Container>
@@ -110,21 +112,21 @@ export default class HelloWorld extends React.Component {
                       user_id={this.state.user_id} />)} />
               <Route component={YouWasKilled} path='/killed' />
               <Route
-                  component={!current_game || current_game.status == "finished" ?
+                  component={!current_game || game.status == "finished" ?
                                   JoinGameWithCode : undefined} path='/join_game' />
               {current_player.current_game_owner &&
-                current_game.players.length > 2 && current_game.status == "unstarted" &&
+                current_game.players.length > 2 && game.status == "unstarted" &&
                 <Route
                     path='/confirm' render={_props =>
                        (<StartGameWarn
                            current_game={this.state.current_game} />)} />}
               <Route
-                  path='/statistic' render={current_game.status == "finished" ?
+                  path='/statistic' render={game.status == "finished" ?
                        (_props =>
                          (<StatisticPage
                              current_player={current_player} />)) : undefined} />
               <Route
-                  path='/best_killer' render={current_game.status == "finished" ?
+                  path='/best_killer' render={game.status == "finished" ?
                        (_props =>
                          (<BestKiller
                              current_game={current_game}
