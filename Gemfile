@@ -18,6 +18,7 @@ gem 'pg'
 gem 'puma', '~> 4.1'
 # Use SCSS for stylesheets
 gem 'sass-rails', '>= 6'
+gem 'sidekiq'
 # Transpile app-like JavaScript. Read more: https://github.com/rails/webpacker
 gem 'validates_timeliness'
 gem 'webpacker', '~> 4.0'

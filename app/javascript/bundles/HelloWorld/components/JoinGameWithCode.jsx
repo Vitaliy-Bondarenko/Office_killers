@@ -8,7 +8,7 @@ class JoinGameWithCode extends React.Component {
     super(props);
 
     this.state = {
-      code: [],
+      code: '',
       errorMessage: ''
     };
   }

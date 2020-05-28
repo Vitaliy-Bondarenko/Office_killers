@@ -27,6 +27,6 @@ class PlayerSerializer < ApplicationSerializer
   end
 
   def current_game_owner
-    object.user_id == object.game.owner_id
+    object.user_id == object.game.owner_id if object.game
   end
 end
