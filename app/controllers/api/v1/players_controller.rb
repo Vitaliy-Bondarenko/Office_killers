@@ -29,7 +29,7 @@ class Api::V1::PlayersController < ApplicationController
   end
 
   def error_death
-    target_info.alive! unless target_info.dead
+    target_info.alive! unless target_info.dead?
   end
 
   def destroy

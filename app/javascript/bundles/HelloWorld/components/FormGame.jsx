@@ -147,7 +147,7 @@ class FormGame extends React.Component {
   }
 
   render() {
-    const game = this.state.game;
+    const game = this.state.game || {};
     const players = game.players || [];
     const { start_time, current_player } = this.state;
     return(

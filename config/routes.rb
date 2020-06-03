@@ -26,6 +26,7 @@ Rails.application.routes.draw do
   get '/logout', to: redirect('/users/sign_out')
   match '*path', to: 'hello_world#index', via: :all
 
+  mount ActionCable.server => '/cable'
   root 'hello_world#index'
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 end
