@@ -37,8 +37,7 @@ class TargetScreen extends React.Component {
   }
 
   DeathConfirmWindow = () => {
-    const { current_player } = this.state;
-    if (current_player.target_info.status == 'death_confirm'){
+    if (this.state.current_player.target_info.status == 'death_confirm'){
       return(
         <Card
             style={{margin: '20% auto',
@@ -72,6 +71,23 @@ class TargetScreen extends React.Component {
     }
   }
 
+  DeathWaitingButton = () => {
+    if (this.state.current_player.status == "death_confirm"){
+      return(
+        <Button disabled id="mm-btn-right-margin">WAITING TO CONFIRM</Button>
+      );
+    }else {
+      return(
+        <input
+            id="mm-btn-red"
+            onClick={this.handlePlayerDeathConfirm}
+            style={{marginLeft: "25px"}}
+            type="button"
+            value="I WAS KILLED" />
+      );
+    }
+  }
+
   render(){
     const { current_player } = this.state;
     return (
@@ -92,12 +108,7 @@ class TargetScreen extends React.Component {
           <Link to='/'>
             <Button id="mm-btn-right-margin">BACK TO MENU</Button>
           </Link>
-          <input
-              id="mm-btn-red"
-              onClick={this.handlePlayerDeathConfirm}
-              style={{marginLeft: "25px"}}
-              type="button"
-              value="I WAS KILLED" />
+          {this.DeathWaitingButton()}
         </div>
       </div>
     );
