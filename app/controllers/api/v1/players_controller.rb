@@ -21,11 +21,12 @@ class Api::V1::PlayersController < ApplicationController
       return current_user.current_game.update(
         status: :finished,
         finish_time: DateTime.now
-      )
+      ) && game_finished
     end
     player.target_ids << target_info.target_id
     player.target_id = target_info.target_id
     player.save
+    ModelMailer.new_target(current_user.id).deliver_later if current_user.news?
   end
 
   def error_death
@@ -38,6 +39,12 @@ class Api::V1::PlayersController < ApplicationController
   end
 
   private
+
+  def game_finished
+    current_user.current_game.users.where(notify_game_finish: true).find_each do |user|
+      ModelMailer.game_finished(user).deliver_later
+    end
+  end
 
   def target_info
     player.target
