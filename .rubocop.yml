@@ -13,7 +13,7 @@ AllCops:
    - 'config/**/*'
 
 Metrics/AbcSize:
-  Max: 25
+  Max: 30
   Exclude:
     - 'db/migrate/*'
 

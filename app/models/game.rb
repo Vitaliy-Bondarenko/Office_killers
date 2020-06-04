@@ -24,6 +24,7 @@ class Game < ApplicationRecord
       target = sorted_players[index + 1] || sorted_players[0]
       p.update(target_id: target.id, target_ids: [target.id], status: :alive)
     end
+    start_game_message
     in_progress!
   end
 
@@ -34,6 +35,12 @@ class Game < ApplicationRecord
   end
 
   private
+
+  def start_game_message
+    users.where(notify_game_start: true).find_each do |user|
+      ModelMailer.game_started(user).deliver_later
+    end
+  end
 
   def add_owner_player
     players.create(user_id: owner_id)
