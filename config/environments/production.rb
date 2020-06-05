@@ -40,8 +40,11 @@ Rails.application.configure do
 
   # Mount Action Cable outside main process or domain.
   config.action_cable.mount_path = '/cable'
-  config.action_cable.url = "wss://#{ENV['DOMAIN_NAME']}/cable"
-  config.action_cable.allowed_request_origins = [ /(http|https):\/\/#{ENV['DOMAIN_NAME']}/ ]
+  config.action_cable.url = "wss://office-killer.herokuapp.com/cable"
+  config.web_socket_server_url = "wss://office-killer.herokuapp.com/cable"
+  config.action_cable.allowed_request_origins = [ /(http|https):\/\/#{ENV['DOMAIN_NAME']}/,
+                                                  'https://office-killer.herokuapp.com',
+                                                  'http://office-killer.herokuapp.com']
   # Force all access to the app over SSL, use Strict-Transport-Security, and use secure cookies.
   # config.force_ssl = true
 
@@ -100,7 +103,7 @@ Rails.application.configure do
   # timestamps for the last write to the primary. The resolver uses the context
   # class timestamps to determine how long to wait before reading from the
   # replica.
-  #
+  config.web_socket_server_url = "wss://arcane-oasis-47211.herokuapp.com/cable"
   # By default Rails will store a last write timestamp in the session. The
   # DatabaseSelector middleware is designed as such you can define your own
   # strategy for connection switching and pass that into the middleware through

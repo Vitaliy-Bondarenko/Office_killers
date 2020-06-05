@@ -8,6 +8,7 @@ ruby '2.6.3'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'active_model_serializers'
 gem 'devise'
+gem 'fcm'
 gem 'rails', '~> 6.0.2', '>= 6.0.2.1'
 gem 'react_on_rails'
 gem 'rubocop-performance'
@@ -45,7 +46,6 @@ end
 
 group :development do
   # Access an interactive console on exception pages or by calling 'console' anywhere in the code.
-  gem 'letter_opener'
   gem 'listen', '>= 3.0.5', '< 3.2'
   gem 'web-console', '>= 3.3.0'
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
