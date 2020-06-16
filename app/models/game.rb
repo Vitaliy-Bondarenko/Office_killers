@@ -26,6 +26,7 @@ class Game < ApplicationRecord
     end
     start_game_message
     in_progress!
+    ActionCable.server.broadcast('notification_channel', 'Your game has started!')
   end
 
   def broadcast_game

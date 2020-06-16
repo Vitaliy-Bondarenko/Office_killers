@@ -27,6 +27,7 @@ class Api::V1::PlayersController < ApplicationController
     player.target_id = target_info.target_id
     player.save
     ModelMailer.new_target(current_user.id).deliver_later if current_user.news?
+    ActionCable.server.broadcast('notification_channel', 'You have new target!')
   end
 
   def error_death
@@ -43,6 +44,7 @@ class Api::V1::PlayersController < ApplicationController
   def game_finished
     current_user.current_game.users.where(notify_game_finish: true).find_each do |user|
       ModelMailer.game_finished(user).deliver_later
+      ActionCable.server.broadcast('notification_channel', 'Your game has finished!')
     end
   end
 
