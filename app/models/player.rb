@@ -6,14 +6,17 @@ class Player < ApplicationRecord
   belongs_to :target, optional: true, class_name: 'Player'
   delegate :email, to: :user, prefix: true
 
-  after_update do
+  after_update :game_broadcast
+  after_update :player_notification, if: -> { saved_change_to_status? }
+  after_create_commit :game_broadcast
+  before_destroy :game_broadcast
+
+  def game_broadcast
     game.broadcast_game
   end
-  after_create_commit do
-    game.broadcast_game
-  end
-  before_destroy do
-    game.broadcast_game
+
+  def player_notification
+    PlayerNotificationJob.perform_later(user.id)
   end
 
   scope :all_except, ->(user) { where.not(user_id: user) }

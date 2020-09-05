@@ -1,19 +1,43 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>ReactOnRailsWithWebpacker</title>
+    <title>Killer</title>
     <%= action_cable_meta_tag %>
     <%= csrf_meta_tags %>
-    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+    <base href='/'>
+    <meta name="theme-color" content="#d2d2d2">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.15.1/moment.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css" />
+    <link rel="manifest" href="/manifest.json" />
+    <link rel="icon" type="image/png" href="/16.png" sizes='16x16'/>
+    <link rel="icon" type="image/png" href="/32.png" sizes='32x32'/>
+    <link rel="icon" type="image/png" href="/100.png" sizes='100x100'/>
+    <link rel="apple-touch-icon" href="apple-touch-icon.png">
+    <link rel="16" sizes="16x16" href="16.png">
+    <link rel="32" sizes="32x32" href="32.png">
+    <link rel="48" sizes="48x48" href="48.png">
+    <link rel="72" sizes="72x72" href="72.png">
+    <link rel="100" sizes="100x100" href="100.png">
+    <link rel="120" sizes="120x120" href="120.png">
+    <link rel="128" sizes="128x128" href="128.png">
+    <link rel="144" sizes="144x144" href="144.png">
+    <link rel="152" sizes="152x152" href="152.png">
+    <link rel="192" sizes="192x192" href="192.png">
+    <link rel="196" sizes="196x196" href="196.png">
+    <link rel="256" sizes="256x256" href="256.png">
+    <link rel="512" sizes="512x512" href="512.png">
+    <link rel="1024" sizes="1024x1024" href="1024.png">
+    <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_pack_tag 'hello-world-bundle' %>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   </head>
 
   <body style="background-color: black">
     <%= yield %>
   </body>
 
-  <script>
-    window.subGames("<%= @hello_world_props[:user_id] %>")
-  </script>
 </html>
+
+<script>
+  window.subGames("<%= @hello_world_props[:user_id] %>")
+</script>

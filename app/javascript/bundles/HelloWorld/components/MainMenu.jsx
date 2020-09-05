@@ -1,6 +1,7 @@
 import React from 'react';
-import { Button, List, Container } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
+import { messaging } from './firebase.js';
+import requestmanager from "../../lib/requestmanager";
 
 class MainMenu extends React.Component {
   constructor(props) {
@@ -11,6 +12,21 @@ class MainMenu extends React.Component {
       owner_id: props.owner_id,
       user_id: props.user_id
     };
+  }
+
+  componentDidMount(){
+    messaging.requestPermission().then(() => {
+      return messaging.getToken();
+    }).then(token => {
+      if (token){
+        const url = '/api/v1/users/' + this.state.user_id;
+        const params = { user: { notif_token: token } };
+        requestmanager.request(url, "put", params).then((_resp) => {
+         }).catch(() => {});
+      } else {
+        console.log('No Instance ID token available. Request permission to generate one.');
+      }
+    });
   }
 
   handleGameButtonText = () => {
@@ -35,49 +51,45 @@ class MainMenu extends React.Component {
   render(){
     const game = this.state.current_game || {};
     return (
-      <div className='mm-list' style={{transform: 'scale(1.2) translate(0, 15%)'}}>
-        <Container>
-          <h1> KILLER </h1>
-          <List>
-            <List.Item>
-              <Link
-                  to='/game'>
-                <Button id="mm-btn">
-                  {this.handleGameButtonText()}</Button>
-              </Link>
-            </List.Item>
-            { game.id && game.status != "finished" ?
-              undefined :
-              <List.Item>
-                <Link to='/join_game'>
-                  <Button id="mm-btn">JOIN GAME VIA CODE</Button>
-                </Link>
-              </List.Item> }
-            <List.Item>
-              <Link to='/tutorial'>
-                <Button id="mm-btn">HOW TO PLAY</Button>
-              </Link>
-            </List.Item>
-            {game && game.status == "finished" ?
-              <List.Item>
-                <Link to='/best_killer'>
-                  <Button id="mm-btn">STATISTIC</Button>
-                </Link>
-              </List.Item> : undefined}
-            <List.Item>
-              <Link to='/settings'>
-                <Button id="mm-btn">SETTINGS</Button>
-              </Link>
-            </List.Item>
-            <List.Item>
-              <input
-                  id="mm-btn-red"
-                  onClick={() => window.location.href="/logout"}
-                  type="button"
-                  value="LOGOUT" />
-            </List.Item>
-          </List>
-        </Container>
+      <div className='mm-list' style={{width: 'min-content'}}>
+        <h1 className='big-font' style={{margin: '0'}}> KILLER </h1>
+        <Link
+            to='/game'>
+          <button
+              id="mm-btn"
+              type="button">
+            {this.handleGameButtonText()}</button>
+        </Link>
+        { game.id && game.status != "finished" ?
+            undefined :
+            <Link to='/join_game'>
+              <button
+                  id="mm-btn"
+                  type="button">JOIN GAME VIA CODE</button>
+            </Link> }
+        <Link to='/tutorial'>
+          <button
+              disabled
+              id="mm-btn"
+              type="button">HOW TO PLAY</button>
+        </Link>
+        {game && game.status == "finished" ?
+          <Link to='/best_killer'>
+            <button
+                id="mm-btn"
+                type="button">STATISTIC</button>
+          </Link> : undefined }
+        <Link to='/settings'>
+          <button
+              id="mm-btn"
+              type="button">SETTINGS</button>
+        </Link>
+        <input
+            id="mm-btn-red"
+            onClick={() => window.location.href="/logout"}
+            style={{margin: '4px'}}
+            type="button"
+            value="LOGOUT" />
       </div>
     );
   }

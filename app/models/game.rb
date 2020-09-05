@@ -24,9 +24,8 @@ class Game < ApplicationRecord
       target = sorted_players[index + 1] || sorted_players[0]
       p.update(target_id: target.id, target_ids: [target.id], status: :alive)
     end
-    start_game_message
+    game_status_notif
     in_progress!
-    ActionCable.server.broadcast('notification_channel', 'Your game has started!')
   end
 
   def broadcast_game
@@ -35,13 +34,13 @@ class Game < ApplicationRecord
     end
   end
 
-  private
-
-  def start_game_message
+  def game_status_notif
     users.where(notify_game_start: true).find_each do |user|
-      ModelMailer.game_started(user).deliver_later
+      GameNotificationJob.perform_later(user.id)
     end
   end
+
+  private
 
   def add_owner_player
     players.create(user_id: owner_id)

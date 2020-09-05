@@ -1,5 +1,4 @@
 import React from 'react';
-import { Button, Card, Icon } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
 
 class StatisticPage extends React.Component {
@@ -14,7 +13,7 @@ class StatisticPage extends React.Component {
   passEmailTargets = (user) => {
     return (
       <div key={user.id}>
-        <div><h4>{user.email}</h4></div>
+        <h4>{user.email}</h4>
       </div>
     );
   }
@@ -24,17 +23,14 @@ class StatisticPage extends React.Component {
     const your_killers = this.state.current_player.your_killers;
     return (
       <div className='statistic-window'>
-        <Card className='card-center' style={{maxWidth: '36%', minWidth: '20%'}}>
-          <div className='float-right'>
-            <a className='corner-close' href='/'>
-              <Icon name='close' />
-            </a>
-          </div>
+        <div
+            className='card-center'
+            style={{maxWidth: '500px', width: '80%'}}>
           <div className='small-padding'>
-            <h3>GAME STATISTIC</h3>
+            <h3 style={{fontSize: '25px', margin: '0'}}>GAME STATISTIC</h3>
           </div>
           <div className='vertical-align'>
-            <div>
+            <div style={{marginBottom: '20px'}}>
               <h3 className='black-text'> Your killers </h3>
               <hr style={{width: "150px", color: 'black', marginTop: '5px'}} />
               {your_killers.map(this.passEmailTargets)}
@@ -45,10 +41,13 @@ class StatisticPage extends React.Component {
               {target_ids.map(this.passEmailTargets)}
             </div>
             <Link to='/'>
-              <Button id="mm-btn-green" style={{marginBottom: "25px"}}>BACK TO MAIN MENU</Button>
+              <button
+                  id="mm-btn"
+                  style={{margin: "25px 0", backgroundColor: '#a8f7a8'}}
+                  type='button'>BACK TO MAIN MENU</button>
             </Link>
           </div>
-        </Card>
+        </div>
       </div>
     );
   }
