@@ -9,9 +9,12 @@ window.subGames = function(user_id) {
       // Called when the subscription has been terminated by the server
     },
 
-    received(_data) {
-      location.reload();
-      // Called when there's incoming data on the websocket for this channel
+    received(data) {
+      if (data.game.status == 'finished'){
+        window.location.href = '/best_killer';
+      }else {
+        location.reload();
+      }
     }
   });
 };

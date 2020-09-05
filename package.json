@@ -2,16 +2,16 @@
   "name": "Office_killers",
   "private": true,
   "dependencies": {
-    "@babel/preset-react": "^7.8.3",
+    "@babel/preset-react": "^7.10.4",
+    "@firebase/app": "^0.6.9",
+    "@firebase/messaging": "^0.6.21",
     "@rails/actioncable": "^6.0.0",
     "@rails/activestorage": "^6.0.0",
     "@rails/ujs": "^6.0.0",
     "@rails/webpacker": "4.2.2",
-    "actioncable": "^5.2.4-3",
     "animate.css": "^3.7.2",
     "animate.css-react": "^1.0.0",
     "babel-plugin-transform-react-remove-prop-types": "^0.4.24",
-    "bootstrap": "^4.4.1",
     "es6-promise": "^4.2.8",
     "isomorphic-fetch": "^2.2.1",
     "prop-types": "^15.7.2",
@@ -25,8 +25,10 @@
     "react-router": "^5.1.2",
     "react-router-dom": "^5.1.2",
     "reactstrap": "^8.4.1",
-    "semantic-ui-react": "^0.88.2",
-    "turbolinks": "^5.2.0"
+    "svg-inline-react": "^3.2.0",
+    "turbolinks": "^5.2.0",
+    "webpack": "^4.43.0",
+    "websocket-extensions": "^0.1.4"
   },
   "scripts": {
     "eslint": "eslint --format unix --ext js --ext jsx ."
@@ -37,5 +39,24 @@
     "eslint": "^6.8.0",
     "eslint-plugin-react": "^7.19.0",
     "webpack-dev-server": "^3.11.0"
-  }
+  },
+  "description": "Active Bridge project",
+  "main": ".eslintrc.js",
+  "directories": {
+    "lib": "lib",
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Vitaliy-Bondarenko/Office_killers.git"
+  },
+  "keywords": [
+    "password"
+  ],
+  "author": "Sheva",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Vitaliy-Bondarenko/Office_killers/issues"
+  },
+  "homepage": "https://github.com/Vitaliy-Bondarenko/Office_killers#readme"
 }
