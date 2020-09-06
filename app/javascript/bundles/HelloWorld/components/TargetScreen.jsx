@@ -28,7 +28,10 @@ class TargetScreen extends React.Component {
   handlePlayerKill = () => {
     const { current_player } = this.state;
     const url = '/api/v1/players/' + current_player.id + '/player_killed';
-    requestmanager.request(url, 'PUT').then((_resp) => {
+    requestmanager.request(url, 'PUT').then((resp) => {
+      if (resp.status == 'finished'){
+        window.location.href = 'http://localhost:3000/best_killer';
+      }
     }).catch(() => {});
   }
 
