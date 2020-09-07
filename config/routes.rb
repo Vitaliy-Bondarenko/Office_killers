@@ -7,7 +7,7 @@ Rails.application.routes.draw do
 
   namespace :api do
     namespace :v1 do
-      resources :users, only: :update
+      resources :users, only: %i[update create]
       resources :games, only: %i[new create update destroy] do
         put 'killer_start', on: :member
       end
@@ -24,6 +24,7 @@ Rails.application.routes.draw do
   get 'auth/failure', to: redirect('/')
   get '/login', to: redirect('/users/auth/google_oauth2')
   get '/game', to: 'hello_world#index', as: 'game_redirect'
+  get '/guest_login', to: 'users#create', as: 'guest_create'
   get '/best_killer', to: 'hello_world#index', as: 'best_killer'
   get '/logout', to: redirect('/users/sign_out')
   match '*path', to: 'hello_world#index', via: :all
