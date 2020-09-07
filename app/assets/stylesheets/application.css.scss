@@ -10,6 +10,23 @@
  * files in this directory. Styles in this file should be added after the last require_* statement.
  * It is generally better to create a new file per style scope.
  *
- *= require_tree .
  *= require_self
  */
+
+@import 'office-killers';
+
+@import "react-datetime-picker/dist/DateTimePicker";
+@import "react-date-picker/dist/DatePicker";
+@import "react-clock/dist/Clock";
+@import "react-calendar/dist/Calendar";
+@import "animate.css/animate";
+@import "react-notifications-component/dist/theme";
+
+@font-face {
+  font-family: 'BebasNeue-Regular';
+  src:asset_url('BebasNeue-Regular.otf');
+}
+
+body{
+  font-family: 'BebasNeue-Regular';
+}

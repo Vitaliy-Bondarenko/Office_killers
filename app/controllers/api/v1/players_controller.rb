@@ -13,21 +13,23 @@ class Api::V1::PlayersController < ApplicationController
 
   def death_confirm
     player.death_confirm! if player.alive?
+    PlayerNotificationJob.perform_later(Player.where('target_ids <@ ARRAY[?]', player.id).ids[0])
   end
 
   def player_killed
     target_info.dead! if target_info.death_confirm?
+    PlayerNotificationJob.perform_later(player.id)
     if players.alive.count == 2
-      return current_user.current_game.update(
+      current_user.current_game.update(
         status: :finished,
         finish_time: DateTime.now
       ) && game_finished
+      render json: { status: 'finished' }
     end
     player.target_ids << target_info.target_id
     player.target_id = target_info.target_id
     player.save
-    ModelMailer.new_target(current_user.id).deliver_later if current_user.news?
-    ActionCable.server.broadcast('notification_channel', 'You have new target!')
+    render json: { status: :ok }
   end
 
   def error_death
@@ -43,8 +45,7 @@ class Api::V1::PlayersController < ApplicationController
 
   def game_finished
     current_user.current_game.users.where(notify_game_finish: true).find_each do |user|
-      ModelMailer.game_finished(user).deliver_later
-      ActionCable.server.broadcast('notification_channel', 'Your game has finished!')
+      GameNotificationJob.perform_later(user)
     end
   end
 

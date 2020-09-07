@@ -1,5 +1,4 @@
 import React from 'react';
-import { Button } from 'semantic-ui-react';
 import requestmanager from "../../lib/requestmanager";
 import { Link } from 'react-router-dom';
 
@@ -25,7 +24,7 @@ class Settings extends React.Component {
                              notify_game_finish: this.state.notify_game_finish,
                              news: this.state.news,
                              image_URL: this.state.image_URL} };
-    const url = "/api/v1/users/" + this.state.current_userId;
+    const url = "/api/v1/users/" + this.state.user_id;
     requestmanager.request(url, "put", params).then((_resp) => {
      }).catch(() => {});
   };
@@ -52,12 +51,12 @@ class Settings extends React.Component {
 
   render(){
     return (
-      <div className='mm-list'>
-        <div className='setting-div'>
-          <h1> KILLER </h1>
+      <div className='mobile-width'>
+        <div className='setting-div' style={{width: 'min-content'}}>
+          <h1 className='big-font' style={{margin: '0'}}> KILLER </h1>
           <div className='text-left-align'>
             <h2> YOUR PHOTO </h2>
-            <p className='white-text-small'> USING FOR DISPLAYING YOUR PHOTO IN EACH GAME </p>
+            <p className='white-text-small' style={{margin: '0'}}> USING FOR DISPLAYING YOUR PHOTO IN EACH GAME </p>
           </div>
           <div>
             <img id='img-profile' src={this.state.image_URL} />
@@ -119,13 +118,18 @@ class Settings extends React.Component {
             </div>
           </div>
         </div>
-        <div style={{marginBottom: '30px'}}>
+        <div style={{margin: '30px 0 30px 0'}}>
           <Link to='/'>
-            <Button id="mm-btn-right-margin">BACK TO MENU</Button>
+            <input
+                id="mm-btn-settings"
+                style={{backgroundColor: 'white', border: '0.2em solid white'}}
+                type='button'
+                value='BACK TO MENU' />
           </Link>
           <input
-              id="mm-btn-green"
+              id="mm-btn-settings"
               onClick={this.handleSubmitSettings}
+              style={{backgroundColor: '#a8f7a8', border: '0.2em solid #a8f7a8'}}
               type="button"
               value="SUBMIT CHANGES" />
         </div>

@@ -1,5 +1,4 @@
 import React from 'react';
-import { Button } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
 
 class BestKiller extends React.Component {
@@ -20,22 +19,28 @@ class BestKiller extends React.Component {
     const { current_game } = this.state;
     const top_killer = this.getTopKiller(current_game.players);
     return (
-      <div className='mm-list' style={{transform: 'translate(0, 13%)'}}>
-        <h1 style={{margin: "0 0 0 0"}}> BEST KILLER </h1>
+      <div className='mm-list'>
+        <h1 className='big-font' style={{margin: "0", whiteSpace: 'nowrap'}}> BEST KILLER </h1>
         <div style={{margin: "20px 0 5px 0"}}>
-          <img id="img-target" src={top_killer.image_URL} />
+          <img
+              id="img-target"
+              src={top_killer.image_URL}
+              style={{maxWidth: '400px'}} />
         </div>
-        <h3 style={{color: "white", fontSize: '1.5rem', marginBottom: '30px'}}>
+        <h3 style={{color: "white", fontSize: '1.5rem', marginBottom: '30px', fontWeight: '300'}}>
           {top_killer.email} killed {top_killer.target_ids.length - 1} players
         </h3>
         <div>
           <Link to='/'>
-            <Button id="mm-btn-right-margin" style={{marginRight: '20px'}}>BACK TO MENU</Button>
+            <input
+                className="mm-btn"
+                value='BACK TO MENU' />
           </Link>
           <Link to='/statistic'>
-            <Button id="mm-btn-right-margin" style={{marginLeft: '20px', backgroundColor: '#a8f7a8'}}>
-              GAME STATISTIC
-            </Button>
+            <input
+                className="mm-btn"
+                style={{backgroundColor: '#a8f7a8'}}
+                value='GAME STATISTIC' />
           </Link>
         </div>
       </div>

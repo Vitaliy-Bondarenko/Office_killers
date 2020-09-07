@@ -3,12 +3,7 @@
 class Api::V1::UsersController < ApplicationController
   def update
     return unless current_user.update(user_params)
-    render json: { first_name: current_user.first_name,
-                   last_name: current_user.last_name,
-                   notify_game_start: current_user.notify_game_start,
-                   notify_game_finish: current_user.notify_game_finish,
-                   news: current_user.news,
-                   image_URL: current_user.image_URL }, status: :ok
+    render json: { status: :ok }
   end
 
   private
@@ -19,6 +14,7 @@ class Api::V1::UsersController < ApplicationController
                                         :notify_game_start,
                                         :notify_game_finish,
                                         :news,
-                                        :image_URL)
+                                        :image_URL,
+                                        :notif_token)
   end
 end

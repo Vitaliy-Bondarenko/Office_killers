@@ -1,11 +1,12 @@
 import React from 'react';
 import requestmanager from '../../lib/requestmanager';
-import {store} from 'react-notifications-component';
+import { store } from 'react-notifications-component';
 import { Row, Col } from "reactstrap";
 import QRCode from 'qrcode.react';
+import { Link } from 'react-router-dom';
 import DateTimePicker from 'react-datetime-picker';
 import 'react-notifications-component/dist/theme.css';
-import "bootstrap/dist/css/bootstrap.css";
+import 'react-datetime-picker/dist/DateTimePicker.css';
 import 'animate.css';
 
 class FormGame extends React.Component {
@@ -91,7 +92,7 @@ class FormGame extends React.Component {
       if (current_player.current_game_owner){
         return (
           <input
-              id="mm-btn-green-width"
+              id="mm-btn-form-game"
               onClick={datetime_changed ? this.handleGameUpdate : this.handleSubmitSettings}
               type="button"
               value={datetime_changed ? "UPDATE GAME" : "START GAME"} />
@@ -100,8 +101,9 @@ class FormGame extends React.Component {
     } else {
       return(
         <input
-            id="mm-btn-green-width"
+            id="mm-btn-form-game"
             onClick={this.handleSubmitSettings}
+            style={{backgroundColor: '#a8f7a8'}}
             type="button"
             value={"CREATE GAME"} />
         );
@@ -152,9 +154,9 @@ class FormGame extends React.Component {
     const { start_time, current_player } = this.state;
     return(
       <div className='mm-list-min-padding'>
-        <h1> KILLER </h1>
+        <h1 className='big-font' style={{margin: '0'}}> KILLER </h1>
         <div className='row-inline-block'>
-          <div className='column-firstname'>
+          <div className='column-qr-code'>
             <label className='text-above-qr' htmlFor="qr-code">
               CONNECTING PLAYERS VIA QR CODE
             </label>
@@ -162,9 +164,7 @@ class FormGame extends React.Component {
                 bgColor={"#000000"}
                 fgColor={"#ffffff"}
                 size={350}
-                style={{borderWidth: '10px',
-                        borderColor: "white",
-                        marginTop: '10px',
+                style={{marginTop: '10px',
                         minWidth: '40%',
                         minHeight: '40%',
                         maxWidth: '350px',
@@ -173,8 +173,8 @@ class FormGame extends React.Component {
                         width: '100%'}}
                 value={window.location.origin + '/games/' + game.code} />
           </div>
-          <div className='column-lastname'>
-            <div className='display-flex'>
+          <div className='column-game-update'>
+            <div style={{maxWidth: '350px', maxHeight: '350px'}}>
               <label className='text-above-qr' htmlFor="code-input">
                 CONNECTING PLAYERS VIA CODE
               </label>
@@ -192,7 +192,7 @@ class FormGame extends React.Component {
                 COPY TO CLIPBOARD
               </button>
             </div>
-            <div>
+            <div style={{maxWidth: '350px', maxHeight: '350px'}}>
               <label className='text-above-qr' htmlFor="date-picker">
                 SET GAME START TIME
               </label>
@@ -205,28 +205,34 @@ class FormGame extends React.Component {
             </div>
           </div>
         </div>
-        <div className='mm-list-min-padding' style={{margin: '30px 0 30px 0'}}>
+        <div className='mm-list-min-padding' style={{margin: '30px 0 10px 0'}}>
           {game.id ?
             <div>
-              <h1 className='medium-text'> CONNECTED USERS </h1>
+              <h1 className='medium-font' style={{margin: '0'}}> CONNECTED USERS </h1>
               <hr align="center" width="25%" />
             </div> :
             undefined }
-          <Row className='all-center' style={{marginBottom: '50px', transform: 'translate(12%)'}}>
+          <Row
+              className='row-map'>
             {game.id ? players.map(this.passPlayers) : undefined }
           </Row>
-          <div className='row-map' style={{marginTop: '20px'}}>
-            <input
-                id="mm-btn-white"
-                onClick={() => window.location.href="/"}
-                type="button"
-                value="BACK TO MENU" />
+          <br />
+          <div
+              className='row-map'>
+            <Link to='/'>
+              <input
+                  id="mm-btn-form-game"
+                  style={{backgroundColor: 'white'}}
+                  type="button"
+                  value="BACK TO MENU" />
+            </Link>
             {game.id ?
               <input
-                  id="mm-btn-red-width"
+                  id="mm-btn-form-game"
                   onClick={current_player.current_game_owner ?
                                   this.destroyGame :
                                   this.destroyPlayer}
+                  style={{backgroundColor: '#ef9c9c'}}
                   type="button"
                   value={current_player.current_game_owner ?
                              "CANCEL GAME" :

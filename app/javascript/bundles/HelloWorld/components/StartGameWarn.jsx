@@ -1,6 +1,6 @@
 import React from 'react';
-import { Button, Card, Icon } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
+import { CloseSVG } from './icons.js';
 import requestmanager from '../../lib/requestmanager';
 
 class StartGameWarn extends React.Component {
@@ -24,30 +24,33 @@ class StartGameWarn extends React.Component {
     const { game } = this.state;
     return (
       <div className='mm-list-centered'>
-        <Card className='card-center' style={{width: '40%'}}>
-          <div className='float-right'>
-            <a className='corner-close' href='/'>
-              <Icon name='close' />
-            </a>
-          </div>
+        <div className='card-center' style={{padding: '0 20px'}}>
+          <Link className='corner-close' to='/'>
+            <CloseSVG />
+          </Link>
           <div className='medium-padding'>
-            <h3>DO YOU REALLY WANT TO START GAME?</h3>
+            <h3 style={{margin: '0', fontWeight: '300'}}>DO YOU REALLY WANT TO START GAME?</h3>
           </div>
           <div>
             <hr align="center" style={{color: 'black'}} width="25%" />
           </div>
           <div className='small-padding'>
-            <h3>PLAYERS IN GAME - {game.players.length}</h3>
+            <h3 style={{margin: '0', fontWeight: '300'}}>PLAYERS IN GAME - {game.players.length}</h3>
           </div>
-          <div className='vertical-align'>
+          <div className='vertical-align' style={{marginBottom: '10px'}}>
             <Link to='/game'>
-              <Button id="button-big-red">CANCEL</Button>
+              <input
+                  id="button-big-red"
+                  type='button'
+                  value='CANCEL' />
             </Link>
-            <Button
+            <input
                 id="button-big-green"
-                onClick={this.handleGameStart}>START</Button>
+                onClick={this.handleGameStart}
+                type='button'
+                value='START GAME' />
           </div>
-        </Card>
+        </div>
       </div>
     );
   }

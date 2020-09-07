@@ -1,7 +1,8 @@
 import React from 'react';
-import { Button, Card, Icon } from 'semantic-ui-react';
 import requestmanager from '../../lib/requestmanager';
 import {store} from 'react-notifications-component';
+import { Link } from 'react-router-dom';
+import { CloseSVG } from './icons.js';
 
 class JoinGameWithCode extends React.Component {
   constructor(props) {
@@ -37,7 +38,7 @@ class JoinGameWithCode extends React.Component {
           },
         });
       } else {
-        window.location = '/game';
+        window.location.href = '/game';
       }
     }).catch(err => console.log(err));
   }
@@ -45,27 +46,26 @@ class JoinGameWithCode extends React.Component {
   render(){
     return (
       <div className='join-by-code'>
-        <Card className='card-center'>
-          <div className='float-right'>
-            <a className='corner-close' href='/'>
-              <Icon name='close' />
-            </a>
-          </div>
+        <div className='card-center'>
+          <Link className='corner-close' to='/'>
+            <CloseSVG />
+          </Link>
           <div className='small-padding'>
-            <h3>ENTER INVITE CODE HERE</h3>
+            <h2 style={{fontWeight: '300', color: 'black'}}>ENTER INVITE CODE HERE</h2>
           </div>
-          <div className='vertical-align'>
+          <div className='vertical-align' style={{display: 'flex', justifyContent: 'center'}}>
             <input
                 className='input-code-join'
                 maxLength="6"
                 onChange={(e) => this.updateCode(e.target.value)}
                 type='text'
                 value={this.state.code || ''} />
-            <Button
+            <button
                 id="button-small-green"
-                onClick={this.handleFindGameByCode}>JOIN</Button>
+                onClick={this.handleFindGameByCode}
+                type='button'>JOIN</button>
           </div>
-        </Card>
+        </div>
       </div>
     );
   }

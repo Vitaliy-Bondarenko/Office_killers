@@ -262,7 +262,7 @@ Devise.setup do |config|
   # config.omniauth :github, 'APP_ID', 'APP_SECRET', scope: 'user,public_repo'
   config.omniauth :google_oauth2, '704399575739-69sl6mo9m8ega5gv02ml3qmg0pffma11.apps.googleusercontent.com',
                                   'imoDd_KdjMWWawQxBGKhjfSd',
-                                  redirect_uri: 'http://localhost:3000/users/auth/google_oauth2/callback',
+                                  redirect_uri: 'https://office-killer.herokuapp.com/users/auth/google_oauth2/callback',
                                   scope: 'userinfo.email,userinfo.profile', skip_jwt: true
 
   # ==> Warden configuration
