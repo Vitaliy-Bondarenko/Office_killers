@@ -45,7 +45,7 @@ class Api::V1::PlayersController < ApplicationController
 
   def game_finished
     current_user.current_game.users.where(notify_game_finish: true).find_each do |user|
-      GameNotificationJob.perform_later(user)
+      GameNotificationJob.perform_later(user.id)
     end
   end
 
