@@ -19,6 +19,7 @@ class Game < ApplicationRecord
 
   def start_game
     return unless unstarted? && players.count > 2
+
     sorted_players = players.shuffle
     sorted_players.each.with_index do |p, index|
       target = sorted_players[index + 1] || sorted_players[0]
