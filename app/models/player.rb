@@ -11,6 +11,12 @@ class Player < ApplicationRecord
   after_create_commit :game_broadcast
   before_destroy :game_broadcast
 
+  enum status: %i[alive dead death_confirm]
+
+  scope :order_by_last, (-> { joins(:game).order('games.created_at desc') })
+  scope :all_except, ->(user) { where.not(user_id: user) }
+  scope :alive_users, -> { where(status: :alive) }
+
   def game_broadcast
     game.broadcast_game
   end
@@ -18,11 +24,4 @@ class Player < ApplicationRecord
   def player_notification
     PlayerNotificationJob.perform_later(id)
   end
-
-  scope :all_except, ->(user) { where.not(user_id: user) }
-  scope :alive_users, -> { where(status: :alive) }
-
-  enum status: %i[alive dead death_confirm]
-
-  scope :order_by_last, (-> { joins(:game).order('games.created_at desc') })
 end
