@@ -11,7 +11,7 @@ class User < ApplicationRecord
 
   has_many :players, dependent: :destroy
   has_many :games, through: :players
-  has_one :current_player, -> { order_by_last }, class_name: 'Player'
+  has_one :current_player, -> { order('created_at desc') }, class_name: 'Player'
   has_one :current_game, through: :current_player, source: :game
 
   def self.from_omniauth(auth)

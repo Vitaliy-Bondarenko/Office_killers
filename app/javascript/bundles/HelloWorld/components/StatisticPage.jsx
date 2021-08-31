@@ -10,10 +10,10 @@ class StatisticPage extends React.Component {
     };
   }
 
-  passEmailTargets = (user) => {
+  passFullNameTargets = (user) => {
     return (
       <div key={user.id}>
-        <h4>{user.email}</h4>
+        <h4>{user.first_name} {user.last_name}</h4>
       </div>
     );
   }
@@ -33,12 +33,12 @@ class StatisticPage extends React.Component {
             <div style={{marginBottom: '20px'}}>
               <h3 className='black-text'> Your killers </h3>
               <hr style={{width: "150px", color: 'black', marginTop: '5px'}} />
-              {your_killers.map(this.passEmailTargets)}
+              {your_killers.map(this.passFullNameTargets)}
             </div>
             <div>
               <h3 className='black-text' style={{marginTop: '13px'}}> You killed </h3>
               <hr style={{width: "150px", color: 'black', marginTop: '5px'}} />
-              {target_ids.map(this.passEmailTargets)}
+              {target_ids.map(this.passFullNameTargets)}
             </div>
             <Link to='/'>
               <button

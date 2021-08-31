@@ -4,7 +4,7 @@ class Player < ApplicationRecord
   belongs_to :game
   belongs_to :user
   belongs_to :target, optional: true, class_name: 'Player'
-  delegate :email, to: :user, prefix: true
+  delegate :email, :first_name, :last_name, to: :user, prefix: true
 
   after_update :game_broadcast
   after_update :player_notification, if: -> { saved_change_to_status? }
@@ -13,7 +13,6 @@ class Player < ApplicationRecord
 
   enum status: %i[alive dead death_confirm]
 
-  scope :order_by_last, (-> { joins(:game).order('games.created_at desc') })
   scope :all_except, ->(user) { where.not(user_id: user) }
   scope :alive_users, -> { where(status: :alive) }
 

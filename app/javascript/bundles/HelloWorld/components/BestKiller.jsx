@@ -28,7 +28,7 @@ class BestKiller extends React.Component {
               style={{maxWidth: '400px'}} />
         </div>
         <h3 style={{color: "white", fontSize: '1.5rem', marginBottom: '30px', fontWeight: '300'}}>
-          {top_killer.email} killed {top_killer.target_ids.length - 1} players
+          {top_killer.first_name} {top_killer.last_name} killed {top_killer.target_ids.length - 1} players
         </h3>
         <div>
           <Link to='/'>

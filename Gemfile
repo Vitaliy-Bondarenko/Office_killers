@@ -7,9 +7,11 @@ ruby '2.6.3'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'active_model_serializers'
+gem 'awesome_print'
 gem 'devise'
 gem 'fcm'
 gem 'jbuilder', '~> 2.7'
+gem 'omniauth', '~> 1.9.1'
 gem 'omniauth-google-oauth2'
 gem 'pg'
 gem 'puma', '~> 4.3'
@@ -46,3 +48,4 @@ end
 
 gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
 
+gem 'mini_racer', platforms: :ruby

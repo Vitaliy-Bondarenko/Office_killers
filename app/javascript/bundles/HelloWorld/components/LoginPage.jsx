@@ -6,7 +6,7 @@ const LoginPage = () => {
       <h1
           className='login-font'
           style={{marginBottom: '20px'}}> KILLER </h1>
-      <div class='login-btns-wrapper'>
+      <div className='login-btns-wrapper'>
         <a
             className='login-btn'
             href='/login'>

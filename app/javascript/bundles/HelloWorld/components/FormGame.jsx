@@ -113,7 +113,7 @@ class FormGame extends React.Component {
   passPlayers = (user) => {
     return (
       <Col key={user.id} xs='4'>
-        <div className="email-input">{user.email}</div>
+        <div className="email-input">{user.first_name} {user.last_name}</div>
       </Col>
     );
   }
