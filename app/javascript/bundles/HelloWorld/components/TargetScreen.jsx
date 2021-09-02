@@ -93,6 +93,7 @@ class TargetScreen extends React.Component {
 
   render(){
     const { current_player } = this.state;
+    const player_target = current_player.target_info
     return (
       <div className='mm-list' style={{height: '100%', width: '100%'}}>
         <div className='setting-div'>
@@ -100,10 +101,10 @@ class TargetScreen extends React.Component {
           <h1 className='big-font'> KILLER </h1>
           <div className='image-label-center'>
             <h2> YOUR TARGET IS </h2>
-            <h2 className='mini-text'> {current_player.target_info.email} </h2>
+            <h2 className='mini-text'> {player_target.first_name} {player_target.last_name} </h2>
           </div>
           <div style={{marginBottom: "20px"}}>
-            <img id='img-target' src={current_player.target_info.image_URL} />
+            <img id='img-target' src={player_target.image_URL} />
           </div>
           <br />
         </div>

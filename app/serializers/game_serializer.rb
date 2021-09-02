@@ -11,6 +11,6 @@ class GameSerializer < ApplicationSerializer
              :players
 
   def players
-    object.players.joins(:user).select(:email, :first_name, :id, :image_URL, :target_ids)
+    object.players.joins(:user).select(:email, :first_name, :last_name, :id, :image_URL, :target_ids)
   end
 end

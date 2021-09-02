@@ -1,9 +1,17 @@
 # frozen_string_literal: true
 
 class Api::V1::UsersController < ApplicationController
+  def show
+    user = User.find_by(id: params[:id])
+    render json: user && UserSerializer.new(user).as_json unless user.nil?
+  end
+
   def update
-    return unless current_user.update(user_params)
-    render json: { status: :ok }
+    if current_user.update(user_params)
+      render json: { status: :success }
+    else
+      render json: { status: current_user.errors.full_messages.to_sentence }
+    end
   end
 
   private

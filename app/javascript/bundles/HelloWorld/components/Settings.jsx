@@ -1,6 +1,9 @@
 import React from 'react';
 import requestmanager from "../../lib/requestmanager";
+import { store } from 'react-notifications-component';
 import { Link } from 'react-router-dom';
+import 'react-notifications-component/dist/theme.css';
+import 'animate.css';
 
 class Settings extends React.Component {
   constructor(props) {
@@ -13,8 +16,25 @@ class Settings extends React.Component {
       image_URL: props.imageProp,
       notify_game_start: props.notify_game_start,
       notify_game_finish: props.notify_game_finish,
-      news: props.news
+      news: props.news,
+      disabled: true
      };
+  }
+
+  UNSAFE_componentWillMount() {
+    this.getUser();
+  }
+
+  getUser = () => {
+    const url = '/api/v1/users/' + this.state.user_id;
+    requestmanager.request(url).then((resp) => {
+      this.setState({ first_name: resp.first_name,
+                      last_name: resp.last_name,
+                      notify_game_start: resp.notify_game_start,
+                      notify_game_finish: resp.notify_game_finish,
+                      news: resp.news
+                     });
+    }).catch(() => {});
   }
 
   handleSubmitSettings = () => {
@@ -25,28 +45,43 @@ class Settings extends React.Component {
                              news: this.state.news,
                              image_URL: this.state.image_URL} };
     const url = "/api/v1/users/" + this.state.user_id;
-    requestmanager.request(url, "put", params).then((_resp) => {
-     }).catch(() => {});
+    requestmanager.request(url, "put", params).then((resp) => {
+      if (resp.status == 'success'){
+        this.setState({ disabled: true });
+        this.notificationPopUp("CHANGES SAVED!", 'success');
+      } else {
+        this.notificationPopUp(resp.status, 'danger');
+      }
+    }).catch(() => {});
   };
 
-  updateFName = (first_name) => {
-    this.setState({ first_name });
+  notificationPopUp = (text, type) => {
+    store.addNotification({
+      message: text,
+      type: type,
+      container: "top-right",
+      insert: "top",
+      animationIn: ["animated", "fadeIn"],
+      animationOut: ["animated", "fadeOut"],
+
+      dismiss:{
+        duration: 3500,
+        onScreen: true
+      },
+    });
   }
 
-  handleChangeForGmS = () => {
-    this.setState({ notify_game_start: !this.state.notify_game_start });
+  handleUpdateFields = (event) => {
+    event.preventDefault();
+    let value = event.target.value.replace(/\s/g, '');
+    const field = event.target.name;
+    this.setState({ [field]: value, disabled: false });
   }
 
-  handleChangeForNews = () => {
-    this.setState({ news: !this.state.news });
-  }
-
-  handleChangeForGmF = () => {
-    this.setState({ notify_game_finish: !this.state.notify_game_finish });
-  }
-
-  updateLName = (last_name) => {
-    this.setState({ last_name });
+  handleChangeForCheckbox = (event) => {
+    const field = event.target.name;
+    console.log(event.target.checked);
+    this.setState({ [field]: event.target.checked, disabled: false });
   }
 
   render(){
@@ -70,7 +105,8 @@ class Settings extends React.Component {
                   className='name-input'
                   id='first-name-input'
                   maxLength="16"
-                  onChange={(e) => this.updateFName(e.target.value)}
+                  name='first_name'
+                  onChange={this.handleUpdateFields}
                   type='text'
                   value={this.state.first_name} />
             </div>
@@ -82,7 +118,8 @@ class Settings extends React.Component {
                   className='name-input'
                   id='last-name-input'
                   maxLength="20"
-                  onChange={(e) => this.updateLName(e.target.value)}
+                  name='last_name'
+                  onChange={this.handleUpdateFields}
                   type='text'
                   value={this.state.last_name} />
             </div>
@@ -94,7 +131,8 @@ class Settings extends React.Component {
                   checked={this.state.notify_game_start}
                   className='notif-gm'
                   id='notif-gm-st'
-                  onChange={this.handleChangeForGmS}
+                  name='notify_game_start'
+                  onChange={this.handleChangeForCheckbox}
                   type='checkbox' />
               <label className='notify-gm' htmlFor='notif-gm-st'>NOTIFY ABOUT GAME START</label><br />
             </div>
@@ -103,7 +141,8 @@ class Settings extends React.Component {
                   checked={this.state.notify_game_finish}
                   className='notif-gm'
                   id='notif-gm-fs'
-                  onChange={this.handleChangeForGmF}
+                  name='notify_game_finish'
+                  onChange={this.handleChangeForCheckbox}
                   type='checkbox' />
               <label className='notify-gm' htmlFor='notif-gm-fs'>NOTIFY ABOUT GAME FINISH</label><br />
             </div>
@@ -112,7 +151,8 @@ class Settings extends React.Component {
                   checked={this.state.news}
                   className='notif-gm'
                   id='notif-gm-news'
-                  onChange={this.handleChangeForNews}
+                  name='news'
+                  onChange={this.handleChangeForCheckbox}
                   type='checkbox' />
               <label className='notify-gm' htmlFor='notif-gm-news'>NEWS</label>
             </div>
@@ -126,12 +166,12 @@ class Settings extends React.Component {
                 type='button'
                 value='BACK TO MENU' />
           </Link>
-          <input
+          <button
               id="mm-btn-settings"
+              disabled={this.state.disabled}
               onClick={this.handleSubmitSettings}
               style={{backgroundColor: '#a8f7a8', border: '0.2em solid #a8f7a8'}}
-              type="button"
-              value="SUBMIT CHANGES" />
+              type="button">SUBMIT CHANGES</button>
         </div>
       </div>
     );
