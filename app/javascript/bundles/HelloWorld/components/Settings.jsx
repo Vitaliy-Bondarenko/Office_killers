@@ -137,7 +137,7 @@ class Settings extends React.Component {
                   name='notify_game_start'
                   onChange={this.handleChangeForCheckbox}
                   type='checkbox' />
-              <label className='notify-gm' htmlFor='notif-gm-st'>NOTIFY ABOUT GAME START</label><br />
+              <label className='notify-gm' htmlFor='notif-gm-st'>NOTIFY ABOUT GAME START</label>
             </div>
             <div>
               <input
@@ -147,7 +147,7 @@ class Settings extends React.Component {
                   name='notify_game_finish'
                   onChange={this.handleChangeForCheckbox}
                   type='checkbox' />
-              <label className='notify-gm' htmlFor='notif-gm-fs'>NOTIFY ABOUT GAME FINISH</label><br />
+              <label className='notify-gm' htmlFor='notif-gm-fs'>NOTIFY ABOUT GAME FINISH</label>
             </div>
             <div>
               <input

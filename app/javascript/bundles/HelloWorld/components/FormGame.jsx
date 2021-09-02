@@ -61,11 +61,13 @@ class FormGame extends React.Component {
   }
 
   destroyGame = () => {
-    const { game } = this.state;
-    const url = '/api/v1/games/' + game.id;
-    requestmanager.request(url, 'delete').then((_resp) => {
-      window.location = "/";
-    }).catch(() => {});
+    if (window.confirm('Are you sure you want to delete this game?')) {
+      const { game } = this.state;
+      const url = '/api/v1/games/' + game.id;
+      requestmanager.request(url, 'delete').then((_resp) => {
+        window.location = "/game";
+      }).catch(() => {});
+    }
   }
 
   handleGameUpdate = () => {
@@ -91,30 +93,28 @@ class FormGame extends React.Component {
     if (game.id){
       if (current_player.current_game_owner){
         return (
-          <input
-              id="mm-btn-form-game"
+          <button
+              className="created-game-btns"
               onClick={datetime_changed ? this.handleGameUpdate : this.handleSubmitSettings}
-              type="button"
-              value={datetime_changed ? "UPDATE GAME" : "START GAME"} />
+              type="button"> {datetime_changed ? "UPDATE GAME" : "START GAME"} </button>
           );
       }
     } else {
       return(
-        <input
-            id="mm-btn-form-game"
+        <button
+            className="created-game-btns"
             onClick={this.handleSubmitSettings}
-            style={{backgroundColor: '#a8f7a8'}}
-            type="button"
-            value={"CREATE GAME"} />
+            style={{backgroundColor: '#a8f7a8', marginLeft: '20px'}}
+            type="button">CREATE GAME </button>
         );
     }
   }
 
   passPlayers = (user) => {
     return (
-      <Col key={user.id} xs='4'>
-        <div className="email-input">{user.first_name} {user.last_name}</div>
-      </Col>
+      <div className='user-wrapper' key={user.id}>
+        <p className="email-input">{user.first_name} {user.last_name}</p>
+      </div>
     );
   }
 
@@ -154,7 +154,7 @@ class FormGame extends React.Component {
     const { start_time, current_player } = this.state;
     return(
       <div className='mm-list-min-padding'>
-        <h1 className='big-font' style={{margin: '0'}}> KILLER </h1>
+        <h1 className='big-font' style={{margin: '0'}}> CREATE GAME </h1>
         <div className='row-inline-block'>
           <div className='column-qr-code'>
             <label className='text-above-qr' htmlFor="qr-code">
@@ -174,7 +174,7 @@ class FormGame extends React.Component {
                 value={window.location.origin + '/games/' + game.code} />
           </div>
           <div className='column-game-update'>
-            <div style={{maxWidth: '350px', maxHeight: '350px'}}>
+            <div style={{maxWidth: '350px', maxHeight: '350px', marginBottom: '15px'}}>
               <label className='text-above-qr' htmlFor="code-input">
                 CONNECTING PLAYERS VIA CODE
               </label>
@@ -186,13 +186,13 @@ class FormGame extends React.Component {
                   type='text'
                   value={game.code || ""} />
               <button
-                  className='copyToClipboard'
+                  className='copy-to-clipboard'
                   onClick={() => this.copyToClipboard()}
                   type='button'>
                 COPY TO CLIPBOARD
               </button>
             </div>
-            <div style={{maxWidth: '350px', maxHeight: '350px'}}>
+            <div style={{maxWidth: '350px', maxHeight: '350px', width: '100%'}}>
               <label className='text-above-qr' htmlFor="date-picker">
                 SET GAME START TIME
               </label>
@@ -205,39 +205,31 @@ class FormGame extends React.Component {
             </div>
           </div>
         </div>
-        <div className='mm-list-min-padding' style={{margin: '30px 0 10px 0'}}>
+        <div className='connected-users-wrapper' style={{margin: '30px 0 10px 0'}}>
           {game.id ?
-            <div>
-              <h1 className='medium-font' style={{margin: '0'}}> CONNECTED USERS </h1>
-              <hr align="center" width="25%" />
-            </div> :
-            undefined }
-          <Row
-              className='row-map'>
-            {game.id ? players.map(this.passPlayers) : undefined }
-          </Row>
-          <br />
+            <>
+              <div>
+                <h1 className='medium-font' style={{margin: '0'}}> CONNECTED USERS </h1>
+                <hr align="center" width="25%" />
+              </div>
+              <div className='connected-users'>
+                {players.map(this.passPlayers)}
+              </div>
+            </> : undefined }
           <div
-              className='row-map'>
-            <Link to='/'>
-              <input
-                  id="mm-btn-form-game"
+              className='row-map' style={{justifyContent: !game.id ? 'center' : 'space-between'}}>
+            <Link to='/' className='back-link-game-form' style={{marginRight: !game.id ? '20px' : '0'}}>
+              <button
+                  className="created-game-btns"
                   style={{backgroundColor: 'white'}}
-                  type="button"
-                  value="BACK TO MENU" />
+                  type="button">BACK TO MENU</button>
             </Link>
             {game.id ?
-              <input
-                  id="mm-btn-form-game"
-                  onClick={current_player.current_game_owner ?
-                                  this.destroyGame :
-                                  this.destroyPlayer}
+              <button
+                  className="created-game-btns"
+                  onClick={this.destroyGame}
                   style={{backgroundColor: '#ef9c9c'}}
-                  type="button"
-                  value={current_player.current_game_owner ?
-                             "CANCEL GAME" :
-                             "DISCONNECT FROM GAME"} /> :
-                    undefined }
+                  type="button"> CANCEL GAME </button> : undefined }
             {this.showStartGameButton()}
           </div>
         </div>
