@@ -2,6 +2,7 @@ import React from 'react';
 import requestmanager from "../../lib/requestmanager";
 import { store } from 'react-notifications-component';
 import { Link } from 'react-router-dom';
+import { SettingsFontSVG } from './icons.js';
 import 'react-notifications-component/dist/theme.css';
 import 'animate.css';
 
@@ -88,16 +89,18 @@ class Settings extends React.Component {
     return (
       <div className='mobile-width'>
         <div className='setting-div' style={{width: 'min-content'}}>
-          <h1 className='big-font' style={{margin: '0'}}> KILLER </h1>
-          <div className='text-left-align'>
-            <h2> YOUR PHOTO </h2>
-            <p className='white-text-small' style={{margin: '0'}}> USING FOR DISPLAYING YOUR PHOTO IN EACH GAME </p>
-          </div>
+          <SettingsFontSVG />
           <div>
-            <img id='img-profile' src={this.state.image_URL} />
+            <div className='text-left-align'>
+              <h2> YOUR PHOTO </h2>
+              <p className='white-text-small' style={{margin: '0'}}> USING FOR DISPLAYING YOUR PHOTO IN EACH GAME </p>
+            </div>
+            <div>
+              <img id='img-profile' src={this.state.image_URL} />
+            </div>
           </div>
           <div className='row-field'>
-            <div className='column-firstname'>
+            <div className='personal-info-inputs'>
               <label className='label-input-settings' htmlFor="first-name-input">
                 FIRST NAME
               </label>
@@ -110,7 +113,7 @@ class Settings extends React.Component {
                   type='text'
                   value={this.state.first_name} />
             </div>
-            <div className='column-lastname'>
+            <div className='personal-info-inputs'>
               <label className='label-input-settings' htmlFor="last-name-input">
                 LAST NAME
               </label>
@@ -157,21 +160,20 @@ class Settings extends React.Component {
               <label className='notify-gm' htmlFor='notif-gm-news'>NEWS</label>
             </div>
           </div>
-        </div>
-        <div style={{margin: '30px 0 30px 0'}}>
-          <Link to='/'>
-            <input
-                id="mm-btn-settings"
-                style={{backgroundColor: 'white', border: '0.2em solid white'}}
-                type='button'
-                value='BACK TO MENU' />
-          </Link>
-          <button
-              id="mm-btn-settings"
-              disabled={this.state.disabled}
-              onClick={this.handleSubmitSettings}
-              style={{backgroundColor: '#a8f7a8', border: '0.2em solid #a8f7a8'}}
-              type="button">SUBMIT CHANGES</button>
+          <div className='btn-wrapper'>
+            <Link to='/' style={{width: '90%', marginRight: '4%'}}>
+              <button
+                  className='settings-btn'
+                  style={{backgroundColor: 'white'}}
+                  type='button'> BACK TO MENU </button>
+            </Link>
+            <button
+                className='settings-btn'
+                disabled={this.state.disabled}
+                onClick={this.handleSubmitSettings}
+                style={{backgroundColor: '#a8f7a8', width: '90%'}}
+                type="button">SUBMIT CHANGES</button>
+          </div>
         </div>
       </div>
     );
