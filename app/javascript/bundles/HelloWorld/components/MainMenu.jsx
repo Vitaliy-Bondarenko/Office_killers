@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { messaging } from './firebase.js';
+import { KillerFontSVG } from './icons.js';
 import requestmanager from "../../lib/requestmanager";
 
 class MainMenu extends React.Component {
@@ -51,9 +52,10 @@ class MainMenu extends React.Component {
   render(){
     const game = this.state.current_game || {};
     return (
-      <div className='mm-list' style={{width: 'min-content'}}>
-        <h1 className='big-font' style={{margin: '0'}}> KILLER </h1>
+      <div className='mm-list flex-main-menu-list' style={{width: 'min-content'}}>
+        <KillerFontSVG />
         <Link
+            style={{marginTop: '10px'}}
             to='/game'>
           <button
               className="mm-btn"
@@ -67,7 +69,7 @@ class MainMenu extends React.Component {
                   className="mm-btn"
                   type="button">JOIN GAME VIA CODE</button>
             </Link> }
-        <Link to='/tutorial'>
+        <Link to='/'>
           <button
               className="mm-btn"
               disabled
@@ -84,12 +86,13 @@ class MainMenu extends React.Component {
               className="mm-btn"
               type="button">SETTINGS</button>
         </Link>
-        <input
+        <button
             id="mm-btn-red"
             onClick={() => window.location.href="/logout"}
             style={{margin: '4px'}}
-            type="button"
-            value="LOGOUT" />
+            type="button">
+              LOGOUT
+        </button>
       </div>
     );
   }
