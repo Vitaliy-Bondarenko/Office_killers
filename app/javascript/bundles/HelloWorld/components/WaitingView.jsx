@@ -14,11 +14,13 @@ class WaitingView extends React.Component {
   }
 
   handleDestroyPlayer = () => {
-    const { current_player } = this.state;
-    const url = '/api/v1/players/' + current_player.id;
-    requestmanager.request(url, 'delete').then((_resp) => {
-      window.location = "/";
-    }).catch(() => {});
+    if (window.confirm('Are you sure you want to leave this game?')) {
+      const { current_player } = this.state;
+      const url = '/api/v1/players/' + current_player.id;
+      requestmanager.request(url, 'delete').then((_resp) => {
+        window.location = "/";
+      }).catch(() => {});
+    }
   }
 
   render(){
@@ -32,20 +34,18 @@ class WaitingView extends React.Component {
           <div className='horizontal-line'> <hr /> </div>
           <p className='small-text'> WE WILL NOTIFY YOU WHEN GAME STARTS </p>
         </div>
-        <div style={{marginTop: '80px'}}>
+        <div style={{marginTop: '80px 0 50px'}}>
           <Link to='/'>
-            <input
-                className="mm-btn"
-                style={{margin: "0 3%", width: '44%'}}
-                type="button"
-                value='BACK TO MENU' />
+            <button
+                className="mm-btn waiting-back"
+                style={{margin: "0 3%"}}
+                type="button">BACK TO MENU</button>
           </Link>
-          <input
+          <button
               id="mm-btn-red"
               onClick={this.handleDestroyPlayer}
               style={{margin: "0 3%", width: '44%'}}
-              type="button"
-              value="DISCONNECT" />
+              type="button">DISCONNECT</button>
         </div>
       </div>
     );

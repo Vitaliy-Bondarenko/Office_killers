@@ -1,7 +1,6 @@
 import React from 'react';
 import requestmanager from '../../lib/requestmanager';
 import { store } from 'react-notifications-component';
-import { Row, Col } from "reactstrap";
 import QRCode from 'qrcode.react';
 import { Link } from 'react-router-dom';
 import DateTimePicker from 'react-datetime-picker';
