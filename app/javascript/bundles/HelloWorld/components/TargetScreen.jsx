@@ -1,5 +1,6 @@
 import React from 'react';
 import requestmanager from '../../lib/requestmanager';
+import { KillerFontSVG } from './icons.js';
 import { Link } from 'react-router-dom';
 
 class TargetScreen extends React.Component {
@@ -19,10 +20,12 @@ class TargetScreen extends React.Component {
   }
 
   handlePlayerDeathConfirm = () => {
-    const { current_player } = this.state;
-    const url = '/api/v1/players/' + current_player.id + '/death_confirm';
-    requestmanager.request(url, 'PUT').then((_resp) => {
-    }).catch(() => {});
+    if (window.confirm('Are you sure?')) {
+      const { current_player } = this.state;
+      const url = '/api/v1/players/' + current_player.id + '/death_confirm';
+      requestmanager.request(url, 'PUT').then((_resp) => {
+      }).catch(() => {});
+    }
   }
 
   handlePlayerKill = () => {
@@ -38,20 +41,11 @@ class TargetScreen extends React.Component {
   DeathConfirmWindow = () => {
     if (this.state.current_player.target_info.status == 'death_confirm'){
       return(
-        <div
-            style={{position: 'absolute',
-                    display: 'block',
-                    background: 'white',
-                    padding: '20px 30px',
-                    transform: 'translate(-50%, -50%)',
-                    top: '50%',
-                    left: '50%'}}>
+        <div className='kill-target-card'>
           <div className='medium-padding'>
-            <h3 style={{margin: '0'}}>DID YOU KILL YOUR TARGET?</h3>
+            <h3 style={{margin: '0', whiteSpace: 'nowrap'}}>DID YOU KILL YOUR TARGET?</h3>
           </div>
-          <div>
-            <hr align="center" style={{color: 'black', marginBottom: '20px'}} width="25%" />
-          </div>
+          <hr align="center" style={{color: 'black', marginBottom: '20px'}} width="25%" />
           <div className='vertical-align'>
             <Link to='/game'>
               <button
@@ -74,19 +68,18 @@ class TargetScreen extends React.Component {
     if (this.state.current_player.status == "death_confirm"){
       return(
         <button
-            className="mm-btn"
+            className="created-game-btns"
             disabled
-            style={{margin: "0 1.5%", width: '47%'}}
+            style={{marginLeft: "15px"}}
             type="button">WAITING FOR CONFIRM</button>
       );
     }else {
       return(
-        <input
-            id="mm-btn-red"
+        <button
+            class="created-game-btns"
             onClick={this.handlePlayerDeathConfirm}
-            style={{margin: "0 1.5%", width: '47%'}}
-            type="button"
-            value="I WAS KILLED" />
+            style={{marginLeft: "15px", backgroundColor: '#ef9c9c'}}
+            type="button">I WAS KILLED</button>
       );
     }
   }
@@ -96,27 +89,26 @@ class TargetScreen extends React.Component {
     const player_target = current_player.target_info
     return (
       <div className='mm-list' style={{height: '100%', width: '100%'}}>
-        <div className='setting-div'>
-          {this.DeathConfirmWindow()}
-          <h1 className='big-font'> KILLER </h1>
+        <div className='setting-div' style={{alignItems: 'center', paddingTop: '25px'}}>
+          <div style={{width: '80%'}}>
+            <KillerFontSVG />
+          </div>
           <div className='image-label-center'>
-            <h2> YOUR TARGET IS </h2>
-            <h2 className='mini-text'> {player_target.first_name} {player_target.last_name} </h2>
+            <h2 style={{fontSize: '30px'}}> YOUR TARGET IS </h2>
+            <h2 className='mini-text' style={{fontSize: '37px'}}> {player_target.first_name} {player_target.last_name} </h2>
           </div>
-          <div style={{marginBottom: "20px"}}>
-            <img id='img-target' src={player_target.image_URL} />
+          <div style={{marginBottom: "20px", position: 'relative'}}>
+            {this.DeathConfirmWindow()}
+            <img className='img-target' src={player_target.image_URL} />
           </div>
-          <br />
-        </div>
-        <div style={{marginBottom: '10px'}}>
-          <Link to='/'>
-            <input
-                className="mm-btn"
-                style={{margin: "0 1.5% 0 1.5%", width: '47%'}}
-                type='button'
-                value='BACK TO MENU' />
-          </Link>
-          {this.DeathWaitingButton()}
+          <div className='row-map'>
+            <Link to='/'>
+              <button
+                  className="created-game-btns"
+                  type='button'> BACK TO MENU </button>
+            </Link>
+            {this.DeathWaitingButton()}
+          </div>
         </div>
       </div>
     );

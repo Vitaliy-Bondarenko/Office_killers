@@ -23,24 +23,24 @@ class BestKiller extends React.Component {
         <h1 className='big-font' style={{margin: "0", whiteSpace: 'nowrap'}}> BEST KILLER </h1>
         <div style={{margin: "20px 0 5px 0"}}>
           <img
-              id="img-target"
-              src={top_killer.image_URL}
-              style={{maxWidth: '400px'}} />
+              className="img-target"
+              src={top_killer.image_URL} />
         </div>
-        <h3 style={{color: "white", fontSize: '1.5rem', marginBottom: '30px', fontWeight: '300'}}>
-          {top_killer.first_name} {top_killer.last_name} killed {top_killer.target_ids.length - 1} players
-        </h3>
+        <div style={{marginBottom: '15px'}}>
+          <h1 style={{color: "white", fontSize: '40px', fontWeight: '300'}}>
+            {top_killer.first_name} {top_killer.last_name}
+          </h1>
+          <h2 style={{marginTop: '0'}}> killed {top_killer.target_ids.length - 1} players</h2>
+        </div>
         <div>
           <Link to='/'>
-            <input
-                className="mm-btn"
-                value='BACK TO MENU' />
+            <button
+                className="mm-btn">BACK TO MENU</button>
           </Link>
           <Link to='/statistic'>
-            <input
+            <button
                 className="mm-btn"
-                style={{backgroundColor: '#a8f7a8'}}
-                value='GAME STATISTIC' />
+                style={{backgroundColor: '#a8f7a8'}}>GAME STATISTIC</button>
           </Link>
         </div>
       </div>

@@ -39,16 +39,14 @@ class StartGameWarn extends React.Component {
           </div>
           <div className='vertical-align' style={{marginBottom: '10px'}}>
             <Link to='/game'>
-              <input
+              <button
                   id="button-big-red"
-                  type='button'
-                  value='CANCEL' />
+                  type='button'>CANCEL</button>
             </Link>
-            <input
+            <button
                 id="button-big-green"
                 onClick={this.handleGameStart}
-                type='button'
-                value='START GAME' />
+                type='button'>START GAME</button>
           </div>
         </div>
       </div>
