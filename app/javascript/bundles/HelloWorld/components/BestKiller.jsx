@@ -19,29 +19,29 @@ class BestKiller extends React.Component {
     const { current_game } = this.state;
     const top_killer = this.getTopKiller(current_game.players);
     return (
-      <div className='mm-list'>
-        <h1 className='big-font' style={{margin: "0", whiteSpace: 'nowrap'}}> BEST KILLER </h1>
-        <div style={{margin: "20px 0 5px 0"}}>
-          <img
-              className="img-target"
-              src={top_killer.image_URL} />
-        </div>
-        <div style={{marginBottom: '15px'}}>
-          <h1 style={{color: "white", fontSize: '40px', fontWeight: '300'}}>
-            {top_killer.first_name} {top_killer.last_name}
-          </h1>
-          <h2 style={{marginTop: '0'}}> killed {top_killer.target_ids.length - 1} players</h2>
-        </div>
-        <div>
-          <Link to='/'>
-            <button
-                className="mm-btn">BACK TO MENU</button>
-          </Link>
-          <Link to='/statistic'>
-            <button
-                className="mm-btn"
-                style={{backgroundColor: '#a8f7a8'}}>GAME STATISTIC</button>
-          </Link>
+      <div className='align-text-center'>
+        <div className='d-flex f-direction-col adaptive-width'>
+          <h1 className='big-font whitespace-nowrap'> BEST KILLER </h1>
+          <div style={{margin: "20px 0 5px 0"}}>
+            <img
+                className="profile-img"
+                src={top_killer.image_URL} />
+          </div>
+          <div>
+            <h1 style={{color: "white", fontSize: '40px', fontWeight: '300'}}>
+              {top_killer.first_name} {top_killer.last_name}
+            </h1>
+            <h2 style={{marginTop: '0'}}> killed {top_killer.target_ids.length - 1} players</h2>
+          </div>
+          <div className='d-flex f-direction-row top-btm-mar-30px double-link-btn-wrapper j-content-space-between'>
+            <Link to='/'>
+              <button>BACK TO MENU</button>
+            </Link>
+            <Link to='/statistic'>
+              <button
+                  className="green-btn">GAME STATISTIC</button>
+            </Link>
+          </div>
         </div>
       </div>
     );

@@ -53,7 +53,7 @@ class JoinGameWithCode extends React.Component {
           <div className='small-padding'>
             <h2 style={{fontWeight: '300', color: 'black'}}>ENTER INVITE CODE HERE</h2>
           </div>
-          <div className='vertical-align' style={{display: 'flex', justifyContent: 'center'}}>
+          <div className='vertical-align d-flex j-content-center'>
             <input
                 className='input-code-join'
                 maxLength="6"
@@ -61,7 +61,7 @@ class JoinGameWithCode extends React.Component {
                 type='text'
                 value={this.state.code || ''} />
             <button
-                id="button-small-green"
+                className="button-small-green"
                 onClick={this.handleFindGameByCode}
                 type='button'>JOIN</button>
           </div>

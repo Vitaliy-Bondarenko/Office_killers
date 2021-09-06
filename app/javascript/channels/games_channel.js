@@ -11,8 +11,8 @@ window.subGames = function(user_id) {
 
     received(data) {
       if (data.game.status == 'finished'){
-        window.location.href = '/best_killer';
-      }else {
+        window.location = '/best_killer';
+      } else {
         location.reload();
       }
     }

@@ -46,16 +46,15 @@ class TargetScreen extends React.Component {
             <h3 style={{margin: '0', whiteSpace: 'nowrap'}}>DID YOU KILL YOUR TARGET?</h3>
           </div>
           <hr align="center" style={{color: 'black', marginBottom: '20px'}} width="25%" />
-          <div className='vertical-align'>
+          <div className='d-flex f-direction-row double-link-btn-wrapper j-content-space-between width-100'>
             <Link to='/game'>
               <button
-                  id="button-big-red"
                   onClick={this.handleNoKill}
                   type="button">NO
               </button>
             </Link>
             <button
-                id="button-big-green"
+                className='red-btn'
                 onClick={this.handlePlayerKill}
                 type='button'>YES</button>
           </div>
@@ -65,20 +64,17 @@ class TargetScreen extends React.Component {
   }
 
   DeathWaitingButton = () => {
-    if (this.state.current_player.status == "death_confirm"){
+    if (this.state.current_player.status == "death_confirm" || this.state.current_player.target_info.status == 'death_confirm'){
       return(
         <button
-            className="created-game-btns"
             disabled
-            style={{marginLeft: "15px"}}
             type="button">WAITING FOR CONFIRM</button>
       );
     }else {
       return(
         <button
-            class="created-game-btns"
+            className="red-btn"
             onClick={this.handlePlayerDeathConfirm}
-            style={{marginLeft: "15px", backgroundColor: '#ef9c9c'}}
             type="button">I WAS KILLED</button>
       );
     }
@@ -88,26 +84,27 @@ class TargetScreen extends React.Component {
     const { current_player } = this.state;
     const player_target = current_player.target_info
     return (
-      <div className='mm-list' style={{height: '100%', width: '100%'}}>
-        <div className='setting-div' style={{alignItems: 'center', paddingTop: '25px'}}>
-          <div style={{width: '80%'}}>
+      <div className='align-text-center'>
+        <div className='d-flex f-direction-col adaptive-width align-items-center'>
+          <div style={{width: '80%', maxWidth: '350px'}}>
             <KillerFontSVG />
           </div>
           <div className='image-label-center'>
             <h2 style={{fontSize: '30px'}}> YOUR TARGET IS </h2>
             <h2 className='mini-text' style={{fontSize: '37px'}}> {player_target.first_name} {player_target.last_name} </h2>
           </div>
-          <div style={{marginBottom: "20px", position: 'relative'}}>
-            {this.DeathConfirmWindow()}
-            <img className='img-target' src={player_target.image_URL} />
-          </div>
-          <div className='row-map'>
-            <Link to='/'>
-              <button
-                  className="created-game-btns"
-                  type='button'> BACK TO MENU </button>
-            </Link>
-            {this.DeathWaitingButton()}
+          <div style={{marginBottom: "20px", position: 'relative', display: 'inline-flex', flexDirection: 'column'}}>
+            <div style={{position: 'relative'}}>
+              {this.DeathConfirmWindow()}
+              <img className='profile-img' src={player_target.image_URL} />
+            </div>
+            <div className='d-flex f-direction-row top-btm-mar-30px double-link-btn-wrapper j-content-space-between'>
+              <Link to='/'>
+                <button
+                    type='button'> BACK TO MENU </button>
+              </Link>
+              {this.DeathWaitingButton()}
+            </div>
           </div>
         </div>
       </div>

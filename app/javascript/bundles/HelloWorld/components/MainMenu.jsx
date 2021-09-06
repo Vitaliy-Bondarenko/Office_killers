@@ -39,10 +39,13 @@ class MainMenu extends React.Component {
         } else {
           return "RETURN TO GAME";
         }
-      } else if(current_game.status == "in_progress") {
-        return "RETURN TO GAME";
-      } else if(current_game.status == "finished") {
-        return "CREATE NEW GAME";
+      } else {
+        switch (current_game.status) {
+          case "in_progress":
+            return "RETURN TO GAME";
+          case "finished":
+            return "CREATE NEW GAME";
+        }
       }
     } else {
       return "CREATE NEW GAME";
@@ -52,13 +55,12 @@ class MainMenu extends React.Component {
   render(){
     const game = this.state.current_game || {};
     return (
-      <div className='mm-list flex-main-menu-list' style={{width: 'min-content'}}>
+      <div className='absolute-center flex-main-menu-list align-text-center min-content-width'>
         <KillerFontSVG />
         <Link
-            style={{marginTop: '10px'}}
             to='/game'>
           <button
-              className="mm-btn"
+              className="default-btn"
               type="button">
             {this.handleGameButtonText()}</button>
         </Link>
@@ -66,30 +68,29 @@ class MainMenu extends React.Component {
             undefined :
             <Link to='/join_game'>
               <button
-                  className="mm-btn"
+                  className="default-btn"
                   type="button">JOIN GAME VIA CODE</button>
             </Link> }
         <Link to='/'>
           <button
-              className="mm-btn"
+              className="default-btn"
               disabled
               type="button">HOW TO PLAY</button>
         </Link>
         {game && game.status == "finished" ?
           <Link to='/best_killer'>
             <button
-                className="mm-btn"
+                className="default-btn"
                 type="button">STATISTIC</button>
           </Link> : undefined }
         <Link to='/settings'>
           <button
-              className="mm-btn"
+              className="default-btn"
               type="button">SETTINGS</button>
         </Link>
         <button
-            id="mm-btn-red"
+            className="default-btn red-btn"
             onClick={() => window.location.href="/logout"}
-            style={{margin: '4px'}}
             type="button">
               LOGOUT
         </button>

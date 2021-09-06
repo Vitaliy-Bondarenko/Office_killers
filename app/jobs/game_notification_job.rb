@@ -14,8 +14,9 @@ class GameNotificationJob < ApplicationJob
       notification: {
         title: game_cases.split('.')[0],
         body: game_cases.split('.')[1],
-        sound: 'default'
-      }
+        sound: 'default',
+        link: 'https://office-killer.herokuapp.com/game'
+      },
     }
     fcm_client.send(device_token, options)
   end

@@ -12,6 +12,7 @@ class Game < ApplicationRecord
   validates :code, uniqueness: true, presence: true
   after_create :add_owner_player, :start_game_on_time
   after_update :start_game_on_time, if: -> { saved_change_to_start_time? }
+  after_update :redirect_to_statistics, if: -> { saved_change_to_status? }
 
   after_create_commit :broadcast_game
   after_update_commit :broadcast_game
@@ -35,9 +36,17 @@ class Game < ApplicationRecord
     end
   end
 
+  def redirect_to_statistics
+    if saved_changes.dig('status').second == 'finished'
+      user_ids.each do |user_id|
+        perform_notification(user_id)
+      end
+    end
+  end
+
   def game_status_notif
     users.where(notify_game_start: true).find_each do |user|
-      GameNotificationJob.perform_later(user.id)
+      perform_notification(user.id)
     end
   end
 
@@ -49,5 +58,9 @@ class Game < ApplicationRecord
 
   def start_game_on_time
     StartGameJob.perform_at(start_time, id) if unstarted? && start_time.present?
+  end
+
+  def perform_notification(user_id)
+    GameNotificationJob.perform_later(user_id)
   end
 end

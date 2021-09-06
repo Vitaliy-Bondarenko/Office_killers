@@ -17,6 +17,7 @@ class Api::V1::GamesController < ApplicationController
 
   def killer_start
     return unless current_game.owner_id == current_user.id
+
     current_game.start_game
   end
 

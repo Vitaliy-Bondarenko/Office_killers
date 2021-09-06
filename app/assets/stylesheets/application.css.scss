@@ -16,6 +16,8 @@
  *= require settings
  *= require game
  *= require target_view
+ *= require buttons
+ *= require statistics
  */
 
 @import 'office-killers';
@@ -32,6 +34,98 @@
   src:asset_url('BebasNeue-Regular.otf');
 }
 
-body{
+:root {
+  --red-btn: #ef9c9c;
+  --green-btn: #a8f7a8;
+}
+
+body {
   font-family: 'BebasNeue-Regular';
+  padding: 15px 15px;
+  margin: 0;
+}
+
+.absolute-center {
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  position: absolute;
+}
+
+.align-text-center {
+  text-align: center;
+  text-align: -webkit-center;
+  text-align: -moz-center;
+}
+
+.solid-border {
+  border: 1px solid black;
+}
+
+.d-flex {
+  display: inline-flex;
+}
+
+.f-direction-col {
+  flex-direction: column;
+}
+
+.f-direction-row {
+  flex-direction: row;
+}
+
+.align-items-center {
+  align-items: center;
+}
+
+.min-content-width {
+  width: min-content;
+}
+
+.padding-top-30px {
+  padding-top: 30px;
+}
+
+.j-content-space-between {
+  justify-content: space-between;
+}
+
+.j-content-center {
+  justify-content: center;
+}
+
+.whitespace-nowrap {
+  white-space: nowrap;
+}
+
+.profile-img {
+  width: 100%;
+}
+
+.no-margin {
+  margin: 0;
+}
+
+.top-btm-mar-30px {
+  margin: 30px 0;
+}
+
+.width-100 {
+  width: 100%;
+}
+
+.width-92 {
+  width: 92%;
+}
+
+.f-wrap {
+  flex-wrap: wrap;
+}
+
+.max-width-850 {
+  max-width: 850px;
+}
+
+.max-width-450 {
+  max-width: 450px;
 }

@@ -1,12 +1,11 @@
 import React from 'react';
+import { KillerFontSVG } from './icons.js';
 
 const LoginPage = () => {
   return (
-    <div className='mm-list' style={{top: '44%'}}>
-      <h1
-          className='login-font'
-          style={{marginBottom: '20px'}}> KILLER </h1>
-      <div className='login-btns-wrapper'>
+    <div className='absolute-center align-text-center' style={{top: '44%', width: 'min-content'}}>
+      <KillerFontSVG />
+      <div className='d-flex f-direction-col align-items-center login-btns-wrapper ' style={{marginTop: '30px'}}>
         <a
             className='login-btn'
             href='/login'>

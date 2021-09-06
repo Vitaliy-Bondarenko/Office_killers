@@ -87,16 +87,16 @@ class Settings extends React.Component {
 
   render(){
     return (
-      <div className='mobile-width'>
-        <div className='setting-div' style={{width: 'min-content'}}>
+      <div className='align-text-center'>
+        <div className='d-flex f-direction-col adaptive-width'>
           <SettingsFontSVG />
           <div>
             <div className='text-left-align'>
               <h2> YOUR PHOTO </h2>
-              <p className='white-text-small' style={{margin: '0'}}> USING FOR DISPLAYING YOUR PHOTO IN EACH GAME </p>
+              <p className='white-text-small no-margin'> USING FOR DISPLAYING YOUR PHOTO IN EACH GAME </p>
             </div>
             <div>
-              <img id='img-profile' src={this.state.image_URL} />
+              <img className="profile-img" src={this.state.image_URL} />
             </div>
           </div>
           <div className='row-field'>
@@ -111,7 +111,7 @@ class Settings extends React.Component {
                   name='first_name'
                   onChange={this.handleUpdateFields}
                   type='text'
-                  value={this.state.first_name} />
+                  value={this.state.first_name || undefined} />
             </div>
             <div className='personal-info-inputs'>
               <label className='label-input-settings' htmlFor="last-name-input">
@@ -124,7 +124,7 @@ class Settings extends React.Component {
                   name='last_name'
                   onChange={this.handleUpdateFields}
                   type='text'
-                  value={this.state.last_name} />
+                  value={this.state.last_name || undefined} />
             </div>
           </div>
           <div className='text-align-left'>
@@ -160,18 +160,15 @@ class Settings extends React.Component {
               <label className='notify-gm' htmlFor='notif-gm-news'>NEWS</label>
             </div>
           </div>
-          <div className='btn-wrapper'>
-            <Link to='/' style={{width: '90%', marginRight: '4%'}}>
+          <div className='d-flex f-direction-row top-btm-mar-30px double-link-btn-wrapper j-content-space-between'>
+            <Link to='/'>
               <button
-                  className='settings-btn'
-                  style={{backgroundColor: 'white'}}
                   type='button'> BACK TO MENU </button>
             </Link>
             <button
-                className='settings-btn'
+                className='green-btn'
                 disabled={this.state.disabled}
                 onClick={this.handleSubmitSettings}
-                style={{backgroundColor: '#a8f7a8', width: '90%'}}
                 type="button">SUBMIT CHANGES</button>
           </div>
         </div>
@@ -180,4 +177,4 @@ class Settings extends React.Component {
   }
 }
 
-export default Settings;
+export default Settings

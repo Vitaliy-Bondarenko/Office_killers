@@ -23,7 +23,7 @@ class PlayerSerializer < ApplicationSerializer
   end
 
   def your_killers
-    Player.where('? = ANY (target_ids)', object.id).select(:first_name, :last_name, :id).joins(:user)
+    Player.where('? = ANY (target_ids)', object.id).select(:first_name, :last_name, :id, :image_URL).joins(:user)
   end
 
   def current_game_owner
