@@ -75,7 +75,7 @@ export default class HelloWorld extends React.Component {
     const check_game_pending = !current_game || game.status == "finished";
     return (
       <Router>
-        <div className='mm-list-align'>
+        <div>
           <div className="app-container">
             <ReactNotification />
           </div>
@@ -101,12 +101,14 @@ export default class HelloWorld extends React.Component {
               <Route exact path='/join_game' >
                 {check_game_pending ? <JoinGameWithCode /> : <Redirect to='/game' />}
               </Route>
-              {current_player.current_game_owner &&
-                current_game.players.length > 2 && game.status == "unstarted" &&
-                <Route
-                    path='/confirm' render={_props =>
-                      (current_game.status == 'unstarted' ? <StartGameWarn
-                          current_game={this.state.current_game} /> : <Redirect to='/game' />)} />}
+              <Route exact
+                      path='/confirm'>
+                  {current_player.current_game_owner &&
+                   current_game.players.length > 2 && game.status == "unstarted" ?
+                      current_game.status == 'unstarted' && <StartGameWarn
+                          current_game={this.state.current_game}
+                          current_player={this.state.current_player} /> : <Redirect to='/game' />}
+                </Route>
               <Route
                   path='/statistic' render={game.status == "finished" ?
                        (_props =>

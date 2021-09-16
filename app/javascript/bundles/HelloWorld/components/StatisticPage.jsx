@@ -12,42 +12,42 @@ class StatisticPage extends React.Component {
 
   passFullNameTargets = (user) => {
     return (
-      <div key={user.id}>
-        <h4>{user.first_name} {user.last_name}</h4>
+      <div className='d-flex f-direction-row' style={{marginTop: '10px'}} key={user.id}>
+        <img className='player-small-avatar' src={user.image_URL} />
+        <h2 className='white-text statistic-user-name'>{user.first_name} {user.last_name}</h2>
       </div>
     );
+  }
+
+  renderStatisticsColumn = (text, players) => {
+    return (
+      <div className='statistics-font-wrapper'>
+        <h2 className='white-text'> {text} </h2>
+        <hr />
+        <div className='d-flex f-direction-col width-100'>
+          {players.map(this.passFullNameTargets)}
+        </div>
+      </div>
+    )
   }
 
   render(){
     const target_ids = this.state.current_player.dead_targets;
     const your_killers = this.state.current_player.your_killers;
     return (
-      <div className='statistic-window'>
-        <div
-            className='card-center'
-            style={{maxWidth: '500px', width: '80%'}}>
-          <div className='small-padding'>
-            <h3 style={{fontSize: '25px', margin: '0'}}>GAME STATISTIC</h3>
-          </div>
-          <div className='vertical-align'>
-            <div style={{marginBottom: '20px'}}>
-              <h3 className='black-text'> Your killers </h3>
-              <hr style={{width: "150px", color: 'black', marginTop: '5px'}} />
-              {your_killers.map(this.passFullNameTargets)}
-            </div>
-            <div>
-              <h3 className='black-text' style={{marginTop: '13px'}}> You killed </h3>
-              <hr style={{width: "150px", color: 'black', marginTop: '5px'}} />
-              {target_ids.map(this.passFullNameTargets)}
-            </div>
-            <Link to='/'>
-              <button
-                  className="mm-btn"
-                  style={{margin: "25px 0", backgroundColor: '#a8f7a8'}}
-                  type='button'>BACK TO MAIN MENU</button>
-            </Link>
-          </div>
+      <div className='align-text-center width-100 d-flex f-direction-col align-items-center'>
+        <div className='top-btm-mar-30px'>
+          <h3 className='white-text' style={{fontSize: '70px'}}>GAME STATISTIC</h3>
         </div>
+        <div className='f-direction-row d-flex width-100 max-width-450 j-content-space-between'>
+          { this.renderStatisticsColumn('Your killers', your_killers) }
+          { this.renderStatisticsColumn('You killed', target_ids) }
+        </div>
+        <Link to='/best_killer' className='top-btm-mar-30px'>
+            <button
+                className="default-btn"
+                type='button'>BACK</button>
+          </Link>
       </div>
     );
   }

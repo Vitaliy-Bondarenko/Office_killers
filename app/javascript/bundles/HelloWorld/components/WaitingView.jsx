@@ -25,26 +25,22 @@ class WaitingView extends React.Component {
 
   render(){
     return(
-      <div
-          className='mm-list'
-          style={{width: '100%'}}>
+      <div className='absolute-center align-text-center width-92'>
         <h1 className='login-font' style={{margin: '0'}}> KILLER </h1>
         <div className='mm-list-waskilled'>
-          <p className='medium-text'> YOUR GAME IS UNSTARTED. WAITING FOR ALL PLAYERS TO CONNECT</p>
+          <p class='medium-text'> Players in game - {this.state.game.players.length} </p>
           <div className='horizontal-line'> <hr /> </div>
-          <p className='small-text'> WE WILL NOTIFY YOU WHEN GAME STARTS </p>
+          <p className='small-text' style={{marginBottom: '10px'}}> YOUR GAME IS UNSTARTED. WAITING FOR ALL PLAYERS TO CONNECT</p>
+          <p className='small-text' style={{marginTop: '10px'}}> WE WILL NOTIFY YOU WHEN GAME STARTS </p>
         </div>
-        <div style={{marginTop: '80px 0 50px'}}>
-          <Link to='/'>
+        <div className='d-flex f-direction-row width-100 double-link-btn-wrapper j-content-center' >
+          <Link to='/' style={{marginRight: '20px'}}>
             <button
-                className="mm-btn waiting-back"
-                style={{margin: "0 3%"}}
                 type="button">BACK TO MENU</button>
           </Link>
           <button
-              id="mm-btn-red"
+              className="red-btn"
               onClick={this.handleDestroyPlayer}
-              style={{margin: "0 3%", width: '44%'}}
               type="button">DISCONNECT</button>
         </div>
       </div>

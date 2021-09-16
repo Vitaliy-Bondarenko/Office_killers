@@ -93,7 +93,7 @@ class FormGame extends React.Component {
       if (current_player.current_game_owner){
         return (
           <button
-              className="created-game-btns"
+              className="green-btn"
               onClick={datetime_changed ? this.handleGameUpdate : this.handleSubmitSettings}
               type="button"> {datetime_changed ? "UPDATE GAME" : "START GAME"} </button>
           );
@@ -101,9 +101,8 @@ class FormGame extends React.Component {
     } else {
       return(
         <button
-            className="created-game-btns"
+            className="green-btn"
             onClick={this.handleSubmitSettings}
-            style={{backgroundColor: '#a8f7a8', marginLeft: '20px'}}
             type="button">CREATE GAME </button>
         );
     }
@@ -111,8 +110,9 @@ class FormGame extends React.Component {
 
   passPlayers = (user) => {
     return (
-      <div className='user-wrapper' key={user.id}>
-        <p className="email-input">{user.first_name} {user.last_name}</p>
+      <div className='user-wrapper email-input d-flex' key={user.id}>
+        <img className='player-small-avatar' src={user.image_URL} />
+        <p className='statistic-user-name'>{user.first_name} {user.last_name}</p>
       </div>
     );
   }
@@ -152,84 +152,85 @@ class FormGame extends React.Component {
     const players = game.players || [];
     const { start_time, current_player } = this.state;
     return(
-      <div className='mm-list-min-padding'>
-        <h1 className='big-font' style={{margin: '0'}}> CREATE GAME </h1>
-        <div className='row-inline-block'>
-          <div className='column-qr-code'>
-            <label className='text-above-qr' htmlFor="qr-code">
-              CONNECTING PLAYERS VIA QR CODE
-            </label>
-            <QRCode
-                bgColor={"#000000"}
-                fgColor={"#ffffff"}
-                size={350}
-                style={{marginTop: '10px',
-                        minWidth: '40%',
-                        minHeight: '40%',
-                        maxWidth: '350px',
-                        maxHeight: '350px',
-                        height: '100%',
-                        width: '100%'}}
-                value={window.location.origin + '/games/' + game.code} />
-          </div>
-          <div className='column-game-update'>
-            <div style={{maxWidth: '350px', maxHeight: '350px', marginBottom: '15px'}}>
-              <label className='text-above-qr' htmlFor="code-input">
-                CONNECTING PLAYERS VIA CODE
-              </label>
-              <input
-                  className='code-for-game'
-                  id='code-input'
-                  readOnly
-                  ref={(codeInputField) => this.codeInputField = codeInputField}
-                  type='text'
-                  value={game.code || ""} />
-              <button
-                  className='copy-to-clipboard'
-                  onClick={() => this.copyToClipboard()}
-                  type='button'>
-                COPY TO CLIPBOARD
-              </button>
-            </div>
-            <div style={{maxWidth: '350px', maxHeight: '350px', width: '100%'}}>
-              <label className='text-above-qr' htmlFor="date-picker">
-                SET GAME START TIME
-              </label>
-              <DateTimePicker
-                  className='date-time-picker'
-                  format="dd-MM-y hh:mm a"
-                  id='date-picker'
-                  onChange={this.handleStartDate}
-                  value={start_time} />
-            </div>
-          </div>
-        </div>
-        <div className='connected-users-wrapper' style={{margin: '30px 0 10px 0'}}>
-          {game.id ?
-            <>
-              <div>
-                <h1 className='medium-font' style={{margin: '0'}}> CONNECTED USERS </h1>
-                <hr align="center" width="25%" />
+      <div className='align-text-center'>
+        <div className='d-flex f-direction-col width-100 j-content-space-between align-items-center'>
+          <h1 className='big-font'> CREATE GAME </h1>
+          <div className='d-flex f-direction-col width-100 max-width-850'>
+            <div>
+              <div className='column-qr-code'>
+                <label className='text-above-qr' htmlFor="qr-code">
+                  CONNECTING PLAYERS VIA QR CODE
+                </label>
+                <QRCode
+                    bgColor={"#000000"}
+                    fgColor={"#ffffff"}
+                    size={350}
+                    style={{marginTop: '10px',
+                            minWidth: '40%',
+                            minHeight: '40%',
+                            maxWidth: '350px',
+                            maxHeight: '350px',
+                            height: '100%',
+                            width: '100%'}}
+                    value={window.location.origin + '/games/' + game.code} />
               </div>
-              <div className='connected-users'>
-                {players.map(this.passPlayers)}
+              <div className='column-game-update'>
+                <div style={{maxWidth: '350px', maxHeight: '350px', marginBottom: '15px'}}>
+                  <label className='text-above-qr' htmlFor="code-input">
+                    CONNECTING PLAYERS VIA CODE
+                  </label>
+                  <input
+                      className='code-for-game'
+                      id='code-input'
+                      readOnly
+                      ref={(codeInputField) => this.codeInputField = codeInputField}
+                      type='text'
+                      value={game.code || ""} />
+                  <button
+                      className='copy-to-clipboard'
+                      onClick={() => this.copyToClipboard()}
+                      type='button'>
+                    COPY TO CLIPBOARD
+                  </button>
+                </div>
+                <div style={{maxWidth: '350px', maxHeight: '350px', width: '100%'}}>
+                  <label className='text-above-qr' htmlFor="date-picker">
+                    SET GAME START TIME
+                  </label>
+                  <DateTimePicker
+                      className='date-time-picker'
+                      format="dd-MM-y hh:mm a"
+                      id='date-picker'
+                      onChange={this.handleStartDate}
+                      value={start_time} />
+                </div>
               </div>
-            </> : undefined }
-          <div
-              className='row-map' style={{justifyContent: !game.id ? 'center' : 'space-between'}}>
-            <Link to='/' className='back-link-game-form' style={{marginRight: !game.id ? '20px' : '0'}}>
-              <button
-                  className="created-game-btns"
-                  style={{backgroundColor: 'white'}}
-                  type="button">BACK TO MENU</button>
-            </Link>
-            {game.id ?
-              <button
-                  className="created-game-btns"
-                  onClick={this.destroyGame}
-                  style={{backgroundColor: '#ef9c9c'}}
-                  type="button"> CANCEL GAME </button> : undefined }
-            {this.showStartGameButton()}
+            </div>
+            <div className='top-btm-mar-30px'>
+              {game.id ?
+                <>
+                  <div className='top-btm-mar-30px'>
+                    <h1 className='medium-font'> CONNECTED USERS </h1>
+                    <hr align="center" width="25%" style={{minWidth: '100px'}} />
+                  </div>
+                  <div className='d-flex adaptive-user-table j-content-space-between width-100 f-wrap'>
+                    {players.map(this.passPlayers)}
+                  </div>
+                </> : undefined }
+              <div
+                  className='d-flex f-direction-row top-btm-mar-30px triple-link-btn-wrapper j-content-space-between width-100' style={{justifyContent: !game.id ? 'center' : 'space-between'}}>
+                <Link to='/' style={{marginRight: game.id ? '0' : '20px'}}>
+                  <button
+                      type="button">BACK TO MENU</button>
+                </Link>
+                {game.id ?
+                  <button
+                      className="red-btn"
+                      onClick={this.destroyGame}
+                      type="button"> CANCEL GAME </button> : undefined }
+                {this.showStartGameButton()}
+              </div>
+            </div>
           </div>
         </div>
       </div>

@@ -1,4 +1,11 @@
 .flex-main-menu-list {
   display: inline-flex;
   flex-direction: column;
+  .default-btn {
+    margin: 4px 0;
+  }
+}
+
+.flex-main-menu-list a:first-of-type {
+  margin-top: 10px;
 }

@@ -1,0 +1,61 @@
+.default-btn {
+  width: 200px;
+  height: 37px;
+  color: black;
+  border: 1px solid black;
+  border-radius: 5px;
+  background-color: white;
+  text-align: center;
+  text-align: -webkit-center;
+  text-align: -moz-center;
+  font-weight: 700;
+  cursor: pointer;
+  user-select: none;
+}
+
+.red-btn {
+  background-color: var(--red-btn);
+}
+
+.green-btn {
+  background-color: var(--green-btn);
+}
+
+.double-link-btn-wrapper {
+  button {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    color: black;
+    border-width: 0;
+    padding: 11px 7px;
+    border-radius: 5px;
+    font-weight: 700;
+    max-width: 210px;
+  }
+  a {
+    width: 48%;
+    max-width: 210px;
+  }
+  button:not(a button) { width: 48% }
+}
+
+.triple-link-btn-wrapper {
+  a {
+    width: 32%;
+    max-width: 210px;
+  }
+  button {
+    width: 100%;
+    margin: 0;
+    color: black;
+    border-width: 0;
+    padding: 11px 7px;
+    border-radius: 5px;
+    font-weight: 700;
+    max-width: 210px;
+  }
+  button:not(a button) {
+    width: 32%;
+  }
+}
