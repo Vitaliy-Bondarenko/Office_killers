@@ -161,18 +161,22 @@ class FormGame extends React.Component {
                 <label className='text-above-qr' htmlFor="qr-code">
                   CONNECTING PLAYERS VIA QR CODE
                 </label>
-                <QRCode
-                    bgColor={"#000000"}
-                    fgColor={"#ffffff"}
-                    size={350}
-                    style={{marginTop: '10px',
-                            minWidth: '40%',
-                            minHeight: '40%',
-                            maxWidth: '350px',
-                            maxHeight: '350px',
-                            height: '100%',
-                            width: '100%'}}
-                    value={window.location.origin + '/games/' + game.code} />
+                <div className='position-relative'>
+                  {game.id ? undefined : <><p> Create game and use this QR code for players to connect </p></>}
+                  <QRCode
+                      bgColor={"#000000"}
+                      fgColor={"#ffffff"}
+                      size={350}
+                      style={{marginTop: '10px',
+                              minWidth: '40%',
+                              minHeight: '40%',
+                              maxWidth: '350px',
+                              maxHeight: '350px',
+                              height: '100%',
+                              width: '100%',
+                              opacity: game.id ? '1' : '0.3'}}
+                      value={window.location.origin + '/games/' + game.code} />
+                </div>
               </div>
               <div className='column-game-update'>
                 <div style={{maxWidth: '350px', maxHeight: '350px', marginBottom: '15px'}}>
