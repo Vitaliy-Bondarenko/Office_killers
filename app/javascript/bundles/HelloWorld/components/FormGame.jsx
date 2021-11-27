@@ -214,7 +214,7 @@ class FormGame extends React.Component {
               {game.id ?
                 <>
                   <div className='top-btm-mar-30px'>
-                    <h1 className='medium-font'> CONNECTED USERS </h1>
+                    <h1 className='medium-font'> CONNECTED USERS - {players.length} </h1>
                     <hr align="center" width="25%" style={{minWidth: '100px'}} />
                   </div>
                   <div className='d-flex adaptive-user-table j-content-space-between width-100 f-wrap'>

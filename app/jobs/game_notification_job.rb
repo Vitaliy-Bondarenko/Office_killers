@@ -25,7 +25,7 @@ class GameNotificationJob < ApplicationJob
   def game_cases
     case @user.current_game.status
     when 'in_progress'
-      'Game has started. Your game has started! Hurry up!'
+      'Game has started. Your game has started! Go check your target!'
     when 'finished'
       'Game has finished. Your game has finished! Go check player statistic'
     end

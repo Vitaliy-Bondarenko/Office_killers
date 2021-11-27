@@ -12,7 +12,6 @@ class Game < ApplicationRecord
   validates :code, uniqueness: true, presence: true
   after_create :add_owner_player, :start_game_on_time
   after_update :start_game_on_time, if: -> { saved_change_to_start_time? }
-  after_update :redirect_to_statistics, if: -> { saved_change_to_status? }
 
   after_create_commit :broadcast_game
   after_update_commit :broadcast_game
@@ -33,14 +32,6 @@ class Game < ApplicationRecord
   def broadcast_game
     user_ids.each do |user_id|
       GameBroadcastJob.perform_later(user_id)
-    end
-  end
-
-  def redirect_to_statistics
-    if saved_changes.dig('status').second == 'finished'
-      user_ids.each do |user_id|
-        perform_notification(user_id)
-      end
     end
   end
 

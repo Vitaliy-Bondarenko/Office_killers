@@ -18,8 +18,9 @@ class Api::V1::PlayersController < ApplicationController
 
   def player_killed
     target_info.dead! if target_info.death_confirm?
+    return check_players_count if players.where.not(status: :dead).count == 2
+
     PlayerNotificationJob.perform_later(player.id)
-    check_players_count
     player.target_ids << target_info.target_id
     player.target_id = target_info.target_id
     player.save
@@ -38,13 +39,11 @@ class Api::V1::PlayersController < ApplicationController
   private
 
   def check_players_count
-    if players.where.not(status: :dead).count == 2
-      current_user.current_game.update(
-        status: :finished,
-        finish_time: DateTime.now
-      ) && game_finished
-      render json: { status: 'finished' }
-    end
+    current_user.current_game.update(
+      status: :finished,
+      finish_time: DateTime.now
+    ) && game_finished
+    render json: { status: 'finished' }
   end
 
   def game_finished
