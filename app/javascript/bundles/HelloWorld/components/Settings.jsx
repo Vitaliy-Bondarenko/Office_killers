@@ -81,7 +81,6 @@ class Settings extends React.Component {
 
   handleChangeForCheckbox = (event) => {
     const field = event.target.name;
-    console.log(event.target.checked);
     this.setState({ [field]: event.target.checked, disabled: false });
   }
 

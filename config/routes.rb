@@ -7,7 +7,9 @@ Rails.application.routes.draw do
 
   namespace :api do
     namespace :v1 do
-      resources :users, only: %i[update create show]
+      resources :users, only: %i[update create show] do
+        get 'all_info', on: :member
+      end
       resources :games, only: %i[new create update destroy] do
         put 'killer_start', on: :member
       end
@@ -16,6 +18,7 @@ Rails.application.routes.draw do
         put 'player_killed', on: :member
         put 'error_death', on: :member
         delete 'ban_player', on: :member
+        put 'unban_player', on: :member
       end
     end
   end

@@ -14,16 +14,32 @@ class FormGame extends React.Component {
     super(props);
 
     this.state = {
-      game: props.game && props.game.status != "finished" ? props.game : undefined,
+      current_game: props.current_game && props.current_game.status != "finished" ? props.current_game : undefined,
       start_time: (props.game || {}).start_time ? new Date(props.game.start_time) : undefined,
       current_user: props.current_user,
       current_player: props.current_player,
       datetime_changed: false
     };
+
+    window.forceUpdatePlayersCount = this.forceUpdatePlayersCount.bind(this);
   }
 
   UNSAFE_componentWillMount() {
+    this.getSessionInfo();
     this.getNewGame();
+  }
+
+  forceUpdatePlayersCount = (current_game) => {
+    this.setState({ current_game });
+  }
+
+  getSessionInfo = () => {
+    const url = '/api/v1/users/' + this.state.current_user.id + '/all_info';
+    if (this.state.current_game) {
+      requestmanager.request(url).then((resp) => {
+        this.setState({ current_user: resp.user, current_game: resp.game, current_player: resp.player });
+      }).catch(() => {});
+    }
   }
 
   copyToClipboard = () => {
@@ -52,18 +68,18 @@ class FormGame extends React.Component {
   }
 
   getNewGame = () => {
-    const { game } = this.state;
-    if (!game) {
+    const { current_game } = this.state;
+    if (!current_game) {
       requestmanager.request('/api/v1/games/new').then((resp) => {
-        this.setState({ game: resp });
+        this.setState({ current_game: resp });
       }).catch(() => {});
     }
   }
 
   destroyGame = () => {
     if (window.confirm('Are you sure you want to delete this game?')) {
-      const { game } = this.state;
-      const url = '/api/v1/games/' + game.id;
+      const { current_game } = this.state;
+      const url = '/api/v1/games/' + current_game.id;
       requestmanager.request(url, 'delete').then((_resp) => {
         window.location = "/game";
       }).catch(() => {});
@@ -71,9 +87,9 @@ class FormGame extends React.Component {
   }
 
   handleGameUpdate = () => {
-    const { game } = this.state;
-    const url = '/api/v1/games/' + game.id;
-    const params = { game: { start_time: this.state.start_time }};
+    const { current_game } = this.state;
+    const url = '/api/v1/games/' + current_game.id;
+    const params = { current_game: { start_time: this.state.start_time }};
     requestmanager.request(url, 'PATCH', params).then((_resp) => {
       window.location = '/game';
     }).catch(() => {});
@@ -95,10 +111,18 @@ class FormGame extends React.Component {
     }
   }
 
+  unbanUser = (user_id) => {
+    if (window.confirm('Are you sure you want to unban this player?')) {
+      const url = '/api/v1/players/' + user_id + '/unban_player?game_id=' + this.state.current_game.id;
+      requestmanager.request(url, 'put').then((_resp) => {
+      }).catch(() => {});
+    }
+  }
+
   showStartGameButton = () => {
-    const game = this.state.game || {};
+    const current_game = this.state.current_game || {};
     const { current_player, datetime_changed } = this.state;
-    if (game.id){
+    if (current_game.id){
       if (current_player.current_game_owner){
         return (
           <button
@@ -129,11 +153,13 @@ class FormGame extends React.Component {
             <div className='d-flex align-items-center j-content-space-between' style={{width: '41px'}}>
               <span
                 onClick={() => this.destroyPlayer(user.id)}
+                title='kick'
                 className='cursor-pointer'>
                 <KickIconSVG />
               </span>
               <span
                 onClick={() => this.banPlayer(user.id)}
+                title='bam'
                 className='cursor-pointer red-color'>
                 <BanIconSVG />
               </span>
@@ -144,17 +170,36 @@ class FormGame extends React.Component {
     );
   }
 
+  getBannedUsers = (user) => {
+    return (
+      <div className='email-input d-flex j-content-space-between' key={user.id}>
+        <div className='d-flex'>
+          <img className='player-small-avatar' src={user.image_URL} />
+          <p className='statistic-user-name'>{user.first_name} {user.last_name}</p>
+        </div>
+        <div className='d-flex align-items-center j-content-space-between' style={{marginLeft: '10px'}}>
+          <span
+            onClick={() => this.unbanUser(user.id)}
+            title='unban'
+            className='cursor-pointer red-color'>
+            <BanIconSVG />
+          </span>
+        </div>
+      </div>
+    );
+  }
+
   handleSubmitSettings = () => {
-    const { game } = this.state;
-    if (!game.id || game.status == "finished") {
-      const params = { game: { code: game.code,
+    const { current_game } = this.state;
+    if (!current_game.id || current_game.status == "finished") {
+      const params = { game: { code: current_game.code,
                                start_time: this.state.start_time }
       };
       requestmanager.request('/api/v1/games/', 'post', params).then((_resp) => {
         window.location = '/game';
       }).catch(() => {});
     } else {
-      if (game.players.length > 2)
+      if (current_game.players.length > 2)
         window.location = '/confirm';
       else {
         store.addNotification({
@@ -175,9 +220,9 @@ class FormGame extends React.Component {
   }
 
   render() {
-    const game = this.state.game || {};
-    const players = game.players || [];
-    const { start_time, current_player } = this.state;
+    const current_game = this.state.current_game || {};
+    const players = current_game.players || [];
+    const { start_time } = this.state;
     return(
       <div className='align-text-center'>
         <div className='d-flex f-direction-col width-100 j-content-space-between align-items-center'>
@@ -189,7 +234,7 @@ class FormGame extends React.Component {
                   CONNECTING PLAYERS VIA QR CODE
                 </label>
                 <div className='position-relative'>
-                  {game.id ? undefined : <><p> Create game and use this QR code for players to connect </p></>}
+                  {current_game.id ? undefined : <><p> Create game and share this QR code to other players </p></>}
                   <QRCode
                       bgColor={"#000000"}
                       fgColor={"#ffffff"}
@@ -201,12 +246,12 @@ class FormGame extends React.Component {
                               maxHeight: '350px',
                               height: '100%',
                               width: '100%',
-                              opacity: game.id ? '1' : '0.3'}}
-                      value={window.location.origin + '/games/' + game.code} />
+                              opacity: current_game.id ? '1' : '0.3'}}
+                      value={window.location.origin + '/games/' + current_game.code} />
                 </div>
               </div>
               <div className='column-game-update'>
-                <div style={{maxWidth: '350px', maxHeight: '350px', marginBottom: '15px'}}>
+                <div className={current_game.id ? 'form-game-attributes' : 'form-game-attributes disabled-inputs'}>
                   <label className='text-above-qr' htmlFor="code-input">
                     CONNECTING PLAYERS VIA CODE
                   </label>
@@ -216,7 +261,7 @@ class FormGame extends React.Component {
                       readOnly
                       ref={(codeInputField) => this.codeInputField = codeInputField}
                       type='text'
-                      value={game.code || ""} />
+                      value={current_game.code || ""} />
                   <button
                       className='copy-to-clipboard'
                       onClick={() => this.copyToClipboard()}
@@ -224,7 +269,7 @@ class FormGame extends React.Component {
                     COPY TO CLIPBOARD
                   </button>
                 </div>
-                <div style={{maxWidth: '350px', maxHeight: '350px', width: '100%'}}>
+                <div className={current_game.id ? 'form-game-attributes' : ' form-game-attributes disabled-inputs'}>
                   <label className='text-above-qr' htmlFor="date-picker">
                     SET GAME START TIME
                   </label>
@@ -235,10 +280,19 @@ class FormGame extends React.Component {
                       onChange={this.handleStartDate}
                       value={start_time} />
                 </div>
+                {current_game.id &&
+                  <>
+                    <div className='form-game-attributes banned-users-wrapper'>
+                      <p className='text-above-qr'>BANNED USERS</p>
+                      <div className='d-flex adaptive-user-table j-content-space-between width-100 f-wrap'>
+                        {current_game.banned_users.map(this.getBannedUsers)}
+                      </div>
+                    </div>
+                  </>}
               </div>
             </div>
             <div className='top-btm-mar-30px'>
-              {game.id ?
+              {current_game.id &&
                 <>
                   <div className='top-btm-mar-30px'>
                     <h1 className='medium-font'> CONNECTED USERS - {players.length} </h1>
@@ -247,18 +301,18 @@ class FormGame extends React.Component {
                   <div className='d-flex adaptive-user-table j-content-space-between width-100 f-wrap'>
                     {players.map(this.passPlayers)}
                   </div>
-                </> : undefined }
+                </> }
               <div
-                  className='d-flex f-direction-row top-btm-mar-30px triple-link-btn-wrapper j-content-space-between width-100' style={{justifyContent: !game.id ? 'center' : 'space-between'}}>
-                <Link to='/' style={{marginRight: game.id ? '0' : '20px'}}>
+                  className='d-flex f-direction-row top-btm-mar-30px triple-link-btn-wrapper j-content-space-between width-100' style={{justifyContent: !current_game.id ? 'center' : 'space-between'}}>
+                <Link to='/' style={{marginRight: current_game.id ? '0' : '20px'}}>
                   <button
                       type="button">BACK TO MENU</button>
                 </Link>
-                {game.id ?
+                {current_game.id &&
                   <button
                       className="red-btn"
                       onClick={this.destroyGame}
-                      type="button"> CANCEL GAME </button> : undefined }
+                      type="button"> CANCEL GAME </button> }
                 {this.showStartGameButton()}
               </div>
             </div>

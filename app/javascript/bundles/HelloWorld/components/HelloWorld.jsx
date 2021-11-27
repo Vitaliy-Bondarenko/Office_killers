@@ -24,6 +24,12 @@ export default class HelloWorld extends React.Component {
       current_game: props.current_game,
       current_player: props.current_player,
      };
+
+     window.updatePlayerIndividually = this.updatePlayerIndividually.bind(this);
+  }
+
+  updatePlayerIndividually = (current_game, current_player) => {
+    this.setState({ current_game, current_player });
   }
 
   handleGameProps = () => {
@@ -39,33 +45,30 @@ export default class HelloWorld extends React.Component {
               current_player={current_player} />));
         }
       } else if (current_game.status == "finished") {
-        return (_props =>
-          (<FormGame
-              current_player={current_player}
-              current_user={current_user.id}
-              game={current_game} />));
+        return this.gameComponent();
       } else {
         if (current_player.current_game_owner){
-          return (_props =>
-          (<FormGame
-              current_player={current_player}
-              current_user={current_user.id}
-              game={current_game} />));
+          return this.gameComponent();
         } else {
           return (_props =>
           (<WaitingView
               current_player={current_player}
-              current_user={current_user.id}
-              game={current_game} />));
+              current_user={current_user}
+              current_game={current_game} />));
         }
       }
     } else {
-      return (_props =>
-      (<FormGame
-          current_player={current_player}
-          current_user={current_user.id}
-          game={current_game} />));
+      return this.gameComponent();
     }
+  }
+
+  gameComponent = () => {
+    const { current_player, current_user, current_game } = this.state;
+    return (_props =>
+      (<FormGame
+        current_player={current_player}
+        current_user={current_user}
+        current_game={current_game} />));
   }
 
   render() {
@@ -106,8 +109,8 @@ export default class HelloWorld extends React.Component {
                   {current_player.current_game_owner &&
                    current_game.players.length > 2 && game.status == "unstarted" ?
                       current_game.status == 'unstarted' && <StartGameWarn
-                          current_game={this.state.current_game}
-                          current_player={this.state.current_player} /> : <Redirect to='/game' />}
+                          current_game={current_game}
+                          current_player={current_player} /> : <Redirect to='/game' />}
                 </Route>
               <Route
                   path='/statistic' render={game.status == "finished" ?

@@ -15,6 +15,7 @@ class Game < ApplicationRecord
 
   after_create_commit :broadcast_game
   after_update_commit :broadcast_game
+  after_update :changing_page_broadcast, if: -> { saved_change_to_status? }
   before_destroy :broadcast_game
 
   def start_game
@@ -29,10 +30,24 @@ class Game < ApplicationRecord
     in_progress!
   end
 
+  def validate_entry(user_id)
+    unstarted? && banned_users&.exclude?(user_id) && user_ids.exclude?(user_id)
+  end
+
   def broadcast_game
     user_ids.each do |user_id|
-      GameBroadcastJob.perform_later(user_id)
+      GameBroadcastJob.perform_later(user_id, 'players_changing')
     end
+  end
+
+  def changing_page_broadcast
+    user_ids.each do |user_id|
+      GameBroadcastJob.perform_later(user_id, 'page_changing')
+    end
+  end
+
+  def broadcast_individual(user_id)
+    GameBroadcastJob.perform_later(user_id)
   end
 
   def game_status_notif

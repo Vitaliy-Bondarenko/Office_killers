@@ -13,4 +13,36 @@
 
 .react-datetime-picker__wrapper {
   border: 0 !important;
+  border-radius: 5px;
+}
+
+.disabled-inputs {
+  input {
+    cursor: default;
+    background-color: gray;
+  }
+  button {
+    color: gray;
+    cursor: default;
+    pointer-events: none;
+  }
+  .react-datetime-picker__wrapper {
+    background-color: gray;
+    pointer-events: none;
+  }
+}
+
+.form-game-attributes {
+  margin-bottom: 15px;
+  max-height: 350px;
+  max-width: 350px;
+  width: 100%;
+}
+
+.banned-users-wrapper {
+  overflow: scroll;
+}
+
+.banned-users-wrapper::-webkit-scrollbar {
+  width: 0
 }

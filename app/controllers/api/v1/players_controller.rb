@@ -2,7 +2,7 @@
 
 class Api::V1::PlayersController < ApplicationController
   def create
-    if game.present? && game.unstarted? && game.banned_users.exclude?(current_user.id)
+    if game.present? && game.validate_entry(current_user.id)
       game.players.create(user_id: current_user.id)
       render json: game
     else
@@ -33,6 +33,7 @@ class Api::V1::PlayersController < ApplicationController
 
   def error_death
     target_info.alive! unless target_info.dead?
+    render json: {}, status: :accepted
   end
 
   def destroy
@@ -41,9 +42,17 @@ class Api::V1::PlayersController < ApplicationController
   end
 
   def ban_player
+    return if player.game.owner_id == player.user.id
+
     player.game.banned_users << player.user.id
     player.game.save
     player.destroy
+    render json: {}, status: :accepted
+  end
+
+  def unban_player
+    game = Game.find_by(id: params[:game_id])
+    game.update(banned_users: game.banned_users.delete(User.find_by(id: params[:id])) || [])
     render json: {}, status: :accepted
   end
 
