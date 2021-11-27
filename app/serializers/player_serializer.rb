@@ -19,7 +19,7 @@ class PlayerSerializer < ApplicationSerializer
   end
 
   def dead_targets
-    User.joins(:players).select(:id, :first_name, :last_name, :status).where(players: { id: object.target_ids, status: :dead })
+    User.joins(:players).select(:id, :first_name, :last_name, :status, :image_URL).where(players: { id: object.target_ids, status: :dead })
   end
 
   def your_killers

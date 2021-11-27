@@ -11,7 +11,7 @@ class PlayerNotificationJob < ApplicationJob
     user_target = User.find(@target.user_id)
     device_token = @target.status == 'dead' ? user_target.notif_token : @user.notif_token
     fcm_client = FCM.new(server_key)
-    if @target.status != 'death_confirm'
+    if @target.status != 'alive'
       options = {
         priority: 'high',
         notification: {
@@ -28,7 +28,7 @@ class PlayerNotificationJob < ApplicationJob
 
   def player_cases
     case @target.status
-    when 'alive'
+    when 'death_confirm'
       'Confirm your kill. Did you kill your target?'
     when 'dead'
       'You are dead. Wait for game to end to see results'
