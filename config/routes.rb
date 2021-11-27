@@ -15,6 +15,7 @@ Rails.application.routes.draw do
         put 'death_confirm', on: :member
         put 'player_killed', on: :member
         put 'error_death', on: :member
+        delete 'ban_player', on: :member
       end
     end
   end

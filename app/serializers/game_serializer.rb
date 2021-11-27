@@ -8,9 +8,10 @@ class GameSerializer < ApplicationSerializer
              :finish_time,
              :owner_id,
              :code,
-             :players
+             :players,
+             :banned_users
 
   def players
-    object.players.joins(:user).select(:email, :first_name, :last_name, :id, :image_URL, :target_ids)
+    object.players.joins(:user).select(:email, :first_name, :last_name, :id, :image_URL, :killed_targets, :target_ids)
   end
 end

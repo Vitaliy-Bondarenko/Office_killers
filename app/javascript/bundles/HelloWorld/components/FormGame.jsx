@@ -4,6 +4,7 @@ import { store } from 'react-notifications-component';
 import QRCode from 'qrcode.react';
 import { Link } from 'react-router-dom';
 import DateTimePicker from 'react-datetime-picker';
+import { KickIconSVG, BanIconSVG } from './icons.js';
 import 'react-notifications-component/dist/theme.css';
 import 'react-datetime-picker/dist/DateTimePicker.css';
 import 'animate.css';
@@ -78,12 +79,20 @@ class FormGame extends React.Component {
     }).catch(() => {});
   }
 
-  destroyPlayer = () => {
-    const { current_player } = this.state;
-    const url = '/api/v1/players/' + current_player.id;
-    requestmanager.request(url, 'delete').then((_resp) => {
-      window.location = "/";
-    }).catch(() => {});
+  destroyPlayer = (player_id) => {
+    if (window.confirm('Are you sure you want to kick this player?')) {
+      const url = '/api/v1/players/' + player_id;
+      requestmanager.request(url, 'delete').then((_resp) => {
+      }).catch(() => {});
+    }
+  }
+
+  banPlayer = (player_id) => {
+    if (window.confirm('Are you sure you want to ban this player?')) {
+      const url = '/api/v1/players/' + player_id + '/ban_player';
+      requestmanager.request(url, 'delete').then((_resp) => {
+      }).catch(() => {});
+    }
   }
 
   showStartGameButton = () => {
@@ -110,9 +119,27 @@ class FormGame extends React.Component {
 
   passPlayers = (user) => {
     return (
-      <div className='user-wrapper email-input d-flex' key={user.id}>
-        <img className='player-small-avatar' src={user.image_URL} />
-        <p className='statistic-user-name'>{user.first_name} {user.last_name}</p>
+      <div className='user-wrapper email-input d-flex j-content-space-between' key={user.id}>
+        <div className='d-flex'>
+          <img className='player-small-avatar' src={user.image_URL} />
+          <p className='statistic-user-name'>{user.first_name} {user.last_name}</p>
+        </div>
+        {this.state.current_player.id != user.id &&
+          <>
+            <div className='d-flex align-items-center j-content-space-between' style={{width: '41px'}}>
+              <span
+                onClick={() => this.destroyPlayer(user.id)}
+                className='cursor-pointer'>
+                <KickIconSVG />
+              </span>
+              <span
+                onClick={() => this.banPlayer(user.id)}
+                className='cursor-pointer red-color'>
+                <BanIconSVG />
+              </span>
+            </div>
+          </>
+        }
       </div>
     );
   }
