@@ -11,7 +11,7 @@ class BestKiller extends React.Component {
   }
 
   getTopKiller = (players) => {
-    players.sort((a, b ) => b.target_ids.length - a.target_ids.length);
+    players.sort((a, b ) => b.killed_targets.length - a.killed_targets.length);
     return players[0];
   }
 
@@ -31,7 +31,7 @@ class BestKiller extends React.Component {
             <h1 style={{color: "white", fontSize: '40px', fontWeight: '300'}}>
               {top_killer.first_name} {top_killer.last_name}
             </h1>
-            <h2 style={{marginTop: '0'}}> killed {top_killer.target_ids.length - 1} players</h2>
+            <h2 style={{marginTop: '0'}}> killed {top_killer.killed_targets.length} players</h2>
           </div>
           <div className='d-flex f-direction-row top-btm-mar-30px double-link-btn-wrapper j-content-space-between'>
             <Link to='/'>

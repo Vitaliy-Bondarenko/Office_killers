@@ -1,5 +1,5 @@
 import React from 'react';
-import { KillerFontSVG } from './icons.js';
+import { KillerFontSVG, GoogleIconSVG } from './icons.js';
 
 const LoginPage = () => {
   return (
@@ -9,7 +9,9 @@ const LoginPage = () => {
         <a
             className='login-btn'
             href='/login'>
-          <img id='google-logo-m' src='http://tiny.cc/gc2gnz' style={{marginRight: '6px'}} />
+          <div id='google-logo'>
+            <GoogleIconSVG />
+          </div>
           <p>SIGN IN WITH GOOGLE</p>
         </a>
         <a

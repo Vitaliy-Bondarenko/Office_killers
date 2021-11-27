@@ -2,11 +2,11 @@
 
 class Api::V1::PlayersController < ApplicationController
   def create
-    if game.present? && game.unstarted?
+    if game.present? && game.unstarted? && game.banned_users.exclude?(current_user.id)
       game.players.create(user_id: current_user.id)
       render json: game
     else
-      flash[:alert] = 'You has errors!'
+      flash[:alert] = 'You have errors!'
       render json: { status: :conflict }
     end
   end
@@ -17,7 +17,11 @@ class Api::V1::PlayersController < ApplicationController
   end
 
   def player_killed
-    target_info.dead! if target_info.death_confirm?
+    if target_info.death_confirm?
+      target_info.dead!
+      player.killed_targets << target_info.id
+      player.save
+    end
     return check_players_count if players.where.not(status: :dead).count == 2
 
     PlayerNotificationJob.perform_later(player.id)
@@ -36,9 +40,18 @@ class Api::V1::PlayersController < ApplicationController
     render json: {}, status: :accepted
   end
 
+  def ban_player
+    player.game.banned_users << player.user.id
+    player.game.save
+    player.destroy
+    render json: {}, status: :accepted
+  end
+
   private
 
   def check_players_count
+    return unless current_user.current_game.status == 'in_progress'
+
     current_user.current_game.update(
       status: :finished,
       finish_time: DateTime.now
