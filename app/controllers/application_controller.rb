@@ -3,6 +3,13 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery with: :null_session
 
+  def authenticate_admin
+    # return true if Rails.env.development?
+    authenticate_or_request_with_http_basic do |name, password|
+      name == 'office' && password == 'htoya'
+    end
+  end
+
   private
 
   def parsed_params
