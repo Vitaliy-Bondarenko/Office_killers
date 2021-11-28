@@ -8,7 +8,7 @@ class WaitingView extends React.Component {
     super(props);
 
     this.state = {
-      game: props.game,
+      current_game: props.current_game,
       current_user: props.current_user,
       current_player: props.current_player
     };
@@ -34,9 +34,9 @@ class WaitingView extends React.Component {
   }
 
   render(){
-    const players = this.state.game.players;
+    const players = this.state.current_game.players;
     return(
-      <div className='absolute-center align-text-center width-92'>
+      <div className='absolute-center-player-wrapper align-text-center'>
         <div style={{width: '80%', maxWidth: '350px'}}>
           <KillerFontSVG />
         </div>

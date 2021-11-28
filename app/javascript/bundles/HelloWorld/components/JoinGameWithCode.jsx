@@ -23,7 +23,6 @@ class JoinGameWithCode extends React.Component {
     const url = '/api/v1/players';
     requestmanager.request(url, 'post', params).then((resp) => {
       if (resp.status == "conflict"){
-        console.log("uncorrect!");
         store.addNotification({
           message: "WRONG CODE!",
           type: "danger",
@@ -40,7 +39,7 @@ class JoinGameWithCode extends React.Component {
       } else {
         window.location.href = '/game';
       }
-    }).catch(err => console.log(err));
+    }).catch();
   }
 
   render(){

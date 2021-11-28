@@ -8,8 +8,15 @@ class TargetScreen extends React.Component {
     super(props);
 
     this.state = {
-      current_player: props.current_player
+      current_player: props.current_player,
+      waiting_for_death: false
     };
+
+    window.forceUpdatePlayers = this.forceUpdatePlayers.bind(this);
+  }
+
+  forceUpdatePlayers = (current_player) => {
+    this.setState({ current_player });
   }
 
   handleNoKill = () => {
@@ -21,6 +28,7 @@ class TargetScreen extends React.Component {
 
   handlePlayerDeathConfirm = () => {
     if (window.confirm('Are you sure?')) {
+      this.setState({waiting_for_death: true});
       const { current_player } = this.state;
       const url = '/api/v1/players/' + current_player.id + '/death_confirm';
       requestmanager.request(url, 'PUT').then((_resp) => {

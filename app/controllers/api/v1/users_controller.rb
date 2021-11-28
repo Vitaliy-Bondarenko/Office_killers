@@ -2,8 +2,11 @@
 
 class Api::V1::UsersController < ApplicationController
   def show
-    user = User.find_by(id: params[:id])
     render json: user && UserSerializer.new(user).as_json unless user.nil?
+  end
+
+  def all_info
+    render json: { user: user, game: user.current_game && GameSerializer.new(user.current_game).as_json, player: user.current_player && PlayerSerializer.new(user.current_player).as_json }
   end
 
   def update
@@ -15,6 +18,10 @@ class Api::V1::UsersController < ApplicationController
   end
 
   private
+
+  def user
+    User.find_by(id: params[:id])
+  end
 
   def user_params
     parsed_params.require(:user).permit(:first_name,
