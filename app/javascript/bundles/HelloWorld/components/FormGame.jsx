@@ -145,7 +145,7 @@ class FormGame extends React.Component {
     return (
       <div className='user-wrapper email-input d-flex j-content-space-between' key={user.id}>
         <div className='d-flex'>
-          <img className='player-small-avatar' src={user.image_URL} />
+          <img className='player-small-avatar' src={user.avatar} />
           <p className='statistic-user-name'>{user.first_name} {user.last_name}</p>
         </div>
         {this.state.current_player.id != user.id &&
@@ -174,7 +174,7 @@ class FormGame extends React.Component {
     return (
       <div className='email-input d-flex j-content-space-between' key={user.id}>
         <div className='d-flex'>
-          <img className='player-small-avatar' src={user.image_URL} />
+          <img className='player-small-avatar' src={user.avatar} />
           <p className='statistic-user-name'>{user.first_name} {user.last_name}</p>
         </div>
         <div className='d-flex align-items-center j-content-space-between' style={{marginLeft: '10px'}}>

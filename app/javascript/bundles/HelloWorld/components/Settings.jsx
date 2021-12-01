@@ -2,7 +2,7 @@ import React from 'react';
 import requestmanager from "../../lib/requestmanager";
 import { store } from 'react-notifications-component';
 import { Link } from 'react-router-dom';
-import { SettingsFontSVG } from './icons.js';
+import { SettingsFontSVG, UploadImageIconSVG } from './icons.js';
 import 'react-notifications-component/dist/theme.css';
 import 'animate.css';
 
@@ -14,10 +14,11 @@ class Settings extends React.Component {
       user_id: props.user_id,
       first_name: props.first_name,
       last_name: props.last_name,
-      image_URL: props.imageProp,
       notify_game_start: props.notify_game_start,
       notify_game_finish: props.notify_game_finish,
       news: props.news,
+      avatar: props.avatar,
+      image_preview: undefined,
       disabled: true
      };
   }
@@ -33,20 +34,23 @@ class Settings extends React.Component {
                       last_name: resp.last_name,
                       notify_game_start: resp.notify_game_start,
                       notify_game_finish: resp.notify_game_finish,
+                      avatar: resp.avatar,
+                      image_preview: resp.avatar,
                       news: resp.news
                      });
     }).catch(() => {});
   }
 
   handleSubmitSettings = () => {
-    const params = { user: { first_name: this.state.first_name,
-                             last_name: this.state.last_name,
-                             notify_game_start: this.state.notify_game_start,
-                             notify_game_finish: this.state.notify_game_finish,
-                             news: this.state.news,
-                             image_URL: this.state.image_URL} };
+    const formData = new FormData();
+    formData.append('user[first_name]', this.state.first_name);
+    formData.append('user[last_name]', this.state.last_name);
+    formData.append('user[notify_game_start]', this.state.notify_game_start);
+    formData.append('user[notify_game_finish]', this.state.notify_game_finish);
+    formData.append('user[news]', this.state.news);
+    formData.append('user[avatar]', this.state.avatar);
     const url = "/api/v1/users/" + this.state.user_id;
-    requestmanager.request(url, "put", params).then((resp) => {
+    requestmanager.request(url, "put", formData, true).then((resp) => {
       if (resp.status == 'success'){
         this.setState({ disabled: true });
         this.notificationPopUp("CHANGES SAVED!", 'success');
@@ -84,18 +88,26 @@ class Settings extends React.Component {
     this.setState({ [field]: event.target.checked, disabled: false });
   }
 
+  onFileChange = (event) => {
+    this.setState({ image_preview: URL.createObjectURL(event.target.files[0]), avatar: event.target.files[0], disabled: false });
+  }
+
   render(){
     return (
       <div className='align-text-center'>
         <div className='d-flex f-direction-col adaptive-width'>
           <SettingsFontSVG />
           <div>
+            <input id='avatar-upload' type='file' accept="image/png, image/jpeg" onChange={this.onFileChange} />
             <div className='text-left-align'>
               <h2> YOUR PHOTO </h2>
               <p className='white-text-small no-margin'> USING FOR DISPLAYING YOUR PHOTO IN EACH GAME </p>
             </div>
-            <div>
-              <img className="profile-img" src={this.state.image_URL} />
+            <div className='avatar-wrapper'>
+              <label for='avatar-upload' className='avatar-upload-btn'>
+                <UploadImageIconSVG />
+              </label>
+              <img className="profile-img" src={this.state.image_preview} />
             </div>
           </div>
           <div className='row-field'>

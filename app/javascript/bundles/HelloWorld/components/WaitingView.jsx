@@ -27,7 +27,7 @@ class WaitingView extends React.Component {
   passPlayers = (user) => {
     return (
       <div className='user-wrapper email-input d-flex' key={user.id}>
-        <img className='player-small-avatar' src={user.image_URL} />
+        <img className='player-small-avatar' src={user.avatar} />
         <p className='statistic-user-name'>{user.first_name} {user.last_name}</p>
       </div>
     );

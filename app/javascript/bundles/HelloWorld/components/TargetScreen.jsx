@@ -101,7 +101,7 @@ class TargetScreen extends React.Component {
           <div style={{marginBottom: "20px", position: 'relative', display: 'inline-flex', flexDirection: 'column'}}>
             <div style={{position: 'relative'}}>
               {this.DeathConfirmWindow()}
-              <img className='profile-img' src={player_target.image_URL} />
+              <img className='profile-img' src={player_target.avatar} />
             </div>
             <div className='d-flex f-direction-row top-btm-mar-30px double-link-btn-wrapper j-content-space-between'>
               <Link to='/'>

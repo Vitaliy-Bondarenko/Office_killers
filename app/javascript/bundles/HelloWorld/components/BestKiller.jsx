@@ -25,7 +25,7 @@ class BestKiller extends React.Component {
           <div style={{margin: "20px 0 5px 0"}}>
             <img
                 className="profile-img"
-                src={top_killer.image_URL} />
+                src={top_killer.avatar} />
           </div>
           <div>
             <h1 style={{color: "white", fontSize: '40px', fontWeight: '300'}}>

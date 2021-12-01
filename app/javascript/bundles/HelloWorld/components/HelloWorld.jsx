@@ -94,7 +94,7 @@ export default class HelloWorld extends React.Component {
                   path='/settings' render={_props =>
                   (<Settings
                       first_name={current_user.first_name}
-                      imageProp={current_user.image_URL}
+                      avatar={current_user.avatar}
                       last_name={current_user.last_name}
                       news={current_user.news}
                       notify_game_finish={current_user.notify_game_finish}

@@ -9,6 +9,7 @@ ruby '2.6.3'
 gem 'activeadmin'
 gem 'active_model_serializers'
 gem 'awesome_print'
+gem 'aws-sdk-s3', require: false
 gem 'devise'
 gem 'fcm'
 gem 'jbuilder', '~> 2.7'

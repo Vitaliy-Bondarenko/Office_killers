@@ -13,7 +13,7 @@ class StatisticPage extends React.Component {
   passFullNameTargets = (user) => {
     return (
       <div className='d-flex f-direction-row' style={{marginTop: '10px'}} key={user.id}>
-        <img className='player-small-avatar' src={user.image_URL} />
+        <img className='player-small-avatar' src={user.avatar} />
         <h2 className='white-text statistic-user-name'>{user.first_name} {user.last_name}</h2>
       </div>
     );

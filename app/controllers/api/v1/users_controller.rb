@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class Api::V1::UsersController < ApplicationController
+  include ActiveStorage::SetCurrent
   def show
     render json: user && UserSerializer.new(user).as_json unless user.nil?
   end
@@ -24,12 +25,12 @@ class Api::V1::UsersController < ApplicationController
   end
 
   def user_params
-    parsed_params.require(:user).permit(:first_name,
+    params.require(:user).permit(:first_name,
                                         :last_name,
                                         :notify_game_start,
                                         :notify_game_finish,
                                         :news,
-                                        :image_URL,
-                                        :notif_token)
+                                        :notif_token,
+                                        :avatar)
   end
 end
