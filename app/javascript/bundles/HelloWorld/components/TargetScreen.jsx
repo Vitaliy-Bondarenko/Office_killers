@@ -88,6 +88,7 @@ class TargetScreen extends React.Component {
   render(){
     const { current_player } = this.state;
     const player_target = current_player.target_info
+    console.log(player_target);
     return (
       <div className='align-text-center'>
         <div className='d-flex f-direction-col adaptive-width align-items-center'>
@@ -99,7 +100,7 @@ class TargetScreen extends React.Component {
             <h2 className='mini-text' style={{fontSize: '37px'}}> {player_target.first_name} {player_target.last_name} </h2>
           </div>
           <div style={{marginBottom: "20px", position: 'relative', display: 'inline-flex', flexDirection: 'column'}}>
-            <div style={{position: 'relative'}}>
+            <div className='avatar-wrapper'>
               {this.DeathConfirmWindow()}
               <img className='profile-img' src={player_target.avatar} />
             </div>

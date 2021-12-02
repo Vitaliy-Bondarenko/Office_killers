@@ -42,17 +42,16 @@ class Settings extends React.Component {
   }
 
   handleSubmitSettings = () => {
+    this.setState({ disabled: true });
     const formData = new FormData();
-    formData.append('user[first_name]', this.state.first_name);
-    formData.append('user[last_name]', this.state.last_name);
-    formData.append('user[notify_game_start]', this.state.notify_game_start);
-    formData.append('user[notify_game_finish]', this.state.notify_game_finish);
-    formData.append('user[news]', this.state.news);
-    formData.append('user[avatar]', this.state.avatar);
+    console.log();
+    ['first_name', 'last_name', 'notify_game_start', 'notify_game_finish', 'news'].forEach((attribute) =>
+      this.state[attribute] != this.props[attribute] && formData.append(`user[${attribute}]`, this.state[attribute])
+    );
+    typeof this.state.avatar == 'object' && formData.append(`user[avatar]`, this.state.avatar);
     const url = "/api/v1/users/" + this.state.user_id;
     requestmanager.request(url, "put", formData, true).then((resp) => {
       if (resp.status == 'success'){
-        this.setState({ disabled: true });
         this.notificationPopUp("CHANGES SAVED!", 'success');
       } else {
         this.notificationPopUp(resp.status, 'danger');
@@ -104,7 +103,7 @@ class Settings extends React.Component {
               <p className='white-text-small no-margin'> USING FOR DISPLAYING YOUR PHOTO IN EACH GAME </p>
             </div>
             <div className='avatar-wrapper'>
-              <label for='avatar-upload' className='avatar-upload-btn'>
+              <label htmlFor='avatar-upload' className='avatar-upload-btn'>
                 <UploadImageIconSVG />
               </label>
               <img className="profile-img" src={this.state.image_preview} />

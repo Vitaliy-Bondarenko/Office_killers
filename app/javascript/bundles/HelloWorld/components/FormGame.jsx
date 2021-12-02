@@ -142,11 +142,12 @@ class FormGame extends React.Component {
   }
 
   passPlayers = (user) => {
+    console.log(user)
     return (
       <div className='user-wrapper email-input d-flex j-content-space-between' key={user.id}>
         <div className='d-flex'>
           <img className='player-small-avatar' src={user.avatar} />
-          <p className='statistic-user-name'>{user.first_name} {user.last_name}</p>
+          <p className='statistic-user-name'>{user.player_full_name}</p>
         </div>
         {this.state.current_player.id != user.id &&
           <>

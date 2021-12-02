@@ -12,7 +12,7 @@ class GameSerializer < ApplicationSerializer
              :banned_users
 
   def players
-    object.players.joins(:user).select(:email, :first_name, :last_name, :id, :killed_targets, :target_ids, :status)
+    ActiveModelSerializers::SerializableResource.new(object.players).as_json
   end
 
   def banned_users

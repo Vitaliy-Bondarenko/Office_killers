@@ -21,7 +21,7 @@ class MainMenu extends React.Component {
         return messaging.getToken();
       }).then(token => {
         if (token){
-          const url = '/api/v1/users/' + this.state.user_id;
+          const url = '/api/v1/users/' + this.state.user_id + '/update_notif_token';
           const params = { user: { notif_token: token } };
           requestmanager.request(url, "put", params).then((_resp) => {
            }).catch(() => {});

@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 class Api::V1::UsersController < ApplicationController
-  include ActiveStorage::SetCurrent
   def show
     render json: user && UserSerializer.new(user).as_json unless user.nil?
   end
@@ -16,6 +15,10 @@ class Api::V1::UsersController < ApplicationController
     else
       render json: { status: current_user.errors.full_messages.to_sentence }
     end
+  end
+
+  def update_notif_token
+    current_user.update(notif_token: params[:notif_token])
   end
 
   private

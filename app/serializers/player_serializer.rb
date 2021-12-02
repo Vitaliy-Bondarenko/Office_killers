@@ -11,19 +11,24 @@ class PlayerSerializer < ApplicationSerializer
              :dead_targets,
              :your_killers,
              :player_full_name,
-             :current_game_owner
+             :current_game_owner,
+             :avatar
+
+  def avatar
+    object.user.avatar.attachment.service_url
+  end
 
   def target_info
-    target_status = object.target.as_json(only: %i[status])
-    object.target.user.as_json(only: %i[first_name last_name]).merge(target_status) unless object.game.unstarted?
+    target_status = object.target.as_json(only: :status)
+    serialize_user(object.target.user).merge(target_status) unless object.game.unstarted?
   end
 
   def dead_targets
-    User.joins(:players).select(:id, :first_name, :last_name, :status).where(players: { id: object.killed_targets, status: :dead })
+    serialize_user(User.joins(:players).where(players: { id: object.killed_targets, status: :dead }))
   end
 
   def your_killers
-    Player.where('? = ANY (target_ids)', object.id).select(:first_name, :last_name, :id).joins(:user)
+    serialize_user(Player.where('? = ANY (target_ids)', object.id).map(&:user))
   end
 
   def current_game_owner
@@ -32,5 +37,11 @@ class PlayerSerializer < ApplicationSerializer
 
   def player_full_name
     [object.user_first_name, object.user_last_name].join(' ')
+  end
+
+  private
+
+  def serialize_user(user)
+    ActiveModelSerializers::SerializableResource.new(user).as_json
   end
 end
