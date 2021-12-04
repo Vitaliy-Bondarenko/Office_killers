@@ -47,8 +47,7 @@ const text = [
   },
   {
     legend: 'SETTINGS',
-    body: `You can change avatar, personal information and configure notification on Settings Page.
-           Be carefull, avatar image file size can't be exceed 3 mb.`,
+    body: `You can change avatar, personal information and configure notifications on Settings Page.`,
     id: 8
   }
 ]
