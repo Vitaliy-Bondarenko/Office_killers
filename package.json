@@ -12,6 +12,7 @@
     "animate.css": "^3.7.2",
     "babel-plugin-transform-react-remove-prop-types": "^0.4.24",
     "es6-promise": "^4.2.8",
+    "html-react-parser": "^1.4.1",
     "isomorphic-fetch": "^2.2.1",
     "prop-types": "^15.7.2",
     "qrcode.react": "^1.0.0",
