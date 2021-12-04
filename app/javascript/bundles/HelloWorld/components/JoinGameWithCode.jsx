@@ -1,5 +1,6 @@
 import React from 'react';
 import requestmanager from '../../lib/requestmanager';
+import QrReader from "react-qr-reader";
 import {store} from 'react-notifications-component';
 import { Link } from 'react-router-dom';
 import { CloseSVG } from './icons.js';
@@ -16,6 +17,12 @@ class JoinGameWithCode extends React.Component {
 
   updateCode = (code) => {
     this.setState({ code });
+  }
+
+  handleScan(data) {
+    if (data) {
+      window.location = data;
+    }
   }
 
   handleFindGameByCode = () => {
@@ -46,6 +53,13 @@ class JoinGameWithCode extends React.Component {
     return (
       <div className='join-by-code'>
         <div className='card-center'>
+        <h2 style={{fontWeight: '300', position: 'absolute', transform: 'translate(50%, -50%)', top: '10px', zIndex: '1000'}}>SCAN GAME QR CODE</h2>
+          <QrReader
+                bgColor='black'
+                fgColor='white'
+                onError={this.handleError}
+                onScan={this.handleScan}
+                style={{ width: "100%", zIndex: '-1' }} />
           <Link className='corner-close' to='/'>
             <CloseSVG />
           </Link>

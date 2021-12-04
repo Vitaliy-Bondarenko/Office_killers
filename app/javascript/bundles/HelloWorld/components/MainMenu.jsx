@@ -69,7 +69,7 @@ class MainMenu extends React.Component {
             <Link to='/join_game'>
               <button
                   className="default-btn"
-                  type="button">JOIN GAME VIA CODE</button>
+                  type="button">JOIN GAME</button>
             </Link> }
         <Link to='/'>
           <button
