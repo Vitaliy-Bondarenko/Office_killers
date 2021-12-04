@@ -71,10 +71,9 @@ class MainMenu extends React.Component {
                   className="default-btn"
                   type="button">JOIN GAME</button>
             </Link> }
-        <Link to='/'>
+        <Link to='/tutorial'>
           <button
               className="default-btn"
-              disabled
               type="button">HOW TO PLAY</button>
         </Link>
         {game && game.status == "finished" ?

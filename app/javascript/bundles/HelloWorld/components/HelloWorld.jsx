@@ -14,6 +14,7 @@ import ReactNotification from 'react-notifications-component';
 import 'animate.css';
 import 'react-notifications-component/dist/theme.css';
 import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
+import HowToPlay from './HowToPlay';
 
 export default class HelloWorld extends React.Component {
   constructor(props) {
@@ -90,6 +91,9 @@ export default class HelloWorld extends React.Component {
                       game={current_game}
                       owner_id={current_user.owner_id}
                       user_id={current_user.id} />)} />
+              <Route
+                exact path='/tutorial' render={_props=>
+                  (<HowToPlay />)} />
               <Route
                   path='/settings' render={_props =>
                   (<Settings
