@@ -2,6 +2,7 @@
 
 class ApplicationController < ActionController::Base
   protect_from_forgery with: :null_session
+  include ActiveStorage::SetCurrent
 
   def authenticate_admin
     # return true if Rails.env.development?

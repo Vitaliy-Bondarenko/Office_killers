@@ -10,6 +10,7 @@ Rails.application.routes.draw do
     namespace :v1 do
       resources :users, only: %i[update create show] do
         get 'all_info', on: :member
+        put 'update_notif_token', on: :member
       end
       resources :games, only: %i[new create update destroy] do
         put 'killer_start', on: :member

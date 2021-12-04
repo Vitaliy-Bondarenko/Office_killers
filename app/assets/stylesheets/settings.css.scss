@@ -17,3 +17,25 @@
 .personal-info-inputs:first-child {
   margin-right: 4%;
 }
+
+.avatar-wrapper {
+  max-width: 350px;
+  max-height: 350px;
+  overflow: hidden;
+  position: relative;
+  .avatar-upload-btn {
+    cursor: pointer;
+    display: block;
+    height: 50px;
+    padding: 7px;
+    position: absolute;
+    right: 0;
+    width: 35px;
+    z-index: 1000;
+  }
+}
+
+
+input[type='file'] {
+  display: none;
+}

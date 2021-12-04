@@ -17,6 +17,10 @@ class Api::V1::UsersController < ApplicationController
     end
   end
 
+  def update_notif_token
+    current_user.update(notif_token: params[:notif_token])
+  end
+
   private
 
   def user
@@ -24,12 +28,12 @@ class Api::V1::UsersController < ApplicationController
   end
 
   def user_params
-    parsed_params.require(:user).permit(:first_name,
+    params.require(:user).permit(:first_name,
                                         :last_name,
                                         :notify_game_start,
                                         :notify_game_finish,
                                         :news,
-                                        :image_URL,
-                                        :notif_token)
+                                        :notif_token,
+                                        :avatar)
   end
 end
