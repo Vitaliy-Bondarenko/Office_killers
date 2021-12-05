@@ -52,7 +52,7 @@ class Api::V1::PlayersController < ApplicationController
 
   def unban_player
     game = Game.find_by(id: params[:game_id])
-    game.update(banned_users: game.banned_users.delete(User.find_by(id: params[:id])) || [])
+    game.update(banned_users: game.banned_users - [(User.find_by(id: params[:id]).id)] || [])
     render json: {}, status: :accepted
   end
 

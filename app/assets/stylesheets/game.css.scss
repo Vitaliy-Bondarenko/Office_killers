@@ -39,8 +39,30 @@
   width: 100%;
 }
 
+.form-game-attributes:last-child {
+  margin: -6px 0;
+}
+
 .banned-users-wrapper {
   overflow: scroll;
+  .banned-users-container {
+    background-color: #64646433;
+    border-radius: 5px;
+    flex-direction: column;
+    height: 175px;
+    margin-top: 5px;
+    max-height: 175px;
+    min-width: 100%;
+    display: none;
+    .email-input {
+      height: 45px;
+      margin: 6px 5px;
+      max-width: 135px;
+    }
+  }
+  .visible {
+    display: inline-flex;
+  }
 }
 
 .banned-users-wrapper::-webkit-scrollbar {

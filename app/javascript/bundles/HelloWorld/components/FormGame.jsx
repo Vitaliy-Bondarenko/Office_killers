@@ -18,7 +18,8 @@ class FormGame extends React.Component {
       start_time: (props.game || {}).start_time ? new Date(props.game.start_time) : undefined,
       current_user: props.current_user,
       current_player: props.current_player,
-      datetime_changed: false
+      datetime_changed: false,
+      bannedPlayerShow: false
     };
 
     window.forceUpdatePlayersCount = this.forceUpdatePlayersCount.bind(this);
@@ -142,12 +143,11 @@ class FormGame extends React.Component {
   }
 
   passPlayers = (user) => {
-    console.log(user)
     return (
       <div className='user-wrapper email-input d-flex j-content-space-between' key={user.id}>
         <div className='d-flex'>
           <img className='player-small-avatar' src={user.avatar} />
-          <p className='statistic-user-name'>{user.player_full_name}</p>
+          <p className='statistic-user-name'>{user.full_name}</p>
         </div>
         {this.state.current_player.id != user.id &&
           <>
@@ -176,7 +176,7 @@ class FormGame extends React.Component {
       <div className='email-input d-flex j-content-space-between' key={user.id}>
         <div className='d-flex'>
           <img className='player-small-avatar' src={user.avatar} />
-          <p className='statistic-user-name'>{user.first_name} {user.last_name}</p>
+          <p className='statistic-user-name'>{user.full_name}</p>
         </div>
         <div className='d-flex align-items-center j-content-space-between' style={{marginLeft: '10px'}}>
           <span
@@ -223,7 +223,7 @@ class FormGame extends React.Component {
   render() {
     const current_game = this.state.current_game || {};
     const players = current_game.players || [];
-    const { start_time } = this.state;
+    const { start_time, bannedPlayerShow } = this.state;
     return(
       <div className='align-text-center'>
         <div className='d-flex f-direction-col width-100 j-content-space-between align-items-center'>
@@ -231,20 +231,18 @@ class FormGame extends React.Component {
           <div className='d-flex f-direction-col width-100 max-width-850'>
             <div>
               <div className='column-qr-code'>
-                <label className='text-above-qr' htmlFor="qr-code">
-                  CONNECTING PLAYERS VIA QR CODE
-                </label>
-                <div className='position-relative'>
+                <div className='qr-code-wrapper'>
+                  <label className='text-above-qr' htmlFor="qr-code">
+                    CONNECTING PLAYERS VIA QR CODE
+                  </label>
                   {current_game.id ? undefined : <><p> Create game and share this QR code to other players </p></>}
                   <QRCode
                       bgColor={"#000000"}
                       fgColor={"#ffffff"}
                       size={350}
-                      style={{marginTop: '10px',
+                      style={{marginTop: '5px',
                               minWidth: '40%',
                               minHeight: '40%',
-                              maxWidth: '350px',
-                              maxHeight: '350px',
                               height: '100%',
                               width: '100%',
                               opacity: current_game.id ? '1' : '0.3'}}
@@ -284,15 +282,15 @@ class FormGame extends React.Component {
                 {current_game.id &&
                   <>
                     <div className='form-game-attributes banned-users-wrapper'>
-                      <p className='text-above-qr'>BANNED USERS</p>
-                      <div className='d-flex adaptive-user-table j-content-space-between width-100 f-wrap'>
+                      <p className='text-above-qr'>BANNED USERS <span className='cursor-pointer' onClick={() => this.setState({ bannedPlayerShow: !this.state.bannedPlayerShow })}>{bannedPlayerShow ? '▼' : '▲'}</span></p>
+                      <div className={`d-flex banned-users-container adaptive-user-table width-100 f-wrap ${this.state.bannedPlayerShow && 'visible'}`}>
                         {current_game.banned_users.map(this.getBannedUsers)}
                       </div>
                     </div>
                   </>}
               </div>
             </div>
-            <div className='top-btm-mar-30px'>
+            <div>
               {current_game.id &&
                 <>
                   <div className='top-btm-mar-30px'>

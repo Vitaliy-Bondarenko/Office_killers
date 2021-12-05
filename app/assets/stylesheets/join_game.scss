@@ -1,0 +1,15 @@
+.join-by-code {
+  text-align: center;
+  top: 50%;
+  right: 50%;
+  position: absolute;
+  transform: translate(50%, -50%);
+  min-width: 100%;
+}
+
+.scan-qr-code-text {
+  position: absolute;
+  transform: translate(50%, -50%);
+  top: 10px;
+  z-index: 1000;
+}

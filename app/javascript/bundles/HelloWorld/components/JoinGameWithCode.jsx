@@ -53,7 +53,7 @@ class JoinGameWithCode extends React.Component {
     return (
       <div className='join-by-code'>
         <div className='card-center'>
-        <h2 style={{fontWeight: '300', position: 'absolute', transform: 'translate(50%, -50%)', top: '10px', zIndex: '1000'}}>SCAN GAME QR CODE</h2>
+        <h2 className='scan-qr-code-text'>SCAN GAME QR CODE</h2>
           <QrReader
                 bgColor='black'
                 fgColor='white'

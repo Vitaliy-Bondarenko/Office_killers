@@ -88,7 +88,6 @@ class TargetScreen extends React.Component {
   render(){
     const { current_player } = this.state;
     const player_target = current_player.target_info
-    console.log(player_target);
     return (
       <div className='align-text-center'>
         <div className='d-flex f-direction-col adaptive-width align-items-center'>

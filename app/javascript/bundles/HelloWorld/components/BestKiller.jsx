@@ -29,7 +29,7 @@ class BestKiller extends React.Component {
           </div>
           <div>
             <h1 style={{color: "white", fontSize: '40px', fontWeight: '300'}}>
-              {top_killer.player_full_name}
+              {top_killer.full_name}
             </h1>
             <h2 style={{marginTop: '0'}}> killed {top_killer.dead_targets.length} players</h2>
           </div>

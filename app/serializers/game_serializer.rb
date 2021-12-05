@@ -16,6 +16,6 @@ class GameSerializer < ApplicationSerializer
   end
 
   def banned_users
-    User.where(id: object.banned_users).select(:first_name, :last_name, :id)
+    ActiveModelSerializers::SerializableResource.new(User.where(id: object.banned_users)).as_json
   end
 end

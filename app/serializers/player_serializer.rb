@@ -10,7 +10,7 @@ class PlayerSerializer < ApplicationSerializer
              :target_info,
              :dead_targets,
              :your_killers,
-             :player_full_name,
+             :full_name,
              :current_game_owner,
              :avatar
 
@@ -35,7 +35,7 @@ class PlayerSerializer < ApplicationSerializer
     object.user_id == object.game.owner_id if object.game
   end
 
-  def player_full_name
+  def full_name
     [object.user_first_name, object.user_last_name].join(' ')
   end
 
