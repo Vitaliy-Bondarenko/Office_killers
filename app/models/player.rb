@@ -9,7 +9,7 @@ class Player < ApplicationRecord
   after_create_commit :broadcast_to_game
   after_update_commit :broadast_to_all_players
   after_update :player_notification, if: -> { saved_change_to_status? }
-  before_destroy :broadast_to_all_players
+  before_destroy :broadcast_to_game
 
   enum status: %i[alive dead death_confirm]
 

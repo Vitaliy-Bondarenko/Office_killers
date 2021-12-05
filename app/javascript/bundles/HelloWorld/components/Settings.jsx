@@ -19,7 +19,8 @@ class Settings extends React.Component {
       news: props.news,
       avatar: props.avatar,
       image_preview: undefined,
-      disabled: true
+      disabled: true,
+      showSpinner: false
      };
   }
 
@@ -42,15 +43,15 @@ class Settings extends React.Component {
   }
 
   handleSubmitSettings = () => {
-    this.setState({ disabled: true });
+    this.setState({ disabled: true, showSpinner: true });
     const formData = new FormData();
-    console.log();
     ['first_name', 'last_name', 'notify_game_start', 'notify_game_finish', 'news'].forEach((attribute) =>
       this.state[attribute] != this.props[attribute] && formData.append(`user[${attribute}]`, this.state[attribute])
     );
     typeof this.state.avatar == 'object' && formData.append(`user[avatar]`, this.state.avatar);
     const url = "/api/v1/users/" + this.state.user_id;
     requestmanager.request(url, "put", formData, true).then((resp) => {
+      this.setState({ showSpinner: false })
       if (resp.status == 'success'){
         this.notificationPopUp("CHANGES SAVED!", 'success');
       } else {
@@ -91,6 +92,14 @@ class Settings extends React.Component {
     this.setState({ image_preview: URL.createObjectURL(event.target.files[0]), avatar: event.target.files[0], disabled: false });
   }
 
+  renderSpinner() {
+    return(
+      <svg class="spinner" viewBox="0 0 50 50">
+        <circle class="path" cx="25" cy="25" r="20" fill="none" stroke-width="5"></circle>
+      </svg>
+    )
+  }
+
   render(){
     return (
       <div className='align-text-center'>
@@ -98,7 +107,7 @@ class Settings extends React.Component {
           <SettingsFontSVG />
           <div>
             <input id='avatar-upload' type='file' accept="image/png, image/jpeg" onChange={this.onFileChange} />
-            <div className='text-left-align'>
+            <div className='text-align-left'>
               <h2> YOUR PHOTO </h2>
               <p className='white-text-small no-margin'> USING FOR DISPLAYING YOUR PHOTO IN EACH GAME </p>
             </div>
@@ -177,9 +186,10 @@ class Settings extends React.Component {
             </Link>
             <button
                 className='green-btn'
+                style={{position: 'relative'}}
                 disabled={this.state.disabled}
                 onClick={this.handleSubmitSettings}
-                type="button">SUBMIT CHANGES</button>
+                type="button">SUBMIT CHANGES {this.state.showSpinner && this.renderSpinner()}</button>
           </div>
         </div>
       </div>
