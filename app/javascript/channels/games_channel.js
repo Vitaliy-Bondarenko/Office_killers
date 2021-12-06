@@ -24,7 +24,11 @@ window.subGames = function(user_id) {
           window.forceUpdatePlayers(data.player);
           break;
         case 'finished':
-          window.location = '/best_killer';
+          if (data.additional_params == 'destroy_game') {
+            location.reload();
+          } else {
+            window.location = '/best_killer';
+          }
           break;
         default:
       }

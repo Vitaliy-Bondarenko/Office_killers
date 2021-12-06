@@ -7,7 +7,7 @@ class Player < ApplicationRecord
   delegate :email, :first_name, :last_name, to: :user, prefix: true
 
   after_create_commit :broadcast_to_game
-  after_update_commit :broadast_to_all_players
+  after_update_commit :broadcast_to_all_players
   after_update :player_notification, if: -> { saved_change_to_status? }
   before_destroy :broadcast_to_game
 
@@ -18,7 +18,7 @@ class Player < ApplicationRecord
 
   private
 
-  def broadast_to_all_players
+  def broadcast_to_all_players
     game.changing_page_broadcast
   end
 
