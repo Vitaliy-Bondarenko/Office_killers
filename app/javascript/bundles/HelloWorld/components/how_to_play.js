@@ -23,31 +23,31 @@ const text = [
   },
   {
     legend: 'JOINING TO GAME',
-    body: `To connect to existing game go to Join Game page and scan QR code from game or enter its code.`,
+    body: `To connect to existing game go to ‘Join Game’ page and scan QR code or alternatively enter code from the game.`,
     id: 4
   },
   {
     legend: 'GAME PROCESS',
-    body: `After game has started, every player will get random target, that they need to eliminate. Elimination can be
-           happened by putting your arm on your target shoulder and by saying 'You're dead' to him, while there
-           are no other person in room present.`,
+    body: `After the game has started, every player will get a random target that they need to eliminate. Killer can eliminate
+           the target by putting the hand on the target’s shoulder and saying ‘You are dead’ when there is no other player
+           around in the same room.`,
     id: 5
   },
   {
     legend: 'PLAYER KILLING',
-    body: `After you eliminate your taget, he needs to confirm his death by pressing button 'I was killed' on Game page.
-           After you confirm your kill on your device, you will get your victim target. Game will be finished automatically
-           after there only 2 alive player remain. Out of those, who did more kills, will win the game.`,
+    body: `After being eliminated, the target needs to confirm the elimination by pressing ‘I was killed’ button on the 'Game page'.
+           Killer, after confirming the kill on the device, will get the victim’s target. Game will be finished automatically
+           when only 2 players remain. The player, who did more kills, will win the game.`,
     id: 6
   },
   {
     legend: 'GAME ENDING',
-    body: `You can see game statistics on Game Statistics page after game has ended.`,
+    body: `You can see the game’s statistics on ‘Game Statistics’ page after the game has ended`,
     id: 7
   },
   {
     legend: 'SETTINGS',
-    body: `You can change avatar, personal information and configure notifications on Settings Page.`,
+    body: `You can change avatar, personal information and configure notifications on the ‘Settings Page’`,
     id: 8
   }
 ]
