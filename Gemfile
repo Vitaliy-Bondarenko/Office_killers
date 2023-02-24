@@ -13,7 +13,7 @@ gem 'aws-sdk-s3', require: false
 gem 'devise'
 gem 'fcm'
 gem 'jbuilder', '~> 2.7'
-gem 'omniauth', '~> 1.9.1'
+gem 'omniauth', '~> 2.0.0'
 gem 'omniauth-google-oauth2'
 gem 'pg'
 gem 'puma', '~> 4.3'
